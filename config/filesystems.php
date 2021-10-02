@@ -42,6 +42,13 @@ return [
             'visibility' => 'public',
         ],
 
+        'wages_data' => [
+            'driver' => 'local',
+            'root' => public_path('/wages_data'),
+            'url' => env('APP_URL').'/wages_data',
+            'visibility' => 'public',
+        ],
+
         's3' => [
             'driver' => 's3',
             'key' => env('AWS_ACCESS_KEY_ID'),

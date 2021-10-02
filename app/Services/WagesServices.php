@@ -14,14 +14,10 @@ class WagesServices{
 
     public static function getWages($request)
     {
-        return  WagesDetails::getWages($request);
-    }
+        $return = WagesDetails::getWages($request);
 
-    public static function getWagesExcel($request)
-    {
-        $data =  WagesDetails::getWages($request);
         $records = $excel_data = [];
-        foreach($data['wages_details'] as $value){
+        foreach($return['wages_details'] as $value){
 
             $records['Pay To:'] = $value['pay_to'];
             $records['Trade'] = $value['trade'];
@@ -36,7 +32,9 @@ class WagesServices{
             $excel_data [] = $records;
         }
 
-        getXlsxFile($excel_data, 'Wages Booking');
+        $return['excel_url'] = getXlsxFile($excel_data, 'Wages_Booking');
+
+        return $return;
     }
 
 }
