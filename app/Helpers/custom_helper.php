@@ -156,7 +156,7 @@ if (! function_exists('envparam')) {
         // return $url;
         // fclose($fp);
         if($uploaded){
-            $url = env('APP_URL').'/'.$xlsxFileName;
+            $url = env('APP_URL').'/storage'.$xlsxFileName;
         }else{
             $url = env('APP_URL');
         }
