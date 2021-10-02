@@ -149,13 +149,18 @@ if (! function_exists('envparam')) {
 			  	$writer->save($fp);
     			$content = ob_get_contents();
     			ob_end_clean();
-				Storage::disk('wages_data')->put($xlsxFileName, $content); 
+				$uploaded = Storage::disk('wages_data')->put($xlsxFileName, $content); 
 			//   $url['url'] = public_path().'/'.$xlsxFileName;
         }
         // $tempImage = tempnam(sys_get_temp_dir(), $xlsxFileName);
         // return $url;
         // fclose($fp);
-        return env('APP_URL').'/wages_data'.'/'.$xlsxFileName;
+        if($uploaded){
+            $url = env('APP_URL').'/wages_data'.'/'.$xlsxFileName;
+        }else{
+            $url = env('APP_URL');
+        }
+        return $url;
     }
 
 ?>
