@@ -55,6 +55,7 @@
             "php artisan clear-compiled", 
             "php artisan optimize", 
             "chmod -R 777 storage", 
+            "chmod -R 777 public/wages_data",
             "php artisan passport:keys" 
         ]
     },
