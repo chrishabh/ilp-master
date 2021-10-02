@@ -55,6 +55,8 @@
             "php artisan clear-compiled", 
             "php artisan optimize", 
             "chmod -R 777 storage", 
+            "chmod -R 775 public/",
+            "php artisan storage:link",
             "php artisan passport:keys" 
         ]
     },
