@@ -28,7 +28,7 @@ class ConstructionDetails extends Model
         $distinct_records = ConstructionDetails::join('main_descritpions', 'main_descritpions.id', '=', 'construction_details.main_description_id')
         ->join('sub_descritpions', 'sub_descritpions.id', '=', 'construction_details.sub_description_id')
         ->select('main_descritpions.description as description_header','sub_descritpions.sub_description')->whereNull('construction_details.deleted_at')
-        ->where('apartment_id',$request['apartment_id'])->where('project_id',$request['project_id'])->where('block_id',$request['block_id'])->distinct()->offset($offset)->limit($noOfRecord)->get();
+        ->where('construction_details.apartment_id',$request['apartment_id'])->where('construction_details.project_id',$request['project_id'])->where('construction_details.block_id',$request['block_id'])->distinct()->offset($offset)->limit($noOfRecord)->get();
 
         foreach($distinct_records as $value){
             $header[$value['description_header']] = $value['description_header'];
@@ -38,7 +38,7 @@ class ConstructionDetails extends Model
         $data = ConstructionDetails::join('main_descritpions', 'main_descritpions.id', '=', 'construction_details.main_description_id')
         ->join('sub_descritpions', 'sub_descritpions.id', '=', 'construction_details.sub_description_id')
         ->select('construction_details.*','main_descritpions.description as description_header','sub_descritpions.sub_description')->whereNull('construction_details.deleted_at')
-        ->where('apartment_id',$request['apartment_id'])->where('project_id',$request['project_id'])->where('block_id',$request['block_id'])->offset($offset)->limit($noOfRecord)->get();
+        ->where('construction_details.apartment_id',$request['apartment_id'])->where('construction_details.project_id',$request['project_id'])->where('construction_details.block_id',$request['block_id'])->offset($offset)->limit($noOfRecord)->get();
 
         $return['total_records'] = ConstructionDetails::whereNull('deleted_at')->where('apartment_id',$request['apartment_id'])->where('project_id',$request['project_id'])->where('block_id',$request['block_id'])->count('id');
 
