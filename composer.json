@@ -57,6 +57,8 @@
             "chmod -R 777 storage", 
             "chmod -R 775 public/",
             "php artisan storage:link",
+            "php artisan cache:clear",
+            "php artisan config:cache",
             "php artisan passport:keys" 
         ]
     },
