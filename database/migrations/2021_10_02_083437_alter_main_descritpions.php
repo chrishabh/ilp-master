@@ -14,9 +14,9 @@ class AlterMainDescritpions extends Migration
     public function up()
     {
         Schema::table('main_descritpions', function (Blueprint $table) {
-            $table->unsignedBigInteger('apartment_id');
-            $table->unsignedBigInteger('block_id');
-            $table->unsignedBigInteger('project_id');
+            $table->unsignedBigInteger('project_id')->after('description');
+            $table->unsignedBigInteger('block_id')->after('description');
+            $table->unsignedBigInteger('apartment_id')->after('description');
         });
     }
 
