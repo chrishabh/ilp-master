@@ -18,6 +18,7 @@ class WagesDetails extends Model
     public static function bookWages($request)
     {
         WagesDetails::insert($request->toArray());
+        ConstructionDetails::addWagesBookValue($request);
     }
 
     public static function getWages($request)

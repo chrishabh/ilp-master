@@ -45,7 +45,7 @@ class ConstructionDetailsController extends Controller
         return  response()->data($data);
     }
 
-    public static function getDescriptionWork(GetApartmentFormRequest $request)
+    public static function getDescriptionWork(GetConstructionDetailsFormRequest $request)
     {
         $requestData = $request->validated();
         $data = ConstructionDetailsServices::getDescriptionWork($request);

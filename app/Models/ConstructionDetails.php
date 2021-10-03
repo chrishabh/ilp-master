@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class ConstructionDetails extends Model
 {
@@ -75,13 +76,22 @@ class ConstructionDetails extends Model
 
         $return['total_records'] = ConstructionDetails::whereNull('deleted_at')->where('project_id',$request['project_id'])->where('block_id',$request['block_id'])->count('id');
 
-        $data = ConstructionDetails::select('booking_description','project_id','block_id','apartment_id')
-        ->whereNull('deleted_at')->where('project_id',$request['project_id'])->where('block_id',$request['block_id'])
-        ->offset($offset)->limit($noOfRecord)->get();
+        $data = ConstructionDetails::join('main_descritpions', 'main_descritpions.id', '=', 'construction_details.main_description_id')
+        ->select('construction_details.main_description_id','main_descritpions.description as description_header',DB::raw('sum(construction_details.total)-sum(construction_details.amount_booked)as total'))->whereNull('construction_details.deleted_at')
+        ->where('construction_details.project_id',$request['project_id'])
+        ->where('construction_details.block_id',$request['block_id'])
+        ->where('construction_details.apartment_id',$request['apartment_id'])
+        ->groupBy('description_header','construction_details.main_description_id')->offset($offset)->limit($noOfRecord)->get();
+
 
         if(count($return)>0){
             $return['description_work_details'] = $data->toArray();
         }
         return $return;
+    }
+
+    public static function addWagesBookValue($request)
+    {
+        DB::select("UPDATE construction_details SET amount_booked = ".$request['sum']." WHERE id = (Select min(id) as id from construction_details where project_id = ".$request['project_id']." and block_id = ".$request['block_id']." and main_description_id =".$request['main_description_id'].")");
     }
 }
