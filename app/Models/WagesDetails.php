@@ -37,6 +37,8 @@ class WagesDetails extends Model
 
         if(count($data)>0){
             $return['wages_details'] = $data->toArray();
+        }else{
+            $return['wages_details'] = [];
         }
         return $return;
     }
