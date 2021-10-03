@@ -31,6 +31,10 @@ class BookWagesFormRequest extends FormRequest
             'plot_or_room' => 'required',
             'description_work' => 'required',
             'sum' => 'required',
+            'project_id' => 'required',
+            'block_id' => 'required',
+            'apartment_id' => 'required',
+            'main_description_id' => 'required'
         ];
     }
 
