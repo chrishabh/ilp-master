@@ -92,6 +92,6 @@ class ConstructionDetails extends Model
 
     public static function addWagesBookValue($request)
     {
-        DB::select("UPDATE construction_details SET amount_booked = ".$request['sum']." WHERE id = (Select min(id) as id from construction_details where project_id = ".$request['project_id']." and block_id = ".$request['block_id']." and main_description_id =".$request['main_description_id']." and apartment_id =".$request['main_description_id'].")");
+        DB::select("UPDATE construction_details SET amount_booked = ".$request['sum']." WHERE id = (Select min(id) as id from construction_details where project_id = ".$request['project_id']." and block_id = ".$request['block_id']." and main_description_id =".$request['main_description_id']." and apartment_id =".$request['apartment_id'].")");
     }
 }
