@@ -29,7 +29,11 @@ class WagesDetails extends Model
 
         $return['total_records'] = WagesDetails::whereNull('deleted_at')->count('id');
 
-        $data = WagesDetails::whereNull('deleted_at')->offset($offset)->limit($noOfRecord)->get();
+        $data = WagesDetails::whereNull('deleted_at')
+        ->where('project_id',$request['project_id'])
+        ->where('block_id',$request['block_id'])
+        ->where('apartment_id',$request['apartment_id'])
+        ->offset($offset)->limit($noOfRecord)->get();
 
         if(count($data)>0){
             $return['wages_details'] = $data->toArray();
