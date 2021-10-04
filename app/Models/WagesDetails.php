@@ -29,7 +29,11 @@ class WagesDetails extends Model
 
         $return['total_records'] = WagesDetails::whereNull('deleted_at')->count('id');
 
-        $data = WagesDetails::whereNull('deleted_at')
+        $data = WagesDetails::join('project_details','wages_details.project_id','=','project_details.id')
+        ->join('block_details','wages_details.block_id','=','block_details.id')
+        ->join('apartment_details','wages_details.apartment_id','=','apartment_details.id')
+        ->select('wages_details.*','project_details.project_name','block_details.block_name','apartment_details.apartment_number')
+        ->whereNull('deleted_at')
         ->where('project_id',$request['project_id'])
         ->where('block_id',$request['block_id'])
         ->where('apartment_id',$request['apartment_id'])
