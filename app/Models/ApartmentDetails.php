@@ -35,4 +35,9 @@ class ApartmentDetails extends Model
         return ApartmentDetails::whereNull('deleted_at')->where('project_id',$request['project_id'])
         ->where('block_id',$request['block_id'])->count('id');
     }
+
+    public static function addApartmentDetails($data){
+
+        return ApartmentDetails::insertGetId($data);
+    }
 }

@@ -33,4 +33,9 @@ class BlockDetails extends Model
     {
         return BlockDetails::whereNull('deleted_at')->where('project_id',$request['project_id'])->count('id');
     }
+
+    public static function addBlockDetails($data){
+
+        return BlockDetails::insertGetId($data);
+    }
 }

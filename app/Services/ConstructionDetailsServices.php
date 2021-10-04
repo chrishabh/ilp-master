@@ -49,4 +49,41 @@ class ConstructionDetailsServices{
         return ConstructionDetails::getDescriptionWork($request);
     }
 
+    public static function addConstructionDetails($request)
+    {
+        $return = ConstructionDetails::addConstructionDetails($request);
+
+        if($return){
+            return $request->toArray();
+        }else{
+            ['message'=> 'Somethig went wrong'];
+        }
+    }
+
+    public static function updateConstructionDetails($request)
+    {
+        $return = ConstructionDetails::updateConstructionDetails($request['id'],$request->toArray());
+
+        if($return){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    public static function addProjectDetails($request)
+    {
+        return ProjectDetails::addProjectDetails($request->toArray());
+    }
+
+    public static function addBlockDetails($request)
+    {
+        return BlockDetails::addBlockDetails($request->toArray());
+    }
+
+    public static function addApartmentDetails($request)
+    {
+        return ApartmentDetails::addApartmentDetails($request->toArray());
+    }
+
 }

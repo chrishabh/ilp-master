@@ -33,4 +33,9 @@ class ProjectDetails extends Model
     {
         return ProjectDetails::whereNull('deleted_at')->count('id');
     }
+
+    public static function addProjectDetails($data){
+
+        return ProjectDetails::insertGetId($data);
+    }
 }

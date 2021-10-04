@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Exceptions\AppException;
+use Exception;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
@@ -93,5 +95,42 @@ class ConstructionDetails extends Model
     public static function addWagesBookValue($request)
     {
         DB::select("UPDATE construction_details SET amount_booked = ".$request['sum']." WHERE id = ( SELECT * FROM(Select min(id) as id from construction_details where project_id = ".$request['project_id']." and block_id = ".$request['block_id']." and main_description_id =".$request['main_description_id']." and apartment_id =".$request['apartment_id'].") as cunst)");
+    }
+
+    public static function addConstructionDetails($request)
+    {
+        $records = [];
+        foreach($request['construction_details'] as $value)
+        {
+            $data['description'] = $value['description'];
+            $data['area'] = $value['area'];
+            $data['unit'] = $value['unit'];
+            $data['lab_rate'] = $value['lab_rate'];
+            $data['total'] = $value['total'];
+            $data['amount_booked'] = $value['amount_booked'];
+            $data['name'] = $value['name'];
+            $data['wages'] = $value['wages'];
+            $data['quantity'] = $value['quantity'];
+            $data['booking_description'] = $value['booking_description'];
+            $data['floor'] = $value['floor'];
+            $data['main_description_id'] = $request['main_description_id'];
+            $data['sub_description_id'] = $request['sub_description_id'];
+            $data['apartment_id'] = $request['apartment_id'];
+            $data['block_id'] = $request['block_id'];
+            $data['project_id'] = $request['project_id'];
+
+            $records [] = $data;
+        }
+
+        try{
+            return DB::table('construction_details')->insert($records);
+        } catch (Exception $e) {
+            throw new AppException('Something went wrong');
+        }
+    }
+
+    public static function updateConstructionDetails($id,$data)
+    {
+        return ConstructionDetails::WhereNull('deleted_at')->where('id',$id)->update($data);
     }
 }
