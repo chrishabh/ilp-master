@@ -89,6 +89,7 @@ if (! function_exists('envparam')) {
         $doc = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
         $sheet = $doc->getActiveSheet();
         $firstLineKeys = false;
+        $uploaded = false;
         if(!empty($details)){
             //Loop through the associative array.
            foreach($details as $i => $row){

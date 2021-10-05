@@ -17,8 +17,7 @@ class WagesDetails extends Model
 
     public static function bookWages($request)
     {
-        WagesDetails::insert($request->toArray());
-        ConstructionDetails::addWagesBookValue($request);
+        WagesDetails::insert($request);
     }
 
     public static function getWages($request)
@@ -32,7 +31,7 @@ class WagesDetails extends Model
         $data = WagesDetails::join('project_details','wages_details.project_id','=','project_details.id')
         ->join('block_details','wages_details.block_id','=','block_details.id')
         ->join('apartment_details','wages_details.apartment_id','=','apartment_details.id')
-        ->select('wages_details.*','project_details.project_name','block_details.block_name','apartment_details.apartment_number')
+        ->select('wages_details.pay_to','wages_details.trade','wages_details.floor as level','wages_details.block_id','wages_details.plot_or_room','wages_details.description_work','wages_details.m2_or_hours','wages_details.rate','wages_details.sum','wages_details.apartment_id','wages_details.main_description_id','wages_details.project_id','project_details.project_name','block_details.block_name','apartment_details.apartment_number')
         ->whereNull('wages_details.deleted_at')
         ->where('wages_details.project_id',$request['project_id'])
         ->where('wages_details.block_id',$request['block_id'])

@@ -9,7 +9,11 @@ class WagesServices{
 
     public static function bookWages($request)
     {
-       WagesDetails::bookWages($request);
+        $data = $request->toArray();
+        $data['floor'] = $data['level'];
+        unset($data['level']);
+       WagesDetails::bookWages( $data);
+       ConstructionDetails::addWagesBookValue($request);
     }
 
     public static function getWages($request)
