@@ -12,7 +12,7 @@ class WagesServices{
         $data = $request->toArray();
         $data['floor'] = $data['level'];
         unset($data['level']);
-       WagesDetails::bookWages( $data);
+       WagesDetails::bookWages($data);
        ConstructionDetails::addWagesBookValue($request);
     }
 
