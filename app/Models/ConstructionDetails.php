@@ -79,10 +79,10 @@ class ConstructionDetails extends Model
         $offset = ($current_page*$noOfRecord)-$noOfRecord;
         $return = [];
 
-        $return['total_records'] = ConstructionDetails::whereNull('deleted_at')->where('project_id',$request['project_id'])->where('block_id',$request['block_id'])->count('main_description_id');
+        $return['total_records'] = ConstructionDetails::whereNull('deleted_at')->where('project_id',$request['project_id'])->where('block_id',$request['block_id'])->distinct()->count('main_description_id');
 
         $data = ConstructionDetails::join('main_descritpions', 'main_descritpions.id', '=', 'construction_details.main_description_id')
-        ->select('construction_details.main_description_id','main_descritpions.description as description_header',DB::raw('sum(construction_details.total)-sum(construction_details.amount_booked)as total'))->whereNull('construction_details.deleted_at')
+        ->select('construction_details.main_description_id','main_descritpions.description as description_header',DB::raw("CASE WHEN sum(construction_details.total)-sum(construction_details.amount_booked) IS NULL THEN 0 WHEN sum(construction_details.total)-sum(construction_details.amount_booked) <0 THEN 0  ELSE sum(construction_details.total)-sum(construction_details.amount_booked) END as total"))->whereNull('construction_details.deleted_at')
         ->where('construction_details.project_id',$request['project_id'])
         ->where('construction_details.block_id',$request['block_id'])
         ->where('construction_details.apartment_id',$request['apartment_id'])
