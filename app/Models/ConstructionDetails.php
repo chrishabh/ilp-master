@@ -23,7 +23,7 @@ class ConstructionDetails extends Model
         $noOfRecord = $request['no_of_records'] ?? 10;
         $current_page = $request['page_number'] ?? 1;
         $offset = ($current_page*$noOfRecord)-$noOfRecord;
-        $header = $main_response = $final = $sub_final =[];
+        $header = $main_response  =[];
         $sub_header = [];
         $return = [];
         $total = $total_amount_booked = 0;
@@ -36,6 +36,8 @@ class ConstructionDetails extends Model
         ->distinct()->offset($offset)->limit($noOfRecord)->get();
 
         foreach($distinct_main_header as $value){
+            $final = $sub_final = [];
+            $total = $total_amount_booked = 0;
             $final['description_header'] = $value['description_header'];
 
             $distinct_sub_headers = ConstructionDetails::join('sub_descritpions', 'sub_descritpions.id', '=', 'construction_details.sub_description_id')
@@ -50,7 +52,7 @@ class ConstructionDetails extends Model
                 ->where('construction_details.apartment_id',$request['apartment_id'])->where('construction_details.project_id',$request['project_id'])
                 ->where('construction_details.block_id',$request['block_id'])
                 ->where('construction_details.main_description_id',$value['main_description_id'])->where('construction_details.sub_description_id',$sub_header['sub_description_id'])->get();
-                foreach($data as $records){
+                foreach($data->toArray() as $records){
                     $sub_final['records'][] =  $records;
                     $total +=  $records['total'];
                     $total_amount_booked +=  $records['amount_booked'];
@@ -77,7 +79,7 @@ class ConstructionDetails extends Model
         $offset = ($current_page*$noOfRecord)-$noOfRecord;
         $return = [];
 
-        $return['total_records'] = ConstructionDetails::whereNull('deleted_at')->where('project_id',$request['project_id'])->where('block_id',$request['block_id'])->count('id');
+        $return['total_records'] = ConstructionDetails::whereNull('deleted_at')->where('project_id',$request['project_id'])->where('block_id',$request['block_id'])->count('main_description_id');
 
         $data = ConstructionDetails::join('main_descritpions', 'main_descritpions.id', '=', 'construction_details.main_description_id')
         ->select('construction_details.main_description_id','main_descritpions.description as description_header',DB::raw('sum(construction_details.total)-sum(construction_details.amount_booked)as total'))->whereNull('construction_details.deleted_at')
