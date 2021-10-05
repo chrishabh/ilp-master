@@ -57,8 +57,8 @@ class ConstructionDetails extends Model
                 }
 
                 $final['sub_description_records'][] =  $sub_final;
-                $final['total'] = $total;
-                $final['total_amount_booked'] = $total_amount_booked;
+                $final['total'] = roundOff($total);
+                $final['total_amount_booked'] = roundOff($total_amount_booked);
                
             }
 

@@ -164,4 +164,11 @@ if (! function_exists('envparam')) {
         return $url;
     }
 
+    function roundOff($number,$upto =2){
+
+        $number=(double)$number;
+        $return=round($number,$upto);
+        return $return;
+    }
+
 ?>
