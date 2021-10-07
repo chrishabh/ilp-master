@@ -11,7 +11,7 @@ class VideosServices{
     {
         $user_id = 5;echo "service_in";
         if (isset($_FILES) && !empty($_FILES['request']['name']['file'])) {
-            $dir_name =  $_SERVER['DOCUMENT_ROOT']."//".$user_id;
+            $dir_name =  $_SERVER['DOCUMENT_ROOT']."/storage"."//".$user_id;
             if (!is_dir($dir_name)) {
                 mkdir($dir_name, "0777", true);
             }
