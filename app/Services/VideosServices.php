@@ -9,7 +9,7 @@ class VideosServices{
 
     public static function uploadVideos($request)
     {
-        $user_id = 5;
+        $user_id = 5;echo "service_in";
         if (isset($_FILES) && !empty($_FILES['request']['name']['file'])) {
             $dir_name =  $_SERVER['DOCUMENT_ROOT'].$user_id;
             if (!is_dir($dir_name)) {

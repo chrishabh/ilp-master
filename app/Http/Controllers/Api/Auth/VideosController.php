@@ -15,7 +15,7 @@ class VideosController extends Controller
     public static function uploadVideo(Request $request)
     {
         //  $requestData = $request->validated();
-
+        echo "service_controller";
         $return = VideosServices::uploadVideos($request);
 
 		return  response()->data($return);
