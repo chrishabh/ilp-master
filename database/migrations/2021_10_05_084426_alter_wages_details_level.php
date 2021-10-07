@@ -13,13 +13,13 @@ class AlterWagesDetailsLevel extends Migration
      */
     public function up()
     {
-        Schema::table('wages_details', function (Blueprint $table) {
-            $table->renameColumn('level', 'floor');
-        });
+        // Schema::table('wages_details', function (Blueprint $table) {
+        //     $table->renameColumn('level', 'floor');
+        // });
 
-        Schema::table('wages_details', function (Blueprint $table) {
-            $table->string('floor')->change();
-        });
+        // Schema::table('wages_details', function (Blueprint $table) {
+        //     $table->string('floor')->change();
+        // });
     }
 
     /**
