@@ -33,7 +33,7 @@ class VideosServices{
     public static function downloadVideos($request)
     {
         $path = videosDetails::downloadVideos($request->id);
-        return ['download_path'=>env('APP_URL').$path->video_path];
+        return ['download_path'=>env('APP_URL')."/storage"."//".$path->video_path];
     }
 
 }
