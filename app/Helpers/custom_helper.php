@@ -79,11 +79,6 @@ if (! function_exists('envparam')) {
         $xlsxFileName = $file.'_'.date('Y_m_d_H_i_s').'.xlsx';
 
         // Set the Content-Type and Content-Disposition headers.
-        header('Access-Control-Allow-Origin: *');
-        header( 'Access-Control-Allow-Headers: Authorization, Content-Type' );
-        header('Content-Type: application/xlsx');
-        header('Content-Disposition: attachment; filename="' .  $xlsxFileName . '"');
-        header('Content-Description: File Transfer');
         //Open file pointer.
         $fp = fopen('php://output', 'w+');
         $doc = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
@@ -156,6 +151,111 @@ if (! function_exists('envparam')) {
         // $tempImage = tempnam(sys_get_temp_dir(), $xlsxFileName);
         // return $url;
         // fclose($fp);
+        if($uploaded){
+            $url = env('APP_URL').'/storage'.'/'.$xlsxFileName;
+        }else{
+            $url = env('APP_URL');
+        }
+        return $url;
+    }
+
+    function getXlsxFiles($details,$file){
+        //Give our xlsx file a name.
+        $xlsxFileName = $file.'_'.date('Y_m_d_H_i_s').'.xlsx';
+
+        // Set the Content-Type and Content-Disposition headers.
+        //Open file pointer.
+        $fp = fopen('php://output', 'w+');
+        $doc = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
+       
+        $firstLineKeys = false;
+        $uploaded = false;
+        $count = 0;
+        if(!empty($details)){
+            //Loop through the associative array.
+          
+           foreach($details as $key => $records){
+               //if($count>0){
+                $fp = fopen('php://output', 'w+');
+                $sheet = $doc->createSheet();
+                $sheet = $doc->getActiveSheet();
+                $doc->setActiveSheetIndex(1);
+               //}
+            
+            $sheet->setTitle($key);
+            foreach($records as $i => $row){
+
+                if (empty($firstLineKeys)) {
+                    $firstLineKeys = array_keys($row);
+                    $j=1;
+                    foreach($firstLineKeys as $x_value){
+                        $sheet->setCellValueByColumnAndRow($j,1,$x_value);
+                          $j=$j+1;
+                    }
+                }
+                $j=1;
+                foreach($row as $x => $x_value) {
+                    $sheet->setCellValueByColumnAndRow($j,$i+2,$x_value);
+                      $j=$j+1;
+                }
+                  
+                }
+                  // get last row and column for formatting
+                  $last_column = $doc->getActiveSheet()->getHighestColumn();
+                  $last_row = $doc->getActiveSheet()->getHighestRow();
+      
+                  // autosize all columns to content width
+                  for ($k = 'A'; $k <= $last_column; $k++) {
+                      $doc->getActiveSheet()->getColumnDimension($k)->setAutoSize(TRUE);
+                  }
+      
+                  // if $keys, freeze the header row and make it bold
+                  if ($firstLineKeys) {
+                      $doc->getActiveSheet()->freezePane('A2');
+                      $doc->getActiveSheet()->getStyle('A1:' . $last_column . '1')->getFont()->setBold(true);
+                  }
+                  // format all columns as text
+                  $doc->getActiveSheet()->getStyle('A2:' . $last_column . $last_row)
+                      ->getNumberFormat()->setFormatCode(\PhpOffice\PhpSpreadsheet\Style\NumberFormat::FORMAT_TEXT);
+                  
+                //   // Color
+                //   $doc->getActiveSheet()
+                //       ->getStyle('A1:A'.$last_row)
+                //       ->getFill()
+                //       ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+                //       ->getStartColor();
+                //   $doc->getActiveSheet()
+                //       ->getStyle('D1:F'. $last_row)
+                //       ->getFill()
+                //       ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+                //       ->getStartColor();    
+                //   $doc->getActiveSheet()
+                //       ->getStyle('I1')
+                //       ->getFill()
+                //       ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+                //       ->getStartColor();
+                  // write and save the file
+                  //$writer = new Xlsx($doc); 
+                 
+                //   ob_start();
+                //       $writer->save($fp);
+                //     $content = ob_get_contents();
+                //     ob_end_clean();
+                //     $uploaded = Storage::disk('public')->put($xlsxFileName, $content); 
+                //   $url['url'] = public_path().'/'.$xlsxFileName;
+
+                $writer = new PhpOffice\PhpSpreadsheet\Writer\Xlsx($doc);
+              
+
+            }
+            $count++;
+            $writer->save($fp);
+            
+        }
+      
+        $tempImage = tempnam(sys_get_temp_dir(), $xlsxFileName);
+        return response()->download($tempImage, $xlsxFileName);
+        fclose($fp);
         if($uploaded){
             $url = env('APP_URL').'/storage'.'/'.$xlsxFileName;
         }else{
