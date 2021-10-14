@@ -10,10 +10,13 @@ class WagesServices{
     public static function bookWages($request)
     {
         $data = $request->toArray();
-        $data['floor'] = $data['level'];
-        unset($data['level']);
-       WagesDetails::bookWages($data);
-       ConstructionDetails::addWagesBookValue($request);
+        foreach($data['book_wages'] as &$value){
+            $value['floor'] = $value['level'];
+            unset($value['level']);
+           WagesDetails::bookWages($value);
+           ConstructionDetails::addWagesBookValue($value);
+        }
+        
     }
 
     public static function getWages($request)
@@ -31,7 +34,7 @@ class WagesServices{
             $records['Description of work'] = $value['description_work'];
             $records['m2 (or hours)'] = $value['m2_or_hours'];
             $records['Rate'] = $value['rate'];
-            $records['Sum'] = $value['sum'];
+            $records['Booking Amount'] = $value['sum'];
 
             $excel_data [] = $records;
         }
