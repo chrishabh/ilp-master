@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Enums\Constants;
 use Illuminate\Foundation\Http\FormRequest;
 
 class GetConstructionDetailsFormRequest extends FormRequest
@@ -23,13 +24,25 @@ class GetConstructionDetailsFormRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            'no_of_records' => 'required',
-            'page_no' => 'required',
-            'project_id' => 'required',
-            'block_id' => 'required',
-            'apartment_id' => 'required|array',
-        ];
+        if($this->path() == Constants::GET_CONSTRUCTION_DETAILS)
+        {
+            return [
+                'no_of_records' => 'required',
+                'page_no' => 'required',
+                'project_id' => 'required',
+                'block_id' => 'required',
+                'apartment_id' => 'required',
+            ];
+        }else{
+            return [
+                'no_of_records' => 'required',
+                'page_no' => 'required',
+                'project_id' => 'required',
+                'block_id' => 'required',
+                'apartment_id' => 'required|array',
+            ];
+        }
+      
     }
 
     public function messages(){
