@@ -35,8 +35,8 @@ class GetConstructionDetailsFormRequest extends FormRequest
             ];
         }else{
             return [
-                'no_of_records' => 'required',
-                'page_no' => 'required',
+                #'no_of_records' => 'required',
+                #'page_no' => 'required',
                 'project_id' => 'required',
                 'block_id' => 'required',
                 'apartment_id' => 'required|array',

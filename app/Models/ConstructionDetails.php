@@ -74,9 +74,9 @@ class ConstructionDetails extends Model
 
     public static function getDescriptionWork($request)
     {
-        $noOfRecord = $request['no_of_records'] ?? 10;
-        $current_page = $request['page_number'] ?? 1;
-        $offset = ($current_page*$noOfRecord)-$noOfRecord;
+        // $noOfRecord = $request['no_of_records'] ?? 10;
+        // $current_page = $request['page_number'] ?? 1;
+        // $offset = ($current_page*$noOfRecord)-$noOfRecord;
         $return = $final = $response = $sub_final = $records =[];
 
         $return['total_records'] = ConstructionDetails::whereNull('deleted_at')->where('project_id',$request['project_id'])->where('block_id',$request['block_id'])->distinct()->count('main_description_id');
@@ -86,7 +86,7 @@ class ConstructionDetails extends Model
         ->where('construction_details.project_id',$request['project_id'])
         ->where('construction_details.block_id',$request['block_id'])
         ->whereIn('construction_details.apartment_id',$request['apartment_id'])
-        ->groupBy('description_header','construction_details.main_description_id','construction_details.apartment_id')->offset($offset)->limit($noOfRecord)->get();
+        ->groupBy('description_header','construction_details.main_description_id','construction_details.apartment_id')->get();
 
         if(count($data)>0){
             $records = $data->toArray();
