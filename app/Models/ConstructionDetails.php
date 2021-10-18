@@ -77,7 +77,7 @@ class ConstructionDetails extends Model
         $noOfRecord = $request['no_of_records'] ?? 10;
         $current_page = $request['page_number'] ?? 1;
         $offset = ($current_page*$noOfRecord)-$noOfRecord;
-        $return = [];
+        $return = $final = $response = $sub_final = $records =[];
 
         $return['total_records'] = ConstructionDetails::whereNull('deleted_at')->where('project_id',$request['project_id'])->where('block_id',$request['block_id'])->distinct()->count('main_description_id');
 
@@ -88,10 +88,27 @@ class ConstructionDetails extends Model
         ->whereIn('construction_details.apartment_id',$request['apartment_id'])
         ->groupBy('description_header','construction_details.main_description_id','construction_details.apartment_id')->offset($offset)->limit($noOfRecord)->get();
 
-
-        if(count($return)>0){
-            $return['description_work_details'] = $data->toArray();
+        if(count($data)>0){
+            $records = $data->toArray();
         }
+
+        foreach($records as $value){
+            $response[$value['description_header']]['description_header'] = $value['description_header'];
+            $sub_final['main_description_id'] = $value['main_description_id'];
+            $sub_final['apartment_id'] = $value['apartment_id'];
+            $sub_final['remaining_booking_amount'] = $value['remaining_booking_amount'];
+            $response[$value['description_header']]['records'][] =  $sub_final;
+
+        }
+        $main_description = MainDescritpion::getDistinctDescription();
+        foreach($main_description as $value){
+            if(isset($response[$value['description_header']])){
+                $final[] =  $response[$value['description_header']];
+            }
+        }
+
+        $return['description_work_details'] = $final;
+
         return $return;
     }
 
