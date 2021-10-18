@@ -28,7 +28,7 @@ class GetWagesFormRequest extends FormRequest
             'page_no' => 'required',
             'project_id' => 'required',
             'block_id' => 'required',
-            'apartment_id' => 'required'
+            #'apartment_id' => 'required'
         ];
     }
 
