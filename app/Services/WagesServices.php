@@ -35,7 +35,16 @@ class WagesServices{
             $records['m2 (or hours)'] = $value['m2_or_hours'];
             $records['Rate'] = $value['rate'];
             $records['Booking Amount'] = $value['sum'];
-
+            $records['Instruction required (y/n)'] = '';
+            $records['Instruction received (y/n)'] = '';
+            $records['Approved'] = $value['sum'];
+            $records['Difference'] = '';
+            $records['Surveyor comments'] = '';
+            $records['measured'] = $value['sum'];
+            $records['Possible VO'] = '';
+            $records['variation'] = '';
+            $records['non recov'] ='';
+            $records['CHECK'] = '';
             $excel_data [] = $records;
         }
 
