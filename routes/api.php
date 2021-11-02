@@ -27,6 +27,8 @@ use Illuminate\Support\Facades\Route;
                 Route::post('get-apartment-details','ConstructionDetailsController@getApartmentDetails');
                 Route::post('get-construction-details','ConstructionDetailsController@getConstructionDetails');
                 Route::post('get-description-work','ConstructionDetailsController@getDescriptionWork');
+                Route::post('upload-excel','ConstructionDetailsController@uploadExelForConstructionDetails');
+                Route::post('get-pay-to-details','ConstructionDetailsController@getPayToDetails');
 
                 // wages booking
                 Route::post('book-wages','WagesBookingController@bookWages');

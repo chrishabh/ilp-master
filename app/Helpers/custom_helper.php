@@ -264,6 +264,40 @@ if (! function_exists('envparam')) {
         return $url;
     }
 
+    function importExcelToDB($file_path)
+    {
+        if(!empty($file_path)){
+            $excel_data = [];
+            $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
+            $spreadsheet = $reader->load($file_path);
+            $sheet_count = $spreadsheet->getSheetCount();
+
+            for($i=0; $i<$sheet_count; $i++){
+                $sheetData = $spreadsheet->getSheet($i)->toArray();//pp($sheetData);
+                $key = $key1 = $key2 =0;
+                foreach($sheetData as $row_key => $row_data){
+                    foreach($row_data as $cell_key => $cell_data){ 
+                        if(!empty($cell_data) && $cell_data == "Project Name"){
+                            $key = $cell_key;
+                            $project_name = $row_data[++$key];
+                        } elseif (!empty($cell_data) && $cell_data == "Block Number"){
+                            $key1 = $cell_key;
+                            $block_name = $row_data[++$key1];
+                        } elseif (!empty($cell_data) && $cell_data == "Apartment Number"){
+                            $key2 = $cell_key;
+                            $apartment_name = $row_data[++$key2];
+                        }
+                    }
+                }
+            }
+            $keys = (isset($sheetData[0]))?$sheetData[0]:[];
+            unset($sheetData[0]);
+            $excel_data [] = $sheetData;
+            return ['keys'=>$keys,'records'=>$sheetData];
+        }
+       
+    }
+
     function roundOff($number,$upto =2){
 
         $number=(double)$number;

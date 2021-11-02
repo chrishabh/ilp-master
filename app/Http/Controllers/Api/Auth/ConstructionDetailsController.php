@@ -12,7 +12,8 @@ use App\Http\Requests\GetConstructionDetailsFormRequest;
 use App\Http\Requests\GetProjectDetialsFormRequest;
 use App\Http\Requests\UpdateConstructionDetailsFormRequest;
 use App\Services\ConstructionDetailsServices;
-
+use Carbon\Carbon;
+use Illuminate\Http\Request;
 
 class ConstructionDetailsController extends Controller
 {
@@ -99,5 +100,21 @@ class ConstructionDetailsController extends Controller
         $return = ConstructionDetailsServices::addApartmentDetails($request);
 
         return  response()->data(['apartment_id'=>$return]);
+    }
+
+    public function uploadExelForConstructionDetails(Request $request)
+    {
+        //$requestData = $request->validated();
+        $return = ConstructionDetailsServices::uploadExcelForData($request);
+
+        return  response()->data($return);
+    }
+
+    public function getPayToDetails(GetProjectDetialsFormRequest $request)
+    {
+        $requestData = $request->validated();
+        $return = ConstructionDetailsServices::getPayToDetails($request);
+
+        return  response()->data($return);
     }
 }
