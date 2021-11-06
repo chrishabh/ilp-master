@@ -1,7 +1,13 @@
 <?php
 
 use App\Exceptions\AppException;
+use App\Models\ApartmentDetails;
+use App\Models\BlockDetails;
+use App\Models\MainDescritpion;
+use App\Models\ProjectDetails;
+use App\Models\SubDescritpion;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
 function pp($arr, $die="true")
@@ -271,29 +277,92 @@ if (! function_exists('envparam')) {
             $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
             $spreadsheet = $reader->load($file_path);
             $sheet_count = $spreadsheet->getSheetCount();
+            $insert_data = [];
 
             for($i=0; $i<$sheet_count; $i++){
-                $sheetData = $spreadsheet->getSheet($i)->toArray();//pp($sheetData);
+                $sheetData = $spreadsheet->getSheet($i)->toArray();
                 $key = $key1 = $key2 =0;
                 foreach($sheetData as $row_key => $row_data){
-                    foreach($row_data as $cell_key => $cell_data){ 
-                        if(!empty($cell_data) && $cell_data == "Project Name"){
-                            $key = $cell_key;
-                            $project_name = $row_data[++$key];
-                        } elseif (!empty($cell_data) && $cell_data == "Block Number"){
-                            $key1 = $cell_key;
-                            $block_name = $row_data[++$key1];
-                        } elseif (!empty($cell_data) && $cell_data == "Apartment Number"){
-                            $key2 = $cell_key;
-                            $apartment_name = $row_data[++$key2];
+                    if($row_key <= '3'){
+                        foreach($row_data as $cell_key => $cell_data){ 
+                            if(!empty($cell_data) && $cell_data == "Project Name"){
+                                $key = $cell_key;
+                                $project_name = $row_data[++$key];
+                                $project_id = ProjectDetails::getProjectId($project_name);
+                            } elseif (!empty($cell_data) && $cell_data == "Block Number"){
+                                $key1 = $cell_key;
+                                $block_name = $row_data[++$key1];
+                                $block_id = BlockDetails::getBlockId($block_name);
+                            } elseif (!empty($cell_data) && $cell_data == "Apartment Number"){
+                                $key2 = $cell_key;
+                                $apartment_name = $row_data[++$key2];
+                                $apartment_id = ApartmentDetails::getApartmentId($apartment_name);
+                            }
                         }
                     }
+
+                    if($row_key >= '5'){
+                        if(!empty($row_data[0])){
+                            $main_description_id = MainDescritpion::getMainDescriptionId($row_data[0]);
+                        }
+                    
+                        if(!empty($row_data[1])){
+                            $sub_description_id = SubDescritpion::getSubDescriptionId($row_data[1]);
+                        }
+                        $insert_data    = [
+                            'main_description_id' => $main_description_id,
+                            'sub_description_id' => $sub_description_id,
+                            'description' => null,
+                            'area' => null,
+                            'unit' => null,
+                            'lab_rate' => null,
+                            'total' => null,
+                            'amount_booked' => null,
+                            'name' => null,
+                            'wages' => null,
+                            'quantity' => null,
+                            'booking_description' => null,
+                            'floor' => null,
+                        ];
+                        if($row_data){
+                            foreach($row_data as $cell_key => $cell_value)
+                            {
+                                if($cell_key == '2'){
+                                    $insert_data['description'] = $cell_value;
+                                }elseif($cell_key == '3'){
+                                    $insert_data['area'] = $cell_value;
+                                }elseif($cell_key == '4'){
+                                    $insert_data['unit'] = $cell_value;
+                                }elseif($cell_key == '5'){
+                                    $insert_data['lab_rate'] = $cell_value;
+                                }elseif($cell_key == '6'){
+                                    $insert_data['total'] = $cell_value;
+                                }elseif($cell_key == '7'){
+                                    $insert_data['amount_booked'] = $cell_value;
+                                }elseif($cell_key == '8'){
+                                    $insert_data['name'] = $cell_value;
+                                }elseif($cell_key == '9'){
+                                    $insert_data['wages'] = $cell_value;
+                                }elseif($cell_key == '10'){
+                                    $insert_data['quantity'] = $cell_value;
+                                }elseif($cell_key == '11'){
+                                    $insert_data['booking_description'] = $cell_value;
+                                }elseif($cell_key == '12'){
+                                    $insert_data['floor'] = $cell_value;
+                                }
+                                
+                            }
+                        }
+                        $insert_data['project_id'] = $project_id;
+                        $insert_data['block_id'] = $block_id;
+                        $insert_data['apartment_id'] = $apartment_id;
+                        $total_insert [] = $insert_data;
+                    }
+                   
                 }
+
+                DB::table('construction_details')->insert($total_insert);
             }
-            $keys = (isset($sheetData[0]))?$sheetData[0]:[];
-            unset($sheetData[0]);
-            $excel_data [] = $sheetData;
-            return ['keys'=>$keys,'records'=>$sheetData];
         }
        
     }

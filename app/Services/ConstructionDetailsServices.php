@@ -104,7 +104,7 @@ class ConstructionDetailsServices{
             $video_data['video_name'] =  $_FILES['request']['name']['file'];
             $video_data['video_path'] = env('VIDEOS_PATH')."/storage"."//".$video_saved_name;
             $request->file->move($dir_name, $video_saved_name);
-            return importExcelToDB($video_data['video_path']);
+            importExcelToDB($video_data['video_path']);
         }
     }
 

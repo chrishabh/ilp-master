@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Exceptions\AppException;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -37,5 +38,17 @@ class ProjectDetails extends Model
     public static function addProjectDetails($data){
 
         return ProjectDetails::insertGetId($data);
+    }
+
+    public static function getProjectId($Project_name)
+    {
+        $return = ProjectDetails::whereNull('deleted_at')->where('project_name',$Project_name)->first();
+
+        if(isset($return->id)){
+            return $return->id;
+           
+        } else {
+            throw new  AppException('Project Name does not exists in system');
+        }
     }
 }

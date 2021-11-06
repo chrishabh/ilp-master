@@ -107,7 +107,7 @@ class ConstructionDetailsController extends Controller
         //$requestData = $request->validated();
         $return = ConstructionDetailsServices::uploadExcelForData($request);
 
-        return  response()->data($return);
+        return  response()->success();
     }
 
     public function getPayToDetails(GetProjectDetialsFormRequest $request)

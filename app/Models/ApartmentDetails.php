@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Exceptions\AppException;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -39,5 +40,17 @@ class ApartmentDetails extends Model
     public static function addApartmentDetails($data){
 
         return ApartmentDetails::insertGetId($data);
+    }
+
+    public static function getApartmentId($apartment_name)
+    {
+        $return = ApartmentDetails::whereNull('deleted_at')->where('apartment_number',$apartment_name)->first();
+
+        if(isset($return->id)){
+            return $return->id;
+           
+        } else {
+            throw new  AppException('Apartment Number does not exists in system');
+        }
     }
 }

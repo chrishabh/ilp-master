@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Exceptions\AppException;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -37,5 +38,17 @@ class BlockDetails extends Model
     public static function addBlockDetails($data){
 
         return BlockDetails::insertGetId($data);
+    }
+
+    public static function getBlockId($block_name)
+    {
+        $return = BlockDetails::whereNull('deleted_at')->where('block_name',$block_name)->first();
+
+        if(isset($return->id)){
+            return $return->id;
+           
+        } else {
+            throw new  AppException('Block Number does not exists in system');
+        }
     }
 }

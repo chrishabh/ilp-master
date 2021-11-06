@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Exceptions\AppException;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -15,5 +16,17 @@ class MainDescritpion extends Model
             return $return->toArray();
         }
         return [];
+    }
+
+    public static function getMainDescriptionId($header_name)
+    {
+        $return =  MainDescritpion::whereNull('deleted_at')->where('description',$header_name)->first();
+
+        if(isset($return->id)){
+            return $return->id;
+           
+        } else {
+            throw new  AppException('Main Description does not exists in system');
+        }
     }
 }
