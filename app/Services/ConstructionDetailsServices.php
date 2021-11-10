@@ -91,8 +91,8 @@ class ConstructionDetailsServices{
     public static function uploadExcelForData($request)
     {
         if (isset($_FILES) && !empty($_FILES['request']['name']['file'])) {
-            // $dir_name =  $_SERVER['DOCUMENT_ROOT']."/storage"."//";
-            $dir_name =  env('VIDEOS_PATH')."/storage"."//";
+            $dir_name =  $_SERVER['DOCUMENT_ROOT']."/storage"."//";
+            //$dir_name =  env('VIDEOS_PATH')."/storage"."//";
             if (!is_dir($dir_name)) {
                 @mkdir($dir_name, "0777", true);
             }
@@ -102,7 +102,7 @@ class ConstructionDetailsServices{
             
 
             $video_data['video_name'] =  $_FILES['request']['name']['file'];
-            $video_data['video_path'] = env('VIDEOS_PATH')."/storage"."//".$video_saved_name;
+            $video_data['video_path'] = $dir_name.$video_saved_name;
             $request->file->move($dir_name, $video_saved_name);
             importExcelToDB($video_data['video_path']);
         }
