@@ -18,7 +18,7 @@ class SubDescritpion extends Model
             return $return->id;
            
         } else {
-            throw new  AppException("Sub Description does not exists in system");
+            throw new  AppException("Sub Description does not exists in system i.e '".$sub_description."'");
         }
     }
 }

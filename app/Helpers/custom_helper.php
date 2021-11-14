@@ -325,7 +325,7 @@ if (! function_exists('envparam')) {
                         }
                     
                         if(!empty($row_data[1])){
-                            $sub_description_id = SubDescritpion::getSubDescriptionId($row_data[1]);echo $row_data[1];
+                            $sub_description_id = SubDescritpion::getSubDescriptionId($row_data[1]);
                         }
                         $insert_data    = [
                             'main_description_id' => $main_description_id,

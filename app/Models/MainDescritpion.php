@@ -26,7 +26,7 @@ class MainDescritpion extends Model
             return $return->id;
            
         } else {
-            throw new  AppException('Main Description does not exists in system');
+            throw new  AppException("Main Description does not exists in system '".$header_name."'");
         }
     }
 }
