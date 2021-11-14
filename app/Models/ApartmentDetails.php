@@ -50,7 +50,7 @@ class ApartmentDetails extends Model
             return $return->id;
            
         } else {
-            throw new  AppException('Apartment Number does not exists in system');
+            return NULL;
         }
     }
 }

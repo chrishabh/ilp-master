@@ -285,6 +285,7 @@ if (! function_exists('envparam')) {
                 }
                 $sheetData = $spreadsheet->getSheet($i)->toArray();
                 $key = $key1 = $key2 =0;
+                $block_id = 1;
                 foreach($sheetData as $row_key => $row_data){
                     if($row_key <= '3'){
                         foreach($row_data as $cell_key => $cell_data){ 
@@ -296,10 +297,21 @@ if (! function_exists('envparam')) {
                                 $key1 = $cell_key;
                                 $block_name = $row_data[++$key1];
                                 $block_id = BlockDetails::getBlockId($block_name);
+                                if(empty($block_id)){
+                                    $block_id = 1;
+                                }
                             } elseif (!empty($cell_data) && $cell_data == "Apartment Number"){
                                 $key2 = $cell_key;
                                 $apartment_name = $row_data[++$key2];
                                 $apartment_id = ApartmentDetails::getApartmentId($apartment_name);
+                                if(empty($apartment_id)){
+                                    $data = [
+                                        'project_id' => $project_id??1,
+                                        'block_id' => $block_id,
+                                        'apartment_number' => $row_data[++$key2]
+                                    ];
+                                    $apartment_id = ApartmentDetails::addApartmentDetails($data);
+                                }
                             } elseif (!empty($cell_data) && $cell_data == "Floor Number"){
                                 $key3 = $cell_key;
                                 $floor_name = $row_data[++$key3];
@@ -360,7 +372,7 @@ if (! function_exists('envparam')) {
                             }
                         }
                         $insert_data['project_id'] = $project_id;
-                        $insert_data['block_id'] = $block_id??NULL;
+                        $insert_data['block_id'] = $block_id??1;
                         $insert_data['apartment_id'] = $apartment_id;
                         $total_insert [] = $insert_data;
                     }

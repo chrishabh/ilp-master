@@ -48,7 +48,7 @@ class ProjectDetails extends Model
             return $return->id;
            
         } else {
-            throw new  AppException('Project Name does not exists in system');
+            return ProjectDetails::insertGetId(['project_name'=>$Project_name]);
         }
     }
 }
