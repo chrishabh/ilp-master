@@ -303,7 +303,7 @@ if (! function_exists('envparam')) {
                             } elseif (!empty($cell_data) && $cell_data == "Apartment Number"){
                                 $key2 = $cell_key;
                                 $apartment_name = $row_data[++$key2];
-                                $apartment_id = ApartmentDetails::getApartmentId($apartment_name);echo $apartment_name."#-app-#";
+                                $apartment_id = ApartmentDetails::getApartmentId($apartment_name);
                                 if(empty($apartment_id)){
                                     $data = [
                                         'project_id' => $project_id??1,
@@ -325,7 +325,7 @@ if (! function_exists('envparam')) {
                         }
                     
                         if(!empty($row_data[1])){
-                            $sub_description_id = SubDescritpion::getSubDescriptionId($row_data[1]);
+                            $sub_description_id = SubDescritpion::getSubDescriptionId($row_data[1]);echo $row_data[1];
                         }
                         $insert_data    = [
                             'main_description_id' => $main_description_id,
