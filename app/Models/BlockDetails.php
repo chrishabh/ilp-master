@@ -48,7 +48,7 @@ class BlockDetails extends Model
             return $return->id;
            
         } else {
-            throw new  AppException('Block Number does not exists in system');
+            return NULL;
         }
     }
 }

@@ -280,6 +280,9 @@ if (! function_exists('envparam')) {
             $insert_data = [];
 
             for($i=0; $i<$sheet_count; $i++){
+                if($i == 0){
+                    continue;
+                }
                 $sheetData = $spreadsheet->getSheet($i)->toArray();
                 $key = $key1 = $key2 =0;
                 foreach($sheetData as $row_key => $row_data){
@@ -297,11 +300,14 @@ if (! function_exists('envparam')) {
                                 $key2 = $cell_key;
                                 $apartment_name = $row_data[++$key2];
                                 $apartment_id = ApartmentDetails::getApartmentId($apartment_name);
+                            } elseif (!empty($cell_data) && $cell_data == "Floor Number"){
+                                $key3 = $cell_key;
+                                $floor_name = $row_data[++$key3];
                             }
                         }
                     }
 
-                    if($row_key >= '5'){
+                    if($row_key >= '6'){
                         if(!empty($row_data[0])){
                             $main_description_id = MainDescritpion::getMainDescriptionId($row_data[0]);
                         }
@@ -328,33 +334,33 @@ if (! function_exists('envparam')) {
                             foreach($row_data as $cell_key => $cell_value)
                             {
                                 if($cell_key == '2'){
-                                    $insert_data['description'] = $cell_value;
+                                    $insert_data['description'] = (!empty($cell_value))?"'".str_replace("'","''",$cell_value)."'":"NULL";
                                 }elseif($cell_key == '3'){
-                                    $insert_data['area'] = $cell_value;
+                                    $insert_data['area'] = (!empty($cell_value))?"'".$cell_value."'":"NULL";
                                 }elseif($cell_key == '4'){
-                                    $insert_data['unit'] = $cell_value;
+                                    $insert_data['unit'] = (!empty($cell_value))?"'".$cell_value."'":"NULL";
                                 }elseif($cell_key == '5'){
-                                    $insert_data['lab_rate'] = $cell_value;
+                                    $insert_data['lab_rate'] = (!empty($cell_value))?"'".$cell_value."'":"NULL";
                                 }elseif($cell_key == '6'){
-                                    $insert_data['total'] = $cell_value;
+                                    $insert_data['total'] = (!empty($cell_value))?"'".$cell_value."'":"NULL";
                                 }elseif($cell_key == '7'){
-                                    $insert_data['amount_booked'] = $cell_value;
+                                    $insert_data['amount_booked'] = (!empty($cell_value))?"'".$cell_value."'":"NULL";
                                 }elseif($cell_key == '8'){
-                                    $insert_data['name'] = $cell_value;
+                                    $insert_data['name'] = (!empty($cell_value))?"'".$cell_value."'":"NULL";
                                 }elseif($cell_key == '9'){
-                                    $insert_data['wages'] = $cell_value;
+                                    $insert_data['wages'] = (!empty($cell_value))?"'".$cell_value."'":"NULL";
                                 }elseif($cell_key == '10'){
-                                    $insert_data['quantity'] = $cell_value;
+                                    $insert_data['quantity'] = (!empty($cell_value))?"'".$cell_value."'":"NULL";
                                 }elseif($cell_key == '11'){
-                                    $insert_data['booking_description'] = $cell_value;
+                                    $insert_data['booking_description'] = (!empty($cell_value))?"'".str_replace("'","''",$cell_value)."'":"NULL";
                                 }elseif($cell_key == '12'){
-                                    $insert_data['floor'] = $cell_value;
+                                    $insert_data['floor'] = "'".$floor_name."'";
                                 }
                                 
                             }
                         }
                         $insert_data['project_id'] = $project_id;
-                        $insert_data['block_id'] = $block_id;
+                        $insert_data['block_id'] = $block_id??NULL;
                         $insert_data['apartment_id'] = $apartment_id;
                         $total_insert [] = $insert_data;
                     }
