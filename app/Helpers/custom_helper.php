@@ -380,6 +380,7 @@ if (! function_exists('envparam')) {
                 }
 
                 DB::table('construction_details')->insert($total_insert);
+                echo $i."-#$-";
             }
         }
        
