@@ -286,6 +286,7 @@ if (! function_exists('envparam')) {
                 $sheetData = $spreadsheet->getSheet($i)->toArray();
                 $key = $key1 = $key2 =0;
                 $block_id = 1;
+                $total_insert = [];
                 foreach($sheetData as $row_key => $row_data){
                    
                     if($row_key <= '3'){
