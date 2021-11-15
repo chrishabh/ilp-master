@@ -44,11 +44,22 @@ class ProjectDetails extends Model
     {
         $return = ProjectDetails::whereNull('deleted_at')->where('project_name',$Project_name)->first();
 
+        if(isset($return->excel_imported)){
+            if($return->excel_imported){
+                throw new AppException('This Project already exists');
+            }
+        }
+
         if(isset($return->id)){
             return $return->id;
            
         } else {
             return ProjectDetails::insertGetId(['project_name'=>$Project_name]);
         }
+    }
+
+    public static function updatedImportedFlag($Project_id)
+    {
+        return ProjectDetails::where('id',$Project_id)->update(['excel_imported'=>'1']);
     }
 }
