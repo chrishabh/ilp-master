@@ -282,7 +282,7 @@ if (! function_exists('envparam')) {
             for($i=0; $i<$sheet_count; $i++){
                 if($i == 0){
                     continue;
-                }echo $i."-#$-";
+                }
                 $sheetData = $spreadsheet->getSheet($i)->toArray();
                 $key = $key1 = $key2 =0;
                 $block_id = 1;

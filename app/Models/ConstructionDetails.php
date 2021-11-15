@@ -114,7 +114,19 @@ class ConstructionDetails extends Model
 
     public static function addWagesBookValue($request)
     {
-        DB::select("UPDATE construction_details SET amount_booked =  CASE WHEN amount_booked IS NOT NULL THEN amount_booked +".$request['sum']." ELSE ".$request['sum']." END WHERE id = ( SELECT * FROM(Select min(id) as id from construction_details where project_id = ".$request['project_id']." and block_id = ".$request['block_id']." and main_description_id =".$request['main_description_id']." and apartment_id =".$request['apartment_id']." ) as cunst)");
+        $return = ConstructionDetails::whereNull('deleted_at')->where('project_id',$request['project_id'])->where('block_id',$request['block_id'])->where('main_description_id',$request['main_description_id'])->where('apartment_id',$request['apartment_id'])->first();
+
+        if(isset($return['amount_booked']))
+        {
+            if(!empty($return['amount_booked'])){
+                $amount_booked = str_replace("'", "", $return['amount_booked']).",".$request['sum'];
+            }else{
+                $amount_booked = $request['sum'];
+            }
+        }else{
+            $amount_booked = $request['sum'];
+        }
+        DB::select("UPDATE construction_details SET amount_booked = '$amount_booked' WHERE id = ( SELECT * FROM(Select min(id) as id from construction_details where project_id = ".$request['project_id']." and block_id = ".$request['block_id']." and main_description_id =".$request['main_description_id']." and apartment_id =".$request['apartment_id']." ) as cunst)");
     }
 
     public static function addConstructionDetails($request)
