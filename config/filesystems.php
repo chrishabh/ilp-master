@@ -48,6 +48,12 @@ return [
             'url' => env('APP_URL').'/wages_data',
             'visibility' => 'public',
         ],
+        'construction_data' => [
+            'driver' => 'local',
+            'root' => public_path('/construction_data'),
+            'url' => env('APP_URL').'/construction_data',
+            'visibility' => 'public',
+        ],
 
         's3' => [
             'driver' => 's3',

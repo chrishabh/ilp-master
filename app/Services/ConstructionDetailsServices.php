@@ -13,6 +13,7 @@ use App\Models\PayToDetails;
 use App\Models\ProjectDetails;
 use Carbon\Carbon;
 use Illuminate\Console\Application;
+use Illuminate\Support\Facades\Storage;
 
 class ConstructionDetailsServices{
 
@@ -118,7 +119,11 @@ class ConstructionDetailsServices{
 
     public static function getProjectExcelForConstructionDetails($request)
     {
-        $data = ConstructionDetails::getConstructionDetailsForProject($request['project_id']);
+        $details = ConstructionDetails::getConstructionDetailsForProject($request['project_id']);
+        $details = group_by('Apartment',$details);
+        $return['download_url'] = downloadConstructionExcelFile($details,"Project_details");
+        return $return;
+       
     }
 
 }

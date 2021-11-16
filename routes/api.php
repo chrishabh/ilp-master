@@ -43,6 +43,7 @@ use Illuminate\Support\Facades\Route;
                 // Route::post('add-apartment-details','ConstructionDetailsController@addApartmentDetails');
             });
             Route::post('upload-excel','ConstructionDetailsController@uploadExelForConstructionDetails');
+            Route::post('download-construction-details','ConstructionDetailsController@getProjectConstructionDetails');
             
         });
 

@@ -398,6 +398,83 @@ if (! function_exists('envparam')) {
        
     }
 
+    function downloadConstructionExcelFile($details,$file)
+    {
+         //Give our xlsx file a name.
+         $xlsxFileName = $file.'_'.date('Y_m_d_H_i_s').'.xlsx';
+    
+         // Set the Content-Type and Content-Disposition headers.
+         //Open file pointer.
+         $fp = fopen('php://output', 'w+');
+         $doc = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
+         $firstLineKeys = false;
+         $uploaded = false;
+         if(!empty($details)){
+             foreach($details as $key => $records){
+                 //if($count>0){
+                  $fp = fopen('php://output', 'w+');
+                  $sheet = $doc->createSheet();
+                  $sheet = $doc->getActiveSheet();
+                  $doc->setActiveSheetIndex(1);
+                 //}
+              
+                 $sheet->setTitle($key);
+                 //Loop through the associative array.
+                 foreach($records as $i => $row){
+                 if (empty($firstLineKeys)) {
+                     $firstLineKeys = array_keys($row);
+                     $j=1;
+                     foreach($firstLineKeys as $x_value){
+                         $sheet->setCellValueByColumnAndRow($j,1,$x_value);
+                         $j=$j+1;
+                     }
+                 }
+                 $j=1;
+                 foreach($row as $x => $x_value) {
+                     $sheet->setCellValueByColumnAndRow($j,$i+2,$x_value);
+                     $j=$j+1;
+                 }
+                 
+                 }
+                 // get last row and column for formatting
+                 $last_column = $doc->getActiveSheet()->getHighestColumn();
+                 $last_row = $doc->getActiveSheet()->getHighestRow();
+     
+                 // autosize all columns to content width
+                 for ($k = 'A'; $k <= $last_column; $k++) {
+                     $doc->getActiveSheet()->getColumnDimension($k)->setAutoSize(TRUE);
+                 }
+     
+                 // if $keys, freeze the header row and make it bold
+                 if ($firstLineKeys) {
+                     $doc->getActiveSheet()->freezePane('A2');
+                     $doc->getActiveSheet()->getStyle('A1:' . $last_column . '1')->getFont()->setBold(true);
+                 }
+                 // format all columns as text
+                 $doc->getActiveSheet()->getStyle('A2:' . $last_column . $last_row)
+                     ->getNumberFormat()->setFormatCode(\PhpOffice\PhpSpreadsheet\Style\NumberFormat::FORMAT_TEXT);
+                 
+                 $writer = new PhpOffice\PhpSpreadsheet\Writer\Xlsx($doc);
+                 //$writer->save($fp);
+             }
+               ob_start();
+                   $writer->save($fp);
+                 $content = ob_get_contents();
+                 ob_end_clean();
+                 $uploaded = Storage::disk('construction_data')->put($xlsxFileName, $content); 
+             //   $url['url'] = public_path().'/'.$xlsxFileName;
+         }
+         // $tempImage = tempnam(sys_get_temp_dir(), $xlsxFileName);
+         // return $url;
+         // fclose($fp);
+         if($uploaded){
+             $url = env('APP_URL').'/ipl/public/construction_data'.'/'.$xlsxFileName;
+         }else{
+             $url = env('APP_URL');
+         }
+         return $url;
+    }
+
     function isEmptyArray($data = []){
         foreach($data as $value){
             if(!empty($value)){
