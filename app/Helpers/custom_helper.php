@@ -191,7 +191,7 @@ if (! function_exists('envparam')) {
             $sheet->setTitle($key);
             foreach($records as $i => $row){
 
-                if (empty($firstLineKeys)) {
+                if ($i==0) {
                     $firstLineKeys = array_keys($row);
                     $j=1;
                     foreach($firstLineKeys as $x_value){
@@ -405,23 +405,29 @@ if (! function_exists('envparam')) {
     
          // Set the Content-Type and Content-Disposition headers.
          //Open file pointer.
-         $fp = fopen('php://output', 'w+');
+         //$fp = fopen('php://output', 'w+');
          $doc = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
          $firstLineKeys = false;
          $uploaded = false;
+         $count = 0;
          if(!empty($details)){
              foreach($details as $key => $records){
-                 //if($count>0){
+                 
                   $fp = fopen('php://output', 'w+');
-                  $sheet = $doc->createSheet();
+                  //if($count>0){
+                    $doc->setActiveSheetIndex($count);
+                    $sheet = $doc->createSheet();
+                  //}
                   $sheet = $doc->getActiveSheet();
-                  $doc->setActiveSheetIndex(1);
+                  
+                   
                  //}
               
                  $sheet->setTitle($key);
                  //Loop through the associative array.
                  foreach($records as $i => $row){
-                 if (empty($firstLineKeys)) {
+                     unset($row['Apartment']);
+                 if ($i ==0) {
                      $firstLineKeys = array_keys($row);
                      $j=1;
                      foreach($firstLineKeys as $x_value){
@@ -437,8 +443,8 @@ if (! function_exists('envparam')) {
                  
                  }
                  // get last row and column for formatting
-                 $last_column = $doc->getActiveSheet()->getHighestColumn();
-                 $last_row = $doc->getActiveSheet()->getHighestRow();
+                 $last_column = $doc->setActiveSheetIndex($count)->getHighestColumn();
+                 $last_row = $doc->setActiveSheetIndex($count)->getHighestRow();
      
                  // autosize all columns to content width
                  for ($k = 'A'; $k <= $last_column; $k++) {
@@ -446,7 +452,7 @@ if (! function_exists('envparam')) {
                  }
      
                  // if $keys, freeze the header row and make it bold
-                 if ($firstLineKeys) {
+                 if (!empty($firstLineKeys)) {
                      $doc->getActiveSheet()->freezePane('A2');
                      $doc->getActiveSheet()->getStyle('A1:' . $last_column . '1')->getFont()->setBold(true);
                  }
@@ -456,11 +462,13 @@ if (! function_exists('envparam')) {
                  
                  $writer = new PhpOffice\PhpSpreadsheet\Writer\Xlsx($doc);
                  //$writer->save($fp);
+                 ob_start();
+                 $writer->save($fp);
+               $content = ob_get_contents();
+               ob_end_clean();
+               $count++;
              }
-               ob_start();
-                   $writer->save($fp);
-                 $content = ob_get_contents();
-                 ob_end_clean();
+              
                  $uploaded = Storage::disk('construction_data')->put($xlsxFileName, $content); 
              //   $url['url'] = public_path().'/'.$xlsxFileName;
          }
