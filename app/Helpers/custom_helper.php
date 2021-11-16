@@ -153,7 +153,7 @@ if (! function_exists('envparam')) {
     			ob_end_clean();
 				$uploaded = Storage::disk('wages_data')->put($xlsxFileName, $content); 
 			//   $url['url'] = public_path().'/'.$xlsxFileName;
-        }
+        }echo public_path('/wages_data');
         // $tempImage = tempnam(sys_get_temp_dir(), $xlsxFileName);
         // return $url;
         // fclose($fp);
