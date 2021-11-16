@@ -55,8 +55,8 @@ class ConstructionDetails extends Model
                 foreach($data->toArray() as $records){
                     $sub_final['records'][] =  $records;
                     $total +=  $records['total'];
-                    $res = explode(',',$records['amount_booked']);
-                    $total_amount_booked +=  array_sum($res);;
+                    $res = explode(',',str_replace("'", "", $records['amount_booked']));
+                    $total_amount_booked +=  array_sum($res);
                 }
 
                 $final['sub_description_records'][] =  $sub_final;
