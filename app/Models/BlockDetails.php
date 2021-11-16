@@ -51,4 +51,9 @@ class BlockDetails extends Model
             return NULL;
         }
     }
+
+    public static function getBlockName($block_id)
+    {
+        return BlockDetails::whereNull('deleted_at')->where('id',$block_id)->first();
+    }
 }

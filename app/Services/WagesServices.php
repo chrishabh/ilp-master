@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\BlockDetails;
 use App\Models\ConstructionDetails;
 use App\Models\WagesDetails;
 
@@ -29,7 +30,7 @@ class WagesServices{
             $records['Pay To:'] = $value['pay_to'];
             $records['Trade'] = $value['trade'];
             $records['Level'] = $value['level'];
-            $records['Block'] = $value['block_id'];
+            $records['Block'] = BlockDetails::getBlockName($value['block_id'])->block_name;
             $records['Plot/room'] = $value['plot_or_room'];
             $records['Description of work'] = $value['description_work'];
             $records['m2 (or hours)'] = $value['m2_or_hours'];
