@@ -184,4 +184,19 @@ class ConstructionDetails extends Model
     {
         return ConstructionDetails::WhereNull('deleted_at')->where('id',$id)->update($data);
     }
+
+    public static function getConstructionDetailsForProject($project_id)
+    {
+        $return = ConstructionDetails::join('main_descritpions', 'main_descritpions.id', '=', 'construction_details.main_description_id')
+        ->join('sub_descritpions', 'sub_descritpions.id', '=', 'construction_details.sub_description_id')
+        ->join('apartment_details', 'apartment_details.id', '=', 'construction_details.apartment_id')
+        ->select('main_descritpions.description as ','')
+        ->WhereNull('construction_details.deleted_at')->where('construction_details.project_id',$project_id)->get();
+
+        if(count($return)>0){
+            return $return->toArray();
+        }
+
+        return [];
+    }
 }

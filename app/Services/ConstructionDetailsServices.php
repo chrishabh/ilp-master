@@ -116,4 +116,9 @@ class ConstructionDetailsServices{
         return  $return;
     }
 
+    public static function getProjectExcelForConstructionDetails($request)
+    {
+        $data = ConstructionDetails::getConstructionDetailsForProject($request['project_id']);
+    }
+
 }

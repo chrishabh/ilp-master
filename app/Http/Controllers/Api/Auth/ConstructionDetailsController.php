@@ -9,6 +9,7 @@ use App\Http\Requests\AddProjectDetailsFormRequest;
 use App\Http\Requests\GetApartmentFormRequest;
 use App\Http\Requests\GetBlockDetailsFormRequest;
 use App\Http\Requests\GetConstructionDetailsFormRequest;
+use App\Http\Requests\GetProjectConstructionDetailsFormRequest;
 use App\Http\Requests\GetProjectDetialsFormRequest;
 use App\Http\Requests\UpdateConstructionDetailsFormRequest;
 use App\Services\ConstructionDetailsServices;
@@ -114,6 +115,14 @@ class ConstructionDetailsController extends Controller
     {
         $requestData = $request->validated();
         $return = ConstructionDetailsServices::getPayToDetails($request);
+
+        return  response()->data($return);
+    }
+
+    public static function getProjectConstructionDetails(GetProjectConstructionDetailsFormRequest $request)
+    {
+        $requestData = $request->validated();
+        $return = ConstructionDetailsServices::getProjectExcelForConstructionDetails($request);
 
         return  response()->data($return);
     }
