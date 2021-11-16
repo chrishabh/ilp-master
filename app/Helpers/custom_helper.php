@@ -362,7 +362,7 @@ if (! function_exists('envparam')) {
                                 }elseif($cell_key == '6'){
                                     $insert_data['total'] = (!empty($cell_value))?ltrim($cell_value,'£'):NULL;
                                 }elseif($cell_key == '7'){
-                                    $insert_data['amount_booked'] = (!empty($cell_value))?"'".$cell_value."'":NULL;
+                                    $insert_data['amount_booked'] = (!empty($cell_value))?"'".ltrim($cell_value,'£')."'":NULL;
                                 }elseif($cell_key == '8'){
                                     $insert_data['name'] = (!empty($cell_value))?"'".$cell_value."'":NULL;
                                 }elseif($cell_key == '9'){
