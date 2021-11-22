@@ -65,6 +65,6 @@ class ProjectDetails extends Model
 
     public static function deleteProject($Project_id)
     {
-        return ProjectDetails::where('id',$Project_id)->update(['deleted'=>date('Y-m-d')]);
+        return ProjectDetails::where('id',$Project_id)->update(['deleted_at'=>date('Y-m-d')]);
     }
 }
