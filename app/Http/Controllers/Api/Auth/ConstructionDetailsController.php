@@ -79,30 +79,6 @@ class ConstructionDetailsController extends Controller
         }
     }
 
-    public function addProjectDetails(AddProjectDetailsFormRequest $request)
-    {
-        $requestData = $request->validated();
-        $return = ConstructionDetailsServices::addProjectDetails($request);
-
-        return  response()->data(['project_id'=>$return]);
-    }
-
-    public function addBlockDetails(AddProjectDetailsFormRequest $request)
-    {
-        $requestData = $request->validated();
-        $return = ConstructionDetailsServices::addBlockDetails($request);
-
-        return  response()->data(['block_id'=>$return]);
-    }
-
-    public function addApartmentDetails(AddProjectDetailsFormRequest $request)
-    {
-        $requestData = $request->validated();
-        $return = ConstructionDetailsServices::addApartmentDetails($request);
-
-        return  response()->data(['apartment_id'=>$return]);
-    }
-
     public function uploadExelForConstructionDetails(Request $request)
     {
         //$requestData = $request->validated();
@@ -125,5 +101,13 @@ class ConstructionDetailsController extends Controller
         $return = ConstructionDetailsServices::getProjectExcelForConstructionDetails($request);
 
         return  response()->data($return);
+    }
+
+    public static function deleteProject(GetProjectConstructionDetailsFormRequest $request)
+    {
+        $requestData = $request->validated();
+        ConstructionDetailsServices::deleteProject($request);
+
+        return  response()->success();
     }
 }

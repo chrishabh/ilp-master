@@ -62,4 +62,9 @@ class ProjectDetails extends Model
     {
         return ProjectDetails::where('id',$Project_id)->update(['excel_imported'=>'1']);
     }
+
+    public static function deleteProject($Project_id)
+    {
+        return ProjectDetails::where('id',$Project_id)->update(['deteled_at'=>date('Y-m-d')]);
+    }
 }

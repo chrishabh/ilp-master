@@ -27,7 +27,7 @@ use Illuminate\Support\Facades\Route;
                 Route::post('get-apartment-details','ConstructionDetailsController@getApartmentDetails');
                 Route::post('get-construction-details','ConstructionDetailsController@getConstructionDetails');
                 Route::post('get-description-work','ConstructionDetailsController@getDescriptionWork');
-                
+                Route::post('delete-project','ConstructionDetailsController@deleteProject');
                 Route::post('get-pay-to-details','ConstructionDetailsController@getPayToDetails');
 
                 // wages booking
@@ -36,11 +36,6 @@ use Illuminate\Support\Facades\Route;
                 Route::post('get-wages-excel','WagesBookingController@getWagesExcel');
                 Route::post('upload-videos','VideosController@uploadVideo');
                 Route::post('download-videos','VideosController@downloadVideo');
-                // Route::post('add-construction-details','ConstructionDetailsController@addConstructionDetails');
-                // Route::post('update-construction-details','ConstructionDetailsController@updateConstructionDetails');
-                // Route::post('add-project-details','ConstructionDetailsController@addProjectDetails');
-                // Route::post('add-block-details','ConstructionDetailsController@addBlockDetails');
-                // Route::post('add-apartment-details','ConstructionDetailsController@addApartmentDetails');
             });
             Route::post('upload-excel','ConstructionDetailsController@uploadExelForConstructionDetails');
             Route::post('download-construction-details','ConstructionDetailsController@getProjectConstructionDetails');
