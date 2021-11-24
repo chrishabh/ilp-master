@@ -129,6 +129,7 @@ class ConstructionDetailsServices{
     public static function deleteProject($request)
     {
         ProjectDetails::deleteProject($request['project_id']);
+        ConstructionDetails::deleteProjectConstructionDetails($request['project_id']);
     }
 
 }

@@ -200,4 +200,9 @@ class ConstructionDetails extends Model
 
         return [];
     }
+
+    public static function deleteProjectConstructionDetails($Project_id)
+    {
+        return ConstructionDetails::where('project_id',$Project_id)->update(['deleted_at'=>date('Y-m-d')]);
+    }
 }
