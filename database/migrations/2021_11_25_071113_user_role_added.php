@@ -14,6 +14,9 @@ class UserRoleAdded extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
+            $table->renameColumn('email_verified_at','user_role');
+        });
+        Schema::table('users', function (Blueprint $table) {
             $table->string('user_role')->nullable()->change();
         });
     }
