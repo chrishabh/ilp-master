@@ -29,6 +29,7 @@ use Illuminate\Support\Facades\Route;
                 Route::post('get-description-work','ConstructionDetailsController@getDescriptionWork');
                 Route::post('delete-project','ConstructionDetailsController@deleteProject');
                 Route::post('get-pay-to-details','ConstructionDetailsController@getPayToDetails');
+                Route::post('edit-construction-details','ConstructionDetailsController@editConstructionDetails');
 
                 // wages booking
                 Route::post('book-wages','WagesBookingController@bookWages');

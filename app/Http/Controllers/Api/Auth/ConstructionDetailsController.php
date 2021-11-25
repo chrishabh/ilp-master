@@ -6,6 +6,7 @@ use App\Exceptions\AppException;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AddConstructionDetailsFormRequest;
 use App\Http\Requests\AddProjectDetailsFormRequest;
+use App\Http\Requests\EditConstructionDetailsFormRequest;
 use App\Http\Requests\GetApartmentFormRequest;
 use App\Http\Requests\GetBlockDetailsFormRequest;
 use App\Http\Requests\GetConstructionDetailsFormRequest;
@@ -107,6 +108,14 @@ class ConstructionDetailsController extends Controller
     {
         $requestData = $request->validated();
         ConstructionDetailsServices::deleteProject($request);
+
+        return  response()->success();
+    }
+
+    public static function editConstructionDetails(EditConstructionDetailsFormRequest $request)
+    {
+        $requestData = $request->validated();
+        ConstructionDetailsServices::editConstructionDetails($request);
 
         return  response()->success();
     }

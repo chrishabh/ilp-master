@@ -132,4 +132,21 @@ class ConstructionDetailsServices{
         ConstructionDetails::deleteProjectConstructionDetails($request['project_id']);
     }
 
+    public static function editConstructionDetails($request)
+    {
+       $data = [
+        'project_id' => $request['project_id'],
+        'block_id' => $request['block_id'],
+        'apartment_id' => $request['apartment_id'],
+        'main_description_id' => $request['main_description_id'],
+        'sub_description_id' => $request['sub_description_id'],
+        'description' =>  $request['description'],
+        'area' => $request['area'],
+        'lab_rate' => $request['lab_rate'],
+        'unit' =>  $request['unit'],
+       ];
+
+       ConstructionDetails::updateConstructionDetails($request['id'],$data);
+    }
+
 }
