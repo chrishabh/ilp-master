@@ -14,7 +14,7 @@ class AutoIncrimentFields extends Migration
     public function up()
     {
         Schema::table('pay_to_details', function (Blueprint $table) {
-            $table->increments('id')->change();
+            // $table->increments('id')->change();
         });
     }
 
