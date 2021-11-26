@@ -35,10 +35,10 @@ class WagesServices{
             $records['Description of work'] = $value['description_work'];
             $records['m2 (or hours)'] = $value['m2_or_hours'];
             $records['Rate'] = $value['rate'];
-            $records['Booking Amount'] = $value['sum'];
+            $records['Booking Amount'] = "£".$value['sum'];
             $records['Instruction required (y/n)'] = '';
             $records['Instruction received (y/n)'] = '';
-            $records['Approved'] = $value['sum'];
+            $records['Approved'] = "£".$value['sum'];
             $records['Difference'] = '';
             $records['Surveyor comments'] = '';
             $records['measured'] = $value['sum'];
