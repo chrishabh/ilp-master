@@ -126,6 +126,9 @@ if (! function_exists('envparam')) {
               // format all columns as text
               $doc->getActiveSheet()->getStyle('A2:' . $last_column . $last_row)
                   ->getNumberFormat()->setFormatCode(\PhpOffice\PhpSpreadsheet\Style\NumberFormat::FORMAT_TEXT);
+
+                $doc->getActiveSheet()->getStyle('I1:I'.$last_row)->getAlignment()->setHorizontal('center');
+                $doc->getActiveSheet()->getStyle('L1:L'.$last_row)->getAlignment()->setHorizontal('center');
               
             //   // Color
             //   $doc->getActiveSheet()
