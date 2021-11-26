@@ -53,4 +53,9 @@ class ApartmentDetails extends Model
             return NULL;
         }
     }
+
+    public static function  deleteApartmentByProject($project_id)
+    {
+        return ApartmentDetails::where('project_id',$project_id)->update(['deleted_at' =>date('Y-m-d')]);
+    }
 }

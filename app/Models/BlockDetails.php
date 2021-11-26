@@ -22,7 +22,7 @@ class BlockDetails extends Model
         $current_page = $request['page_number'] ?? 1;
         $offset = ($current_page*$noOfRecord)-$noOfRecord;
 
-        $data = BlockDetails::whereNull('deleted_at')->where('project_id',$request['project_id'])->offset($offset)->limit($noOfRecord)->get();
+        $data = BlockDetails::whereNull('deleted_at')->whereNull('project_id')->ORwhere('project_id',$request['project_id'])->offset($offset)->limit($noOfRecord)->get();
 
         if(count($data)>0){
             return $data->toArray();
@@ -55,5 +55,15 @@ class BlockDetails extends Model
     public static function getBlockName($block_id)
     {
         return BlockDetails::whereNull('deleted_at')->where('id',$block_id)->first();
+    }
+
+    public static function deleteBlockByProject($project_id)
+    {
+        return BlockDetails::where('project_id',$project_id)->update(['deleted_at' =>date('Y-m-d')]);
+    }
+
+    public static function insertProjectForExcelImport($data)
+    {
+        return BlockDetails::insertGetId($data);
     }
 }
