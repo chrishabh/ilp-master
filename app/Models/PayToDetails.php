@@ -27,4 +27,9 @@ class PayToDetails extends Model
     {
         return PayToDetails::whereNull('deleted_at')->count('id');
     }
+
+    public static function addPayToDetails($data)
+    {
+        return PayToDetails::insertGetId($data);
+    }
 }

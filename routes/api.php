@@ -35,8 +35,10 @@ use Illuminate\Support\Facades\Route;
                 Route::post('book-wages','WagesBookingController@bookWages');
                 Route::post('get-wages','WagesBookingController@getWages');
                 Route::post('get-wages-excel','WagesBookingController@getWagesExcel');
-                Route::post('upload-videos','VideosController@uploadVideo');
-                Route::post('download-videos','VideosController@downloadVideo');
+                // Route::post('upload-videos','VideosController@uploadVideo');
+                // Route::post('download-videos','VideosController@downloadVideo');
+                Route::post('add-pay-details','WagesBookingController@getWages');
+
             //});
             Route::post('upload-excel','ConstructionDetailsController@uploadExelForConstructionDetails');
             Route::post('download-construction-details','ConstructionDetailsController@getProjectConstructionDetails');

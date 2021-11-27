@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\AddPayToDetailsFormRequest;
 use App\Http\Requests\BookWagesFormRequest;
 use App\Http\Requests\GetBlockDetailsFormRequest;
 use App\Http\Requests\GetWagesFormRequest;
@@ -34,5 +35,13 @@ class WagesBookingController extends Controller
         $data =  WagesServices::getWagesExcel($request);
 
         return  response()->data($data);
+    }
+
+    public static function addPayTODetails(AddPayToDetailsFormRequest $request)
+    {
+        $requestData = $request->validated();
+        $data =  WagesServices::addPayToDetails($request);
+
+        return  response()->data(['id'=>$data]);
     }
 }

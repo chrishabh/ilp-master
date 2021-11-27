@@ -129,10 +129,14 @@ if (! function_exists('envparam')) {
 
                 $doc->getActiveSheet()->getStyle('I1:I'.$last_row)->getAlignment()->setHorizontal('center');
                 $doc->getActiveSheet()->getStyle('L1:L'.$last_row)->getAlignment()->setHorizontal('center');
-                $doc->getActiveSheet()->getColumnDimension('H')->setWidth('100');
-                $doc->getActiveSheet()->getColumnDimension('J')->setWidth('3');
-                $doc->getActiveSheet()->getColumnDimension('K')->setWidth('3');
-                $doc->getActiveSheet()->getColumnDimension('L')->setWidth('3');
+                $doc->getActiveSheet()->getColumnDimension('H')->setAutoSize(FALSE);
+                $doc->getActiveSheet()->getColumnDimension('H')->setWidth('16');
+                $doc->getActiveSheet()->getColumnDimension('J')->setAutoSize(FALSE);
+                $doc->getActiveSheet()->getColumnDimension('J')->setWidth('16');
+                $doc->getActiveSheet()->getColumnDimension('K')->setAutoSize(FALSE);
+                $doc->getActiveSheet()->getColumnDimension('K')->setWidth('16');
+                $doc->getActiveSheet()->getColumnDimension('L')->setAutoSize(FALSE);
+                $doc->getActiveSheet()->getColumnDimension('L')->setWidth('6');
                 
             //   // Color
             $doc->getActiveSheet()

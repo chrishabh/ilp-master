@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\BlockDetails;
 use App\Models\ConstructionDetails;
+use App\Models\PayToDetails;
 use App\Models\WagesDetails;
 
 class WagesServices{
@@ -85,6 +86,11 @@ class WagesServices{
         $return['excel_url'] = getXlsxFiles($excel_data, 'Wages_Booking');
 
         return $return;
+    }
+
+    public static function addPayToDetails($request)
+    {
+       return PayToDetails::addPayToDetails($request);
     }
 
 }
