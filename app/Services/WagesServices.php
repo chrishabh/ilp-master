@@ -34,7 +34,7 @@ class WagesServices{
             $records['Plot/room'] = $value['plot_or_room'];     // Coloumn E
             $records['Description of work'] = $value['description_work'];       // Coloumn F
             $records['m2 (or hours)'] = $value['m2_or_hours'];      // Coloumn G
-            $records['Rate'] = roundOff($value['rate']);      // Coloumn H
+            $records['Rate'] = $value['rate'];      // Coloumn H
             $records['Booking Amount'] = "£".roundOff($value['sum']);     // Coloumn I
             $records['Instruction required (y/n)'] = '';        // Coloumn J
             $records['Instruction received (y/n)'] = '';        // Coloumn K
