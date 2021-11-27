@@ -129,23 +129,137 @@ if (! function_exists('envparam')) {
 
                 $doc->getActiveSheet()->getStyle('I1:I'.$last_row)->getAlignment()->setHorizontal('center');
                 $doc->getActiveSheet()->getStyle('L1:L'.$last_row)->getAlignment()->setHorizontal('center');
-              
+                $doc->getActiveSheet()->getColumnDimension('H')->setWidth(4.42);
+                $doc->getActiveSheet()->getColumnDimension('J')->setWidth(4.42);
+                $doc->getActiveSheet()->getColumnDimension('K')->setWidth(4.42);
+                $doc->getActiveSheet()->getColumnDimension('L')->setWidth(4.42);
             //   // Color
-            //   $doc->getActiveSheet()
-            //       ->getStyle('A1:A'.$last_row)
-            //       ->getFill()
-            //       ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
-            //       ->getStartColor();
-            //   $doc->getActiveSheet()
-            //       ->getStyle('D1:F'. $last_row)
-            //       ->getFill()
-            //       ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
-            //       ->getStartColor();    
-            //   $doc->getActiveSheet()
-            //       ->getStyle('I1')
-            //       ->getFill()
-            //       ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
-            //       ->getStartColor();
+            $doc->getActiveSheet()
+                ->getStyle('A2:A'.$last_row)
+                ->getFill()
+                ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+                ->getStartColor()
+                ->setARGB('#437C17');
+            $doc->getActiveSheet()
+                ->getStyle('B2:B'.$last_row)
+                ->getFill()
+                ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+                ->getStartColor()
+                ->setARGB('#437C17');
+            $doc->getActiveSheet()
+                ->getStyle('B2:B'.$last_row)
+                ->getFill()
+                ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+                ->getStartColor()
+                ->setARGB('#437C17');
+            $doc->getActiveSheet()
+                ->getStyle('C2:C'.$last_row)
+                ->getFill()
+                ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+                ->getStartColor()
+                ->setARGB('#437C17');
+            $doc->getActiveSheet()
+                ->getStyle('D2:D'. $last_row)
+                ->getFill()
+                ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+                ->getStartColor()
+                ->setARGB('#437C17');
+            $doc->getActiveSheet()
+                ->getStyle('E2:E'. $last_row)
+                ->getFill()
+                ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+                ->getStartColor()
+                ->setARGB('#437C17');
+            $doc->getActiveSheet()
+                ->getStyle('F2:F'. $last_row)
+                ->getFill()
+                ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+                ->getStartColor()
+                ->setARGB('#437C17');
+            $doc->getActiveSheet()
+                ->getStyle('G2:G'. $last_row)
+                ->getFill()
+                ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+                ->getStartColor()
+                ->setARGB('#437C17');
+            $doc->getActiveSheet()
+                ->getStyle('H2:H'. $last_row)
+                ->getFill()
+                ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+                ->getStartColor()
+                ->setARGB('#437C17');
+            $doc->getActiveSheet()
+                ->getStyle('I2:I'. $last_row)
+                ->getFill()
+                ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+                ->getStartColor()
+                ->setARGB('#437C17');
+            $doc->getActiveSheet()
+                ->getStyle('J2:J'. $last_row)
+                ->getFill()
+                ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+                ->getStartColor()
+                ->setARGB('#437C17');
+            $doc->getActiveSheet()
+                ->getStyle('K2:K'. $last_row)
+                ->getFill()
+                ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+                ->getStartColor()
+                ->setARGB('#437C17');
+            $doc->getActiveSheet()
+                ->getStyle('L2:L'. $last_row)
+                ->getFill()
+                ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+                ->getStartColor()
+                ->setARGB('#437C17');
+            $doc->getActiveSheet()
+                ->getStyle('M2:M'. $last_row)
+                ->getFill()
+                ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+                ->getStartColor()
+                ->setARGB('#437C17');
+            $doc->getActiveSheet()
+                ->getStyle('N2:N'. $last_row)
+                ->getFill()
+                ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+                ->getStartColor()
+                ->setARGB('#437C17');
+            $doc->getActiveSheet()
+                ->getStyle('O2:O'. $last_row)
+                ->getFill()
+                ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+                ->getStartColor()
+                ->setARGB('#437C17');
+            $doc->getActiveSheet()
+                ->getStyle('P2:P'. $last_row)
+                ->getFill()
+                ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+                ->getStartColor()
+                ->setARGB('#437C17');
+            $doc->getActiveSheet()
+                ->getStyle('Q2:Q'. $last_row)
+                ->getFill()
+                ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+                ->getStartColor()
+                ->setARGB('#437C17');
+            $doc->getActiveSheet()
+                ->getStyle('R2:R'. $last_row)
+                ->getFill()
+                ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+                ->getStartColor()
+                ->setARGB('#437C17');
+            $doc->getActiveSheet()
+                ->getStyle('S2:S'. $last_row)
+                ->getFill()
+                ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+                ->getStartColor()
+                ->setARGB('#437C17');
+            $doc->getActiveSheet()
+                ->getStyle('T2:T'. $last_row)
+                ->getFill()
+                ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+                ->getStartColor()
+                ->setARGB('#437C17');
               // write and save the file
               //$writer = new Xlsx($doc); 
               $writer = new PhpOffice\PhpSpreadsheet\Writer\Xlsx($doc);

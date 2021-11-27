@@ -27,25 +27,26 @@ class WagesServices{
         $records = $excel_data = [];
         foreach($return['wages_details'] as $value){
 
-            $records['Pay To:'] = $value['pay_to'];
-            $records['Trade'] = $value['trade'];
-            $records['Level'] = $value['level'];
-            $records['Block'] = BlockDetails::getBlockName($value['block_id'])->block_name;
-            $records['Plot/room'] = $value['plot_or_room'];
-            $records['Description of work'] = $value['description_work'];
-            $records['m2 (or hours)'] = $value['m2_or_hours'];
-            $records['Rate'] = $value['rate'];
-            $records['Booking Amount'] = "£".$value['sum'];
-            $records['Instruction required (y/n)'] = '';
-            $records['Instruction received (y/n)'] = '';
-            $records['Approved'] = "£".$value['sum'];
-            $records['Difference'] = '';
-            $records['Surveyor comments'] = '';
-            $records['measured'] = $value['sum'];
-            $records['Possible VO'] = '';
-            $records['variation'] = '';
-            $records['non recov'] ='';
-            $records['CHECK'] = '';
+            $records['Pay To:'] = $value['pay_to'];     // Coloumn A
+            $records['Trade'] = $value['trade'];    // Coloumn B
+            $records['Level'] = $value['level'];    // Coloumn C
+            $records['Block'] = BlockDetails::getBlockName($value['block_id'])->block_name;     // Coloumn D
+            $records['Plot/room'] = $value['plot_or_room'];     // Coloumn E
+            $records['Description of work'] = $value['description_work'];       // Coloumn F
+            $records['m2 (or hours)'] = $value['m2_or_hours'];      // Coloumn G
+            $records['Rate'] = roundOff($value['rate']);      // Coloumn H
+            $records['Booking Amount'] = "£".roundOff($value['sum']);     // Coloumn I
+            $records['Instruction required (y/n)'] = '';        // Coloumn J
+            $records['Instruction received (y/n)'] = '';        // Coloumn K
+            $records[' '] = '';         // Coloumn L
+            $records['Approved'] = "£".roundOff($value['sum']);       // Coloumn M
+            $records['Difference'] = '';        // Coloumn N
+            $records['Surveyor comments'] = '';     // Coloumn O
+            $records['measured'] = roundOff($value['sum']);       // Coloumn P
+            $records['Possible VO'] = '';       // Coloumn Q
+            $records['variation'] = '';     // Coloumn R
+            $records['non recov'] ='';      // Coloumn S
+            $records['CHECK'] = '';     // Coloumn T
             $excel_data [] = $records;
         }
 
