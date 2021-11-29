@@ -122,12 +122,20 @@ class ConstructionDetailsServices{
         $details = ConstructionDetails::getConstructionDetailsForProject($request['project_id']);
         foreach($details as &$value)
         {
+            $array_value = [];
             if(!empty($value['Total'])){
                 $value['Total'] = "£".roundOff($value['Total']);
             }
-            if(!empty($value['Amount'])){
-                $value['Amount'] = "£".roundOff($value['Amount']);
+            $amount = explode(",",$value['Amount']);
+            foreach($amount as $amount_value)
+            {
+                if(!empty($amount_value)){
+                    $array_value [] = "£".roundOff($amount_value);
+                }
+               
             }
+            $value['Amount'] = implode(",",$array_value);
+            
         }
         $details = group_by('Apartment',$details);
         $return['download_url'] = downloadConstructionExcelFile($details,"Project_details");
