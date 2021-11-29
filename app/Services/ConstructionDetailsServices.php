@@ -120,6 +120,11 @@ class ConstructionDetailsServices{
     public static function getProjectExcelForConstructionDetails($request)
     {
         $details = ConstructionDetails::getConstructionDetailsForProject($request['project_id']);
+        foreach($details as &$value)
+        {
+            $value['Total'] = "£".roundOff($value['Total']);
+            $value['Amount'] = "£".roundOff($value['Amount']);
+        }
         $details = group_by('Apartment',$details);
         $return['download_url'] = downloadConstructionExcelFile($details,"Project_details");
         return $return;
