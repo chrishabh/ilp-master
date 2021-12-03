@@ -33,6 +33,9 @@ use Illuminate\Support\Facades\Route;
 
                 // wages booking
                 Route::post('book-wages','WagesBookingController@bookWages');
+                Route::post('edit-booked-wages','WagesBookingController@editBookedWages');
+                Route::post('delete-booked-wages','WagesBookingController@deleteBookedWages');
+                Route::get('final-wages-submission','WagesBookingController@finalSubmissionWages');
                 Route::post('get-wages','WagesBookingController@getWages');
                 Route::post('get-wages-excel','WagesBookingController@getWagesExcel');
                 // Route::post('upload-videos','VideosController@uploadVideo');

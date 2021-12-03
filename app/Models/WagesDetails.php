@@ -46,4 +46,21 @@ class WagesDetails extends Model
         }
         return $return;
     }
+
+    public static function updateWages($id,$data = [])
+    {
+        unset($data['level']);
+        return WagesDetails::whereNull('deleted_at')->where('id',$id)->update($data);
+    }
+
+    public static function deleteWages($id)
+    {
+        return WagesDetails::whereNull('deleted_at')->where('id',$id)->update(['deleted_at'=>date('Y-m-d')]);
+    }
+
+    public static function finalWagesSubmission()
+    {
+        $user_id = 5;  
+        return WagesDetails::whereNull('deleted_at')->where('user_id',$user_id)->update(['final_submission_date'=>date('Y-m-d')]);
+    }
 }

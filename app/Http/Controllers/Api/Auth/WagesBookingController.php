@@ -44,4 +44,27 @@ class WagesBookingController extends Controller
 
         return  response()->data(['id'=>$data]);
     }
+
+    public static function editBookedWages(BookWagesFormRequest $request)
+    {
+        $requestData = $request->validated();
+        WagesServices::editBookedWages($request);
+
+        return  response()->success();
+    }
+
+    public static function deleteBookedWages(BookWagesFormRequest $request)
+    {
+        $requestData = $request->validated();
+        WagesServices::deleteBookedWages($request);
+
+        return  response()->success();
+    }
+
+    public static function finalSubmissionWages()
+    {
+        WagesServices::finalSubmissionWages();
+
+        return  response()->success();
+    }
 }

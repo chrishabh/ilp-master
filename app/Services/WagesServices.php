@@ -93,4 +93,20 @@ class WagesServices{
        return PayToDetails::addPayToDetails($request);
     }
 
+    public static function editBookedWages($request)
+    {
+        $request->floor = $request->level;
+        WagesDetails::updateWages($request->id,$request->toArray());
+    }
+
+    public static function deleteBookedWages($request)
+    {
+        WagesDetails::deleteWages($request->id);
+    }
+
+    public static function finalSubmissionWages()
+    {
+        WagesDetails::finalWagesSubmission();
+    }
+
 }
