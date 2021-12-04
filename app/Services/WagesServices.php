@@ -36,14 +36,14 @@ class WagesServices{
             $records['Description of work'] = $value['description_work'];       // Coloumn F
             $records['m2 (or hours)'] = $value['m2_or_hours'];      // Coloumn G
             $records['Rate'] = $value['rate'];      // Coloumn H
-            $records['Booking Amount'] = "£".roundOff($value['sum']);     // Coloumn I
+            $records['Booking Amount'] = "£".roundOff($value['amount']);     // Coloumn I
             $records['Instruction required (y/n)'] = '';        // Coloumn J
             $records['Instruction received (y/n)'] = '';        // Coloumn K
             $records[' '] = '';         // Coloumn L
-            $records['Approved'] = "£".roundOff($value['sum']);       // Coloumn M
+            $records['Approved'] = "£".roundOff($value['amount']);       // Coloumn M
             $records['Difference'] = '';        // Coloumn N
             $records['Surveyor comments'] = '';     // Coloumn O
-            $records['measured'] = roundOff($value['sum']);       // Coloumn P
+            $records['measured'] = roundOff($value['amount']);       // Coloumn P
             $records['Possible VO'] = '';       // Coloumn Q
             $records['variation'] = '';     // Coloumn R
             $records['non recov'] ='';      // Coloumn S
