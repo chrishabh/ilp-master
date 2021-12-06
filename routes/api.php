@@ -21,7 +21,7 @@ use Illuminate\Support\Facades\Route;
         });
 
         Route::group(['namespace' => 'Api\Auth'], function () {
-            //Route::group(['middleware' => ['auth:api']], function () {
+            Route::group(['middleware' => ['userAuth']], function () {
                 Route::post('get-project-details','ConstructionDetailsController@getProjectDetails');
                 Route::post('get-block-details','ConstructionDetailsController@getBlockDetails');
                 Route::post('get-apartment-details','ConstructionDetailsController@getApartmentDetails');
@@ -42,7 +42,7 @@ use Illuminate\Support\Facades\Route;
                 // Route::post('download-videos','VideosController@downloadVideo');
                 Route::post('add-pay-details','WagesBookingController@addPayToDetails');
 
-            //});
+            });
             Route::post('upload-excel','ConstructionDetailsController@uploadExelForConstructionDetails');
             Route::post('download-construction-details','ConstructionDetailsController@getProjectConstructionDetails');
             

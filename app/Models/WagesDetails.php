@@ -65,7 +65,7 @@ class WagesDetails extends Model
 
     public static function finalWagesSubmission()
     {
-        $user_id = 5;  
+        $user_id = User::details()->id; 
         return WagesDetails::whereNull('deleted_at')->where('user_id',$user_id)->update(['final_submission_date'=>date('Y-m-d')]);
     }
 }

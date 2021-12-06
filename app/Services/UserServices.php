@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use App\Exceptions\AppException;
 use App\Exceptions\BusinessExceptions\RegisterFailedException;
+use App\Models\UserAuthorization;
 use Illuminate\Console\Application;
 
 class UserServices{
@@ -22,6 +23,13 @@ class UserServices{
         //OtpVerificationServices::emailVerificationRequest($request);
 
         $user['token'] = $user->createToken('MyApp')->accessToken;
+        
+        $data = [
+            'user_id' => $user['id'],
+            'token' => $user['token']
+        ];
+
+        UserAuthorization::addToken($data);
 
         return $user;
 

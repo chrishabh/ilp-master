@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Models\BlockDetails;
 use App\Models\ConstructionDetails;
 use App\Models\PayToDetails;
+use App\Models\User;
 use App\Models\WagesDetails;
 
 class WagesServices{
@@ -14,6 +15,7 @@ class WagesServices{
         $data = $request->toArray();
         foreach($data['book_wages'] as &$value){
             $value['floor'] = $value['level'];
+            $value['user_id'] = User::details()->id;
             unset($value['level']);
            WagesDetails::bookWages($value);
            ConstructionDetails::addWagesBookValue($value);

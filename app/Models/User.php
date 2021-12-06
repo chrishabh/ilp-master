@@ -58,4 +58,14 @@ class User extends Authenticatable
     {
         return User::where('id', $user_id)->first();
     }
+
+    public static function details(){
+        $headerStringValue = apache_request_headers();
+        if(!empty($headerStringValue['Authorization'])){
+            $token = explode(' ',$headerStringValue['Authorization']);
+            return User::join('user_authorizations','user_authorizations.user_id','=','users.id')->whereNull('users.deleted_at')->where('user_authorizations.token',$token[1])->first();
+            
+        }
+        return (object)[];
+    }
 }

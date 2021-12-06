@@ -11,6 +11,7 @@ use App\Models\BlockDetails;
 use App\Models\ConstructionDetails;
 use App\Models\PayToDetails;
 use App\Models\ProjectDetails;
+use App\Models\UserAuthorization;
 use Carbon\Carbon;
 use Illuminate\Console\Application;
 use Illuminate\Support\Facades\Storage;
@@ -19,7 +20,6 @@ class ConstructionDetailsServices{
 
     public static function getProjectDetails($request)
     {
-
         $return['total_records'] = ProjectDetails::getProjectTotalRecords($request);
         $return['project_details'] = ProjectDetails::getProjectDetails($request);
 
