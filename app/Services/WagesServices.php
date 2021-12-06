@@ -15,7 +15,7 @@ class WagesServices{
         $data = $request->toArray();
         foreach($data['book_wages'] as &$value){
             $value['floor'] = $value['level'];
-            $value['user_id'] = User::details()->id;
+            //$value['user_id'] = User::details()->id;
             unset($value['level']);
            WagesDetails::bookWages($value);
            ConstructionDetails::addWagesBookValue($value);
@@ -106,9 +106,9 @@ class WagesServices{
         WagesDetails::deleteWages($request->id);
     }
 
-    public static function finalSubmissionWages()
+    public static function finalSubmissionWages($request)
     {
-        WagesDetails::finalWagesSubmission();
+        WagesDetails::finalWagesSubmission($request);
     }
 
 }

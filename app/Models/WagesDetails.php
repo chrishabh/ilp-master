@@ -41,6 +41,7 @@ class WagesDetails extends Model
         ->whereNull('wages_details.deleted_at')
         ->where('wages_details.project_id',$request['project_id'])
         ->where('wages_details.block_id',$request['block_id'])
+        ->where('wages_details.user_id',$request['user_id'])
         //->where('wages_details.apartment_id',$request['apartment_id'])
         ->offset($offset)->limit($noOfRecord)->get();
 
@@ -63,9 +64,9 @@ class WagesDetails extends Model
         return WagesDetails::whereNull('deleted_at')->where('id',$id)->update(['deleted_at'=>date('Y-m-d')]);
     }
 
-    public static function finalWagesSubmission()
+    public static function finalWagesSubmission($request)
     {
-        $user_id = User::details()->id; 
+        $user_id = $request['user_id'];
         return WagesDetails::whereNull('deleted_at')->where('user_id',$user_id)->update(['final_submission_date'=>date('Y-m-d')]);
     }
 }

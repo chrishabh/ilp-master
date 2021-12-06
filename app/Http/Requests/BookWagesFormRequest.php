@@ -39,7 +39,8 @@ class BookWagesFormRequest extends FormRequest
                     'book_wages.*.project_id' => 'required',
                     'book_wages.*.block_id' => 'required',
                     'book_wages.*.apartment_id' => 'required',
-                    'book_wages.*.main_description_id' => 'required'
+                    'book_wages.*.main_description_id' => 'required',
+                    'book_wages.*.user_id' => 'required'
                 ];
             break;
 
@@ -63,6 +64,12 @@ class BookWagesFormRequest extends FormRequest
             case Constants::DELETE_BOOKED_WAGES:
                 return [
                     'id' => 'required'
+                ];
+            break;
+
+            case Constants::LAST_SUBMIT_WAGES:
+                return [
+                    'user_id' => 'required'
                 ];
             break;
 

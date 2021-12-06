@@ -61,9 +61,11 @@ class WagesBookingController extends Controller
         return  response()->success();
     }
 
-    public static function finalSubmissionWages()
+    public static function finalSubmissionWages(BookWagesFormRequest $request)
     {
-        WagesServices::finalSubmissionWages();
+        $requestData = $request->validated();
+
+        WagesServices::finalSubmissionWages($request);
 
         return  response()->success();
     }
