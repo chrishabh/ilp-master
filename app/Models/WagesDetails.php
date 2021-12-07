@@ -21,11 +21,13 @@ class WagesDetails extends Model
         WagesDetails::insert($request);
     }
 
-    public static function getWages($request)
+    public static function getWages($request,$excel_data = false)
     {
         $noOfRecord = $request['no_of_records'] ?? 10;
         $current_page = $request['page_number'] ?? 1;
         $offset = ($current_page*$noOfRecord)-$noOfRecord;
+        $project_id = $request['project_id'];
+        $user_id = $request['user_id'];
 
         $return['total_records'] = WagesDetails::whereNull('deleted_at')->count('id');
 
@@ -40,10 +42,16 @@ class WagesDetails extends Model
         ,'apartment_details.apartment_number','main_descritpions.description as description_header')
         ->whereNull('wages_details.deleted_at')
         ->where('wages_details.project_id',$request['project_id'])
-        ->where('wages_details.block_id',$request['block_id'])
-        ->where('wages_details.user_id',$request['user_id'])
+        //->where('wages_details.block_id',$request['block_id'])
+        ->where('wages_details.user_id',$request['user_id']);
         //->where('wages_details.apartment_id',$request['apartment_id'])
-        ->offset($offset)->limit($noOfRecord)->get();
+        if($excel_data == true){
+            $data = $data->whereRaw("final_submission_date = (select max(final_submission_date) from wages_details where project_id = '$project_id' and user_id = '$user_id')")
+            ->offset($offset)->limit($noOfRecord)->get();
+        }else{
+            $data = $data->whereNull('wages_details.final_submission_date')->offset($offset)->limit($noOfRecord)->get();
+        }
+        
 
         if(count($data)>0){
             $return['wages_details'] = $data->toArray();
