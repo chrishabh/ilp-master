@@ -127,24 +127,25 @@ if (! function_exists('envparam')) {
               $doc->getActiveSheet()->getStyle('A2:' . $last_column . $last_row)
                   ->getNumberFormat()->setFormatCode(\PhpOffice\PhpSpreadsheet\Style\NumberFormat::FORMAT_TEXT);
 
-                $doc->getActiveSheet()->getStyle('I1:I'.$last_row)->getAlignment()->setHorizontal('center');
+                $doc->getActiveSheet()->getStyle('H1:H'.$last_row)->getAlignment()->setHorizontal('center');
+                $doc->getActiveSheet()->getStyle('K1:K'.$last_row)->getAlignment()->setHorizontal('center');
                 $doc->getActiveSheet()->getStyle('L1:L'.$last_row)->getAlignment()->setHorizontal('center');
-                $doc->getActiveSheet()->getColumnDimension('H')->setAutoSize(FALSE);
-                $doc->getActiveSheet()->getColumnDimension('H')->setWidth('16');
+                $doc->getActiveSheet()->getColumnDimension('G')->setAutoSize(FALSE);
+                $doc->getActiveSheet()->getColumnDimension('G')->setWidth('16');
+                $doc->getActiveSheet()->getColumnDimension('I')->setAutoSize(FALSE);
+                $doc->getActiveSheet()->getColumnDimension('I')->setWidth('16');
                 $doc->getActiveSheet()->getColumnDimension('J')->setAutoSize(FALSE);
                 $doc->getActiveSheet()->getColumnDimension('J')->setWidth('16');
                 $doc->getActiveSheet()->getColumnDimension('K')->setAutoSize(FALSE);
-                $doc->getActiveSheet()->getColumnDimension('K')->setWidth('16');
-                $doc->getActiveSheet()->getColumnDimension('L')->setAutoSize(FALSE);
-                $doc->getActiveSheet()->getColumnDimension('L')->setWidth('6');
+                $doc->getActiveSheet()->getColumnDimension('K')->setWidth('6');
                 
             //   // Color
-            $doc->getActiveSheet()
-                ->getStyle('A2:T'.$last_row)
-                ->getFill()
-                ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
-                ->getStartColor()
-                ->setARGB('ffffff');
+            // $doc->getActiveSheet()
+            //     ->getStyle('A2:T'.$last_row)
+            //     ->getFill()
+            //     ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+            //     ->getStartColor()
+            //     ->setARGB('ffffff');
               // write and save the file
               //$writer = new Xlsx($doc); 
               $writer = new PhpOffice\PhpSpreadsheet\Writer\Xlsx($doc);
