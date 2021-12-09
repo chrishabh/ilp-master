@@ -130,6 +130,7 @@ if (! function_exists('envparam')) {
                 $doc->getActiveSheet()->getStyle('H1:H'.$last_row)->getAlignment()->setHorizontal('center');
                 $doc->getActiveSheet()->getStyle('K1:K'.$last_row)->getAlignment()->setHorizontal('center');
                 $doc->getActiveSheet()->getStyle('L1:L'.$last_row)->getAlignment()->setHorizontal('center');
+                $doc->getActiveSheet()->getStyle('O1:O'.$last_row)->getAlignment()->setHorizontal('center');
                 $doc->getActiveSheet()->getColumnDimension('G')->setAutoSize(FALSE);
                 $doc->getActiveSheet()->getColumnDimension('G')->setWidth('16');
                 $doc->getActiveSheet()->getColumnDimension('I')->setAutoSize(FALSE);
@@ -268,7 +269,7 @@ if (! function_exists('envparam')) {
         if($uploaded){
             $url = env('APP_URL').'/storage'.'/'.$xlsxFileName;
         }else{
-            $url = env('APP_URL');
+           throw new AppException('No wages exists to download',null,1001);
         }
         return $url;
     }
