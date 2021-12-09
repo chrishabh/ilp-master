@@ -164,7 +164,7 @@ if (! function_exists('envparam')) {
         if($uploaded){
             $url = env('APP_URL').'/ipl/public/wages_data'.'/'.$xlsxFileName;
         }else{
-            $url = env('APP_URL');
+            throw new AppException('No wages exists to download',null,1001);
         }
         return $url;
     }
