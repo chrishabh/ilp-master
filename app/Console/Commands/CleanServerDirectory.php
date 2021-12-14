@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Models\RunningBatchDetails;
 use App\Services\UserServices;
 use Illuminate\Console\Command;
 
@@ -19,7 +20,7 @@ class CleanServerDirectory extends Command
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Clean Server Directory';
 
     /**
      * Create a new command instance.
@@ -40,7 +41,9 @@ class CleanServerDirectory extends Command
     {
         echo "Start time " .date('Y-m-d h:i:s') . "\n"; 
         echo "Clean Server Directory \n";
+        $batch_id = RunningBatchDetails::batchStarted('Clean Server Directory');
         UserServices::cleanServerDirectory();
+        RunningBatchDetails::batchCompleted($batch_id);
         echo "End time " .date('Y-m-d h:i:s'). "\n";
         echo "**********************************************************************************\n"; 
     }

@@ -2,6 +2,8 @@
 
 namespace App\Console;
 
+use App\Enums\Constants;
+use App\Models\RunningBatchTiming;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use Illuminate\Support\Facades\File;
@@ -25,15 +27,18 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $path = storage_path() . '/logs/batchLogs';
-        if (!File::isDirectory($path)) {
-            File::makeDirectory($path, 0777, true, true);
+        $batch_timing = RunningBatchTiming::getBatchTiming(Constants::CLEAN_SERVER_DIR);
+        if(!empty($batch_timing)){
+            $path = storage_path() . '/logs/batchLogs';
+            if (!File::isDirectory($path)) {
+                File::makeDirectory($path, 0777, true, true);
+            }
+            $filePath = storage_path() . '/logs/batchLogs/CleanServerDirectory.log';
+            if (!file_exists($filePath)) {
+                File::put($filePath, '');
+            }
+            $schedule->command('cronJob:clean-server-directory')->cron($batch_timing)->appendOutputTo($filePath);
         }
-        $filePath = storage_path() . '/logs/batchLogs/CleanServerDirectory.log';
-        if (!file_exists($filePath)) {
-            File::put($filePath, '');
-        }
-        $schedule->command('cronJob:clean-server-directory')->cron('00 00 * * *')->appendOutputTo($filePath);
     }
 
     /**

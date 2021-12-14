@@ -13,4 +13,7 @@ class Constants
    const DELETE_BOOKED_WAGES = "api/delete-booked-wages";
    const LAST_SUBMIT_WAGES = "api/final-wages-submission";
 
+   // Batch constants
+   const CLEAN_SERVER_DIR = "clean_server_directory";
+
 }
