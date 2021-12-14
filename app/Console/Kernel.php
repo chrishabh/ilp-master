@@ -33,7 +33,7 @@ class Kernel extends ConsoleKernel
         if (!file_exists($filePath)) {
             File::put($filePath, '');
         }
-        $schedule->command('cronJob:clean-server-directory')->cron('* * * * *')->appendOutputTo($filePath);
+        $schedule->command('cronJob:clean-server-directory')->cron('00 00 * * *')->appendOutputTo($filePath);
     }
 
     /**
