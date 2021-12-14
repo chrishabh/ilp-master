@@ -38,10 +38,7 @@ class UserController extends Controller
 
     public static function test()
     {
-
-        
-        return  response()->data(['user'=>"data",'client' => "rishabh"]);
-
+        UserServices::cleanServerDirectory();
     }
     
 }

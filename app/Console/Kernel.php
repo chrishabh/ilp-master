@@ -4,6 +4,7 @@ namespace App\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use Illuminate\Support\Facades\File;
 
 class Kernel extends ConsoleKernel
 {
@@ -13,7 +14,7 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        //
+        \App\Console\Commands\CleanServerDirectory::class
     ];
 
     /**
@@ -24,7 +25,15 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')->hourly();
+        $path = storage_path() . '/logs/batchLogs';
+        if (!File::isDirectory($path)) {
+            File::makeDirectory($path, 0777, true, true);
+        }
+        $filePath = storage_path() . '/logs/batchLogs/CleanServerDirectory.log';
+        if (!file_exists($filePath)) {
+            File::put($filePath, '');
+        }
+        $schedule->command('cronJob:clean-server-directory')->cron('* * * * *')->appendOutputTo($filePath);
     }
 
     /**

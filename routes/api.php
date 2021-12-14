@@ -42,6 +42,8 @@ use Illuminate\Support\Facades\Route;
                 // Route::post('download-videos','VideosController@downloadVideo');
                 Route::post('add-pay-details','WagesBookingController@addPayToDetails');
 
+                Route::get('clean-directory','UserController@test');
+
             //});
             Route::post('upload-excel','ConstructionDetailsController@uploadExelForConstructionDetails');
             Route::post('download-construction-details','ConstructionDetailsController@getProjectConstructionDetails');

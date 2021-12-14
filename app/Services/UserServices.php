@@ -7,6 +7,7 @@ use App\Exceptions\AppException;
 use App\Exceptions\BusinessExceptions\RegisterFailedException;
 use App\Models\UserAuthorization;
 use Illuminate\Console\Application;
+use Illuminate\Support\Facades\File;
 
 class UserServices{
 
@@ -55,6 +56,52 @@ class UserServices{
             // catch(\Exception $e){
             //     return $e->getMessage();
             // }
+        }
+
+    }
+
+    public static function cleanServerDirectory()
+    {
+        $construction_count = 0;
+        $wages_count = 0;
+        $storage_count = 0;
+        $path = public_path('construction_data/');
+        if(file_exists($path)){
+            $files = scandir(public_path('construction_data/'));
+            //$files =  File::allFiles($path);
+            foreach($files as $value){
+                if ($value != "." && $value != "..") {
+                    if (file_exists($path.$value))
+                    $flag = unlink($path.$value);$construction_count++;
+                }
+            }
+            echo "Public Construction data files cleaned ".$construction_count."\n";
+        }
+
+        $path = public_path('storage/');
+        if(file_exists($path)){
+            $files = scandir(public_path('storage/'));
+            //$files =  File::allFiles($path);
+            foreach($files as $value){
+                if ($value != "." && $value != "..") {
+                    if (file_exists($path.$value))
+                    $flag = unlink($path.$value);$storage_count++;
+                }
+            }
+            echo "Public Storage files cleaned ".$storage_count."\n";
+        }
+
+        $path = public_path('wages_data/');
+        if(file_exists($path)){
+            $files = scandir(public_path('wages_data/'));
+            //$files =  File::allFiles($path);
+            foreach($files as $value){
+                if ($value != "." && $value != "..") {
+                    if (file_exists($path.$value))
+                    $flag = unlink($path.$value);$wages_count++;
+                }
+            }
+            echo "Public Wages data files cleaned ".$wages_count."\n";
         }
 
     }
