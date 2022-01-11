@@ -38,6 +38,17 @@ class ResponseMacros
              
                 if(is_array($errors) && !empty($errors)){
                     $response['errors'] = $errors;
+                    if(count($errors)>0){
+                        $response['message'] = '';
+                    }
+                    
+                    foreach($errors as $validaton_message)
+                    {
+                        foreach($validaton_message as $value){
+                            $response['message'] = (!empty($response['message']))?$response['message'].'~'.$value.".":$value.".";
+                        }
+                    }
+                    unset($response['errors']);
                 }
             }
             return response()->json($response,$http_code);

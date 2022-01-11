@@ -29,7 +29,7 @@ class WagesDetails extends Model
         $project_id = $request['project_id'];
         $user_id = $request['user_id'];
 
-        $return['total_records'] = WagesDetails::whereNull('deleted_at')->count('id');
+        $return['total_records'] = WagesDetails::whereNull('deleted_at')->where('project_id',$request['project_id'])->where('user_id',$request['user_id'])->count('id');
 
         $data = WagesDetails::join('project_details','wages_details.project_id','=','project_details.id')
         ->join('block_details','wages_details.block_id','=','block_details.id')
