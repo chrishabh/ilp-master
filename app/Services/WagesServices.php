@@ -26,6 +26,9 @@ class WagesServices{
     public static function getWages($request)
     {
         $return = WagesDetails::getWages($request,false);
+        foreach($return['wages_details'] as &$value){
+            $value['remaining_amount'] = ConstructionDetails::getRemaingAmountForWages($value);
+        }
         $download_data = WagesDetails::getWages($request,true);
         $records = $excel_data = [];
         foreach($download_data['wages_details'] as $value){

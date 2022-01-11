@@ -205,4 +205,26 @@ class ConstructionDetails extends Model
     {
         return ConstructionDetails::where('project_id',$Project_id)->update(['deleted_at'=>date('Y-m-d')]);
     }
+
+    public static function getRemaingAmountForWages($data){
+
+        $total_amount_booked = $remaining_amount = 0;
+        $total = ConstructionDetails::select(DB::raw('SUM(total) as total_amount'))
+        ->where('main_description_id',$data['main_description_id'])->where('project_id',$data['project_id'])->whereNull('deleted_at')->get();
+
+        $booked_amount = ConstructionDetails::select('amount_booked')
+        ->where('main_description_id',$data['main_description_id'])->where('project_id',$data['project_id'])->whereNull('deleted_at')->get();
+
+        if(count($booked_amount)>0){
+            foreach($booked_amount->toArray() as $records){
+                $res = explode(',',str_replace("'", "", $records['amount_booked']));
+                $total_amount_booked +=  array_sum($res);
+            }
+        }
+        $total_amount = $total[0]->total_amount ?? 0;
+
+        $remaining_amount = roundOff($total_amount - $total_amount_booked,4);
+
+        return $remaining_amount;
+    }
 }
