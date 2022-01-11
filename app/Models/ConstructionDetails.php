@@ -210,10 +210,12 @@ class ConstructionDetails extends Model
 
         $total_amount_booked = $remaining_amount = 0;
         $total = ConstructionDetails::select(DB::raw('SUM(total) as total_amount'))
-        ->where('main_description_id',$data['main_description_id'])->where('project_id',$data['project_id'])->whereNull('deleted_at')->get();
+        ->where('main_description_id',$data['main_description_id'])->where('project_id',$data['project_id'])
+        ->where('apartment_id',$data['apartment_id'])->whereNull('deleted_at')->get();
 
         $booked_amount = ConstructionDetails::select('amount_booked')
-        ->where('main_description_id',$data['main_description_id'])->where('project_id',$data['project_id'])->whereNull('deleted_at')->get();
+        ->where('main_description_id',$data['main_description_id'])->where('project_id',$data['project_id'])
+        ->where('apartment_id',$data['apartment_id'])->whereNull('deleted_at')->get();
 
         if(count($booked_amount)>0){
             foreach($booked_amount->toArray() as $records){
