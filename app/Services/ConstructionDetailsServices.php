@@ -130,6 +130,7 @@ class ConstructionDetailsServices{
             foreach($amount as $amount_value)
             {
                 if(!empty($amount_value)){
+                    $amount_value = str_replace("'","",$amount_value);
                     $array_value [] = "£".roundOff($amount_value);
                 }
                

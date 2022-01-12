@@ -63,7 +63,7 @@ class WagesDetails extends Model
 
     public static function updateWages($id,$data = [])
     {
-        unset($data['level']);
+        unset($data['level']); unset($data['old_amount']);
         return WagesDetails::whereNull('deleted_at')->where('id',$id)->update($data);
     }
 
@@ -76,5 +76,10 @@ class WagesDetails extends Model
     {
         $user_id = $request['user_id'];
         return WagesDetails::whereNull('deleted_at')->where('user_id',$user_id)->update(['final_submission_date'=>date('Y-m-d')]);
+    }
+
+    public static function getWagesById($id)
+    {
+        return WagesDetails::whereNull('deleted_at')->where('id',$id)->first();
     }
 }

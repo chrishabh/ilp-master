@@ -41,6 +41,7 @@ class BookWagesFormRequest extends FormRequest
                     'book_wages.*.apartment_id' => 'required',
                     'book_wages.*.main_description_id' => 'required',
                     'book_wages.*.user_id' => 'required'
+                   
                 ];
             break;
 
@@ -57,7 +58,8 @@ class BookWagesFormRequest extends FormRequest
                     'project_id' => 'required',
                     'block_id' => 'required',
                     'apartment_id' => 'required',
-                    'main_description_id' => 'required'
+                    'main_description_id' => 'required',
+                    'old_amount' => 'required'
                 ];
             break;
 

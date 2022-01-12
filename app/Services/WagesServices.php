@@ -104,10 +104,12 @@ class WagesServices{
     {
         $request->floor = $request->level;
         WagesDetails::updateWages($request->id,$request->toArray());
+        ConstructionDetails::updateConstructionEditWagesCase($request->toArray());
     }
 
     public static function deleteBookedWages($request)
     {
+        ConstructionDetails::updateConstructionDeleteWagesCase($request->id);
         WagesDetails::deleteWages($request->id);
     }
 
