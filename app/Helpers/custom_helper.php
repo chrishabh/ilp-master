@@ -286,6 +286,31 @@ if (! function_exists('envparam')) {
 
             for($i=0; $i<$sheet_count; $i++){
                 if($i == 0){
+                    $highestRow = $spreadsheet->getSheet($i)->getHighestRow();
+                    //$checkSheetData = $spreadsheet->getCell('')->toArray();
+                    $is_verified = false;
+                    for($k = 1; $k<=$highestRow; $k++){
+                        $columnA =  $spreadsheet->getSheet($i)->getCellByColumnAndRow(1, $k)->getValue();
+                        $columnB =  $spreadsheet->getSheet($i)->getCellByColumnAndRow(2, $k)->getValue();
+                        if($columnA == "Main Description" && $columnB == "Sub Description"){
+                            $is_verified = true;
+                            continue;
+                        }
+                        if($is_verified){
+                            if(!empty($columnA)){
+                                $main_desc [] = $columnA;
+                            }
+                           if(!empty($columnB)){
+                                $sub_desc [] = $columnB;
+                           }
+                           
+                        }
+                    }
+                    $main_desc = array_unique($main_desc);
+                    $sub_desc = array_unique($sub_desc);
+                    MainDescritpion::checkMainDescription($main_desc);
+                    SubDescritpion::checckSubDescription($sub_desc);
+
                     continue;
                 }
                 $sheetData = $spreadsheet->getSheet($i)->toArray();

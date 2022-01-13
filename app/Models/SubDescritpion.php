@@ -21,4 +21,16 @@ class SubDescritpion extends Model
             throw new  AppException("Sub Description does not exists in system i.e '".$sub_description."'");
         }
     }
+
+    public static function checckSubDescription($sub_description_array = [])
+    {
+
+        foreach($sub_description_array as $value){
+            $return = SubDescritpion::whereNull('deleted_at')->where('sub_description',$value)->exists();
+            if(!$return){
+                throw new  AppException("Sub Description does not exists in the system i.e ".$value);
+            }
+        }
+        return ;
+    }
 }

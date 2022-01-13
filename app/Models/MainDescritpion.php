@@ -29,4 +29,16 @@ class MainDescritpion extends Model
             throw new  AppException("Main Description does not exists in system '".$header_name."'");
         }
     }
+
+    public static function checkMainDescription($main_desc_array = [])
+    {
+        foreach($main_desc_array as $value){
+            $return =  MainDescritpion::whereNull('deleted_at')->where('description',$value)->exists();
+            if(!$return){
+                throw new  AppException("Main Description does not exists in the system i.e ".$value);
+            }
+        }
+        return ;
+        
+    }
 }
