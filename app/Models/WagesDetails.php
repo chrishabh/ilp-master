@@ -36,7 +36,7 @@ class WagesDetails extends Model
         ->join('apartment_details','wages_details.apartment_id','=','apartment_details.id')
         ->join('main_descritpions', 'main_descritpions.id', '=', 'wages_details.main_description_id')
         ->select('wages_details.id','wages_details.pay_to','wages_details.trade','wages_details.floor as level','wages_details.block_id',
-        'wages_details.plot_or_room','wages_details.description_work','wages_details.m2_or_hours','wages_details.rate',
+        'wages_details.plot_or_room','wages_details.description_work','wages_details.m2_or_hours','wages_details.rate','wages_details.floor_id',
         'wages_details.sum as amount','wages_details.apartment_id','wages_details.main_description_id','wages_details.project_id',
         'project_details.project_name','block_details.block_name','wages_details.apartment_id'
         ,'apartment_details.apartment_number','main_descritpions.description as description_header')
