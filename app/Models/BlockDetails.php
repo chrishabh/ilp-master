@@ -40,7 +40,7 @@ class BlockDetails extends Model
         return BlockDetails::insertGetId($data);
     }
 
-    public static function getBlockId($block_name)
+    public static function getBlockId($block_name,$project_id)
     {
         $return = BlockDetails::whereNull('deleted_at')->where('block_name',$block_name)->first();
 
@@ -48,7 +48,11 @@ class BlockDetails extends Model
             return $return->id;
            
         } else {
-            return NULL;
+            $data = [
+                "block_name" => (!empty($block_name))?$block_name:'N/A',
+                "project_id" => $project_id
+            ];
+            return BlockDetails::insertGetId($data);
         }
     }
 

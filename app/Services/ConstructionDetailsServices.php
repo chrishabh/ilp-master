@@ -9,6 +9,7 @@ use App\Http\Requests\GetProjectDetialsFormRequest;
 use App\Models\ApartmentDetails;
 use App\Models\BlockDetails;
 use App\Models\ConstructionDetails;
+use App\Models\Floor;
 use App\Models\PayToDetails;
 use App\Models\ProjectDetails;
 use App\Models\UserAuthorization;
@@ -38,6 +39,7 @@ class ConstructionDetailsServices{
     {
         $return['total_records'] = ApartmentDetails::getApartmentTotalRecords($request);
         $return['apartment_details'] = ApartmentDetails::getApartmentDetails($request);
+        $return['floor_details'] = Floor::getFloorDetails($request);
 
         return  $return;
     }

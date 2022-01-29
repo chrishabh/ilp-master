@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Exceptions\AppException;
 use App\Models\BlockDetails;
 use App\Models\ConstructionDetails;
 use App\Models\PayToDetails;
@@ -14,11 +15,15 @@ class WagesServices{
     {
         $data = $request->toArray();
         foreach($data['book_wages'] as &$value){
-            $value['floor'] = $value['level'];
-            //$value['user_id'] = User::details()->id;
-            unset($value['level']);
-           WagesDetails::bookWages($value);
-           ConstructionDetails::addWagesBookValue($value);
+            if(isset($value['apartment_id']) || isset($value['floor_id'])){
+                $value['floor'] = $value['level'];
+                //$value['user_id'] = User::details()->id;
+                unset($value['level']);
+               WagesDetails::bookWages($value);
+               ConstructionDetails::addWagesBookValue($value);
+            }else{
+                throw new AppException("For booking wages apartment or floor is required.");
+            }
         }
         
     }

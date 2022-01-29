@@ -3,6 +3,7 @@
 use App\Exceptions\AppException;
 use App\Models\ApartmentDetails;
 use App\Models\BlockDetails;
+use App\Models\Floor;
 use App\Models\MainDescritpion;
 use App\Models\ProjectDetails;
 use App\Models\SubDescritpion;
@@ -315,11 +316,11 @@ if (! function_exists('envparam')) {
                 }
                 $sheetData = $spreadsheet->getSheet($i)->toArray();
                 $key = $key1 = $key2 =0;
-                $block_id = 1;
+                //$block_id = 1;
                 $total_insert = [];
                 foreach($sheetData as $row_key => $row_data){
                    
-                    if($row_key <= '3'){
+                    if($row_key <= '5'){
                         foreach($row_data as $cell_key => $cell_data){ 
                             if(empty($cell_data)){
                                 continue;
@@ -328,16 +329,25 @@ if (! function_exists('envparam')) {
                                 $key = $cell_key;
                                 $project_name = $row_data[++$key];
                                 $project_id = ProjectDetails::getProjectId($project_name);
-                            } elseif (!empty($cell_data) && $cell_data == "Block Number"){
-                                $key1 = $cell_key;
-                                $block_name = $row_data[++$key1];
-                                $block_id = BlockDetails::getBlockId($block_name);
-                                if(empty($block_id)){
-                                    $block_id = 1;
-                                }
-                            } elseif (!empty($cell_data) && $cell_data == "Apartment Number"){
+
+                            } elseif (!empty($cell_data) && $cell_data == "Block"){
+                                    $key1 = $cell_key;
+                                    $block_name = $row_data[++$key1];
+                                    $block_id = BlockDetails::getBlockId($block_name,$project_id);
+                                
+                            } elseif (!empty($cell_data) && $cell_data == "Floor Number"){
                                 $key2 = $cell_key;
-                                $apartment_name = $row_data[++$key2];
+                                $floor_name = $row_data[++$key2];
+                                $floor_data = [
+                                    "floor_name" => $floor_name,
+                                    "block_id" => $block_id,
+                                    "project_id" => $project_id
+                                ];
+                                $floor_id = Floor::addFloor($floor_data);
+                            } 
+                            elseif (!empty($cell_data) && $cell_data == "Apartment Number"){
+                                $key3 = $cell_key;
+                                $apartment_name = $row_data[++$key3];
                                 $apartment_id = ApartmentDetails::getApartmentId($apartment_name);
                                 if(empty($apartment_id)){
                                     $data = [
@@ -348,13 +358,13 @@ if (! function_exists('envparam')) {
                                     $apartment_id = ApartmentDetails::addApartmentDetails($data);
                                 }
                             } elseif (!empty($cell_data) && $cell_data == "Floor Number"){
-                                $key3 = $cell_key;
-                                $floor_name = $row_data[++$key3];
+                                $key4 = $cell_key;
+                                $floor_name = $row_data[++$key4];
                             }
                         }
+                        continue;
                     }
-
-                    if($row_key >= '6'){
+                    if($row_key >= '7'){
                         if(!empty($row_data[0])){
                             $main_description_id = MainDescritpion::getMainDescriptionId($row_data[0]);
                         }
@@ -388,11 +398,11 @@ if (! function_exists('envparam')) {
                                 }elseif($cell_key == '4'){
                                     $insert_data['unit'] = (!empty($cell_value))?$cell_value:NULL;
                                 }elseif($cell_key == '5'){
-                                    $insert_data['lab_rate'] = (!empty($cell_value))?ltrim($cell_value,'£'):NULL;
+                                    $insert_data['lab_rate'] = (!empty($cell_value))?ltrim(trim($cell_value," "),'£'):NULL;
                                 }elseif($cell_key == '6'){
-                                    $insert_data['total'] = (!empty($cell_value))?ltrim($cell_value,'£'):NULL;
+                                    $insert_data['total'] = (!empty($cell_value))?ltrim(trim($cell_value," "),'£'):NULL;
                                 }elseif($cell_key == '7'){
-                                    $insert_data['amount_booked'] = (!empty($cell_value))?"'".ltrim($cell_value,'£')."'":NULL;
+                                    $insert_data['amount_booked'] = (!empty($cell_value))?"'".ltrim(trim($cell_value," "),'£')."'":NULL;
                                 }elseif($cell_key == '8'){
                                     $insert_data['name'] = (!empty($cell_value))?"'".$cell_value."'":NULL;
                                 }elseif($cell_key == '9'){
@@ -402,13 +412,14 @@ if (! function_exists('envparam')) {
                                 }elseif($cell_key == '11'){
                                     $insert_data['booking_description'] = (!empty($cell_value))?"'".str_replace("'","''",$cell_value)."'":NULL;
                                 }elseif($cell_key == '12'){
-                                    $insert_data['floor'] = $floor_name;
+                                    $insert_data['floor'] = $floor_name??null;
                                 }
                                 
                             }
                             $insert_data['project_id'] = $project_id;
                             $insert_data['block_id'] = $block_id??1;
-                            $insert_data['apartment_id'] = $apartment_id;
+                            $insert_data['apartment_id'] = $apartment_id??null;
+                            $insert_data['floor_id'] = $floor_id??null;
                             $total_insert [] = $insert_data;
                         }
                        
@@ -416,7 +427,6 @@ if (! function_exists('envparam')) {
                     }
                    
                 }
-
                 DB::table('construction_details')->insert($total_insert);
 
                 if(($i+1) ==  $sheet_count){
