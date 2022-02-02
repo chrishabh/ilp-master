@@ -34,4 +34,9 @@ class Floor extends Model
         }
         return [];
     }
+
+    public static function  deleteFloorByProject($project_id)
+    {
+        return Floor::where('project_id',$project_id)->update(['deleted_at' =>date('Y-m-d')]);
+    }
 }

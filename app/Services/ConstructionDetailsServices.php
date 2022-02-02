@@ -155,6 +155,7 @@ class ConstructionDetailsServices{
         ProjectDetails::deleteProject($request['project_id']);
         BlockDetails::deleteBlockByProject($request['project_id']);
         ApartmentDetails::deleteApartmentByProject($request['project_id']);
+        Floor::deleteFloorByProject($request['project_id']);
         ConstructionDetails::deleteProjectConstructionDetails($request['project_id']);
     }
 
