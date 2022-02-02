@@ -17,7 +17,14 @@ class Floor extends Model
 
     public static function addFloor($data){
 
-        return Floor::insertGetId($data);
+        $return = Floor::whereNull('deleted_at')->where('block_id',$data['block_id'])->where('project_id',$data['project_id'])->where('floor_name',$data['floor_name'])->first();
+        if(isset($return->id)){
+            return $return->id;
+           
+        } else {
+            return Floor::insertGetId($data);
+        }
+        //return Floor::insertGetId($data);
     }
 
     public static function getFloorDetails($request){
