@@ -27,13 +27,26 @@ class ConstructionDetails extends Model
         $sub_header = [];
         $return = [];
         $total = $total_amount_booked = 0;
+        $apartment_id = $request['apartment_id']??null;
+        $floor_id = $request['floor_id']??null;
 
-        $return['total_records'] = ConstructionDetails::whereNull('deleted_at')->where('apartment_id',$request['apartment_id'])->where('project_id',$request['project_id'])->where('block_id',$request['block_id'])->count('id');
+        $return['total_records'] = ConstructionDetails::whereNull('deleted_at')->where('project_id',$request['project_id'])->where('block_id',$request['block_id']);
+        if(!empty($apartment_id)){
+            $return['total_records'] = $return['total_records']->where('apartment_id',$request['apartment_id'])->count('id');
+        }else{
+            $return['total_records'] = $return['total_records']->where('floor_id',$floor_id)->count('id');
+        }
+
 
         $distinct_main_header = ConstructionDetails::join('main_descritpions', 'main_descritpions.id', '=', 'construction_details.main_description_id')
         ->select('main_descritpions.description as description_header','main_description_id')->whereNull('construction_details.deleted_at')
-        ->where('construction_details.apartment_id',$request['apartment_id'])->where('construction_details.project_id',$request['project_id'])->where('construction_details.block_id',$request['block_id'])
-        ->distinct()->offset($offset)->limit($noOfRecord)->get();
+        ->where('construction_details.project_id',$request['project_id'])->where('construction_details.block_id',$request['block_id']);
+        if(!empty($apartment_id)){
+            $distinct_main_header = $distinct_main_header->where('construction_details.apartment_id',$request['apartment_id'])->distinct()->offset($offset)->limit($noOfRecord)->get();
+        }else{
+            $distinct_main_header = $distinct_main_header->where('construction_details.floor_id',$request['floor_id'])->distinct()->offset($offset)->limit($noOfRecord)->get();
+        }
+        
 
         foreach($distinct_main_header as $value){
             $final = $sub_final = [];
@@ -42,16 +55,27 @@ class ConstructionDetails extends Model
 
             $distinct_sub_headers = ConstructionDetails::join('sub_descritpions', 'sub_descritpions.id', '=', 'construction_details.sub_description_id')
             ->select('sub_descritpions.sub_description','sub_description_id')->whereNull('construction_details.deleted_at')
-            ->where('construction_details.apartment_id',$request['apartment_id'])->where('construction_details.project_id',$request['project_id'])
-            ->where('construction_details.block_id',$request['block_id'])->where('construction_details.main_description_id',$value['main_description_id'])->distinct()->get();
+            ->where('construction_details.project_id',$request['project_id'])
+            ->where('construction_details.block_id',$request['block_id'])->where('construction_details.main_description_id',$value['main_description_id']);
+            if(!empty($apartment_id)){
+                $distinct_sub_headers = $distinct_sub_headers->where('construction_details.apartment_id',$request['apartment_id'])->distinct()->get();
+            }else{
+                $distinct_sub_headers = $distinct_sub_headers->where('construction_details.floor_id',$request['floor_id'])->distinct()->get();
+            }
             
             foreach($distinct_sub_headers as $sub_header){
                 $sub_final['sub_description'] = $sub_header['sub_description'];
                 $sub_final['records'] = [];
                 $data = ConstructionDetails::whereNull('construction_details.deleted_at')
-                ->where('construction_details.apartment_id',$request['apartment_id'])->where('construction_details.project_id',$request['project_id'])
+                ->where('construction_details.project_id',$request['project_id'])
                 ->where('construction_details.block_id',$request['block_id'])
-                ->where('construction_details.main_description_id',$value['main_description_id'])->where('construction_details.sub_description_id',$sub_header['sub_description_id'])->get();
+                ->where('construction_details.main_description_id',$value['main_description_id'])->where('construction_details.sub_description_id',$sub_header['sub_description_id']);
+                if(!empty($apartment_id)){
+                    $data = $data->where('construction_details.apartment_id',$request['apartment_id'])->get();
+                }else{
+                    $data = $data->where('construction_details.floor_id',$request['floor_id'])->get();
+                }
+                
                 foreach($data->toArray() as $records){
                     $sub_final['records'][] =  $records;
                     $total +=  $records['total'];
