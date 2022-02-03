@@ -133,7 +133,12 @@ class ConstructionDetails extends Model
         foreach($records as $value){
             $response[$value['description_header']]['description_header'] = $value['description_header'];
             $sub_final['main_description_id'] = $value['main_description_id'];
-            $sub_final['apartment_id'] = $value['apartment_id'];
+            if(count($apartment_id)>0){
+                $sub_final['apartment_id'] = $value['apartment_id'];
+            }else{
+                $sub_final['floor_id'] = $value['floor_id'];
+            }
+            
             $sub_final['remaining_booking_amount'] = $value['remaining_booking_amount'];
             $response[$value['description_header']]['records'][] =  $sub_final;
 
