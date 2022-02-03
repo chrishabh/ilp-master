@@ -106,10 +106,16 @@ class ConstructionDetails extends Model
 
         $apartment_id = $request['apartment_id']??[];
 
+        if(count($apartment_id)>0){
+            $field = 'construction_details.apartment_id';
+        }else{
+            $field = 'construction_details.floor_id';
+        }
+
         $return['total_records'] = ConstructionDetails::whereNull('deleted_at')->where('project_id',$request['project_id'])->where('block_id',$request['block_id'])->distinct()->count('main_description_id');
 
         $data = ConstructionDetails::join('main_descritpions', 'main_descritpions.id', '=', 'construction_details.main_description_id')
-        ->select('construction_details.main_description_id','construction_details.apartment_id','construction_details.floor_id','main_descritpions.description as description_header',DB::raw("CASE WHEN sum(construction_details.total) IS NULL THEN 0 WHEN sum(construction_details.amount_booked) IS NULL THEN ROUND(sum(construction_details.total),2) ELSE ROUND(sum(construction_details.total)-sum(construction_details.amount_booked),2) END as remaining_booking_amount"))->whereNull('construction_details.deleted_at')
+        ->select('construction_details.main_description_id',$field,'main_descritpions.description as description_header',DB::raw("CASE WHEN sum(construction_details.total) IS NULL THEN 0 WHEN sum(construction_details.amount_booked) IS NULL THEN ROUND(sum(construction_details.total),2) ELSE ROUND(sum(construction_details.total)-sum(construction_details.amount_booked),2) END as remaining_booking_amount"))->whereNull('construction_details.deleted_at')
         ->where('construction_details.project_id',$request['project_id'])
         ->where('construction_details.block_id',$request['block_id']);
 
