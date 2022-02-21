@@ -173,6 +173,7 @@ if (! function_exists('envparam')) {
 
     function getXlsxFiles($details,$file){
         //Give our xlsx file a name.
+        ini_set('memory_limit', '128M');
         $xlsxFileName = $file.'_'.date('Y_m_d_H_i_s').'.xlsx';
 
         // Set the Content-Type and Content-Disposition headers.
@@ -278,6 +279,7 @@ if (! function_exists('envparam')) {
 
     function importExcelToDB($file_path)
     {
+        ini_set('memory_limit', '128M');
         if(!empty($file_path)){
             $excel_data = [];
             $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
