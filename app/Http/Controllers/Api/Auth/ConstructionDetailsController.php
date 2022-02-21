@@ -88,6 +88,14 @@ class ConstructionDetailsController extends Controller
         return  response()->success();
     }
 
+    public function readExcel(Request $request)
+    {
+        //$requestData = $request->validated();
+        importExcelToDB($_SERVER['DOCUMENT_ROOT']."/storage"."//"."1644231439Video-20220114_063635-Meeting.xlsx.xlsx");
+
+        return  response()->success();
+    }
+
     public function getPayToDetails(GetProjectDetialsFormRequest $request)
     {
         $requestData = $request->validated();

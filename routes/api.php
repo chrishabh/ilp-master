@@ -46,6 +46,7 @@ use Illuminate\Support\Facades\Route;
 
             //});
             Route::post('upload-excel','ConstructionDetailsController@uploadExelForConstructionDetails');
+            Route::post('read-excel','ConstructionDetailsController@readExcel');
             Route::post('download-construction-details','ConstructionDetailsController@getProjectConstructionDetails');
             
         });
