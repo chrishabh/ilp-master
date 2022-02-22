@@ -279,7 +279,8 @@ if (! function_exists('envparam')) {
 
     function importExcelToDB($file_path)
     {
-        ini_set('memory_limit', '128M');
+        ini_set('memory_limit', '-1');
+        //ini_set('max_execution_time', 240);
         if(!empty($file_path)){
             $excel_data = [];
             $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
@@ -320,6 +321,8 @@ if (! function_exists('envparam')) {
                     continue;
                 }
                 $sheetData = $spreadsheet->getSheet($i)->toArray();
+                $sheetData = array_map('array_filter', $sheetData);
+                $sheetData = array_filter($sheetData);
                 $key = $key1 = $key2 =0;
                 //$block_id = 1;
                 $total_insert = [];
