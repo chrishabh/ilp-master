@@ -15,7 +15,7 @@ class WagesServices{
     {
         $data = $request->toArray();
         foreach($data['book_wages'] as &$value){
-            if(isset($value['apartment_id']) || isset($value['floor_id'])){
+            if(!empty($value['apartment_id']) || !empty($value['floor_id'])){
                 $value['floor'] = $value['level'];
                 //$value['user_id'] = User::details()->id;
                 unset($value['level']);
