@@ -150,9 +150,9 @@ class ConstructionDetailsServices{
             }
             $value['Amount'] = implode(",",$array_value);
             if(!empty($value['Apartment'])){
-                $aparment_aaray = $value;
+                $aparment_aaray [] = $value;
             }else{
-                $floor_array = $value;
+                $floor_array [] = $value;
             }
         }
         $aparment_aaray = group_by('Apartment',$aparment_aaray);
