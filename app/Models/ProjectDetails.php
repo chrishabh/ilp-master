@@ -46,7 +46,7 @@ class ProjectDetails extends Model
 
         if(isset($return->excel_imported)){
             if($return->excel_imported){
-                throw new AppException('This Project already exists');
+                //throw new AppException('This Project already exists');
             }
         }
 
