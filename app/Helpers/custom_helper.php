@@ -333,17 +333,17 @@ if (! function_exists('envparam')) {
                             if(empty($cell_data)){
                                 continue;
                             }
-                            if(!empty($cell_data) && $cell_data == "Project Name"){
+                            if(!empty($cell_data) && ltrim(trim($cell_data," ")) == "Project Name"){
                                 $key = $cell_key;
                                 $project_name = $row_data[++$key];
                                 $project_id = ProjectDetails::getProjectId($project_name);
 
-                            } elseif (!empty($cell_data) && $cell_data == "Block"){
+                            } elseif (!empty($cell_data) && ltrim(trim($cell_data," ")) == "Block"){
                                     $key1 = $cell_key;
                                     $block_name = $row_data[++$key1];
                                     $block_id = BlockDetails::getBlockId($block_name,$project_id);
                                 
-                            } elseif (!empty($cell_data) && $cell_data == "Floor Number"){
+                            } elseif (!empty($cell_data) && ltrim(trim($cell_data," ")) == "Floor Number"){
                                 $key2 = $cell_key;
                                 $floor_name = $row_data[++$key2];
                                 $floor_data = [
@@ -353,7 +353,7 @@ if (! function_exists('envparam')) {
                                 ];
                                 $floor_id = Floor::addFloor($floor_data);
                             } 
-                            elseif (!empty($cell_data) && $cell_data == "Apartment Number"){
+                            elseif (!empty($cell_data) && ltrim(trim($cell_data," ")) == "Apartment Number"){
                                 $key3 = $cell_key;
                                 $apartment_name = $row_data[++$key3];
                                 $apartment_id = ApartmentDetails::getApartmentId($apartment_name);
