@@ -407,19 +407,19 @@ if (! function_exists('envparam')) {
                                     $insert_data['unit'] = (!empty($cell_value))?$cell_value:NULL;
                                 }elseif($cell_key == '5'){
                                     $insert_data['lab_rate'] = (!empty($cell_value))?ltrim(trim($cell_value," "),'£'):NULL;
-                                }elseif($cell_key == '5'){
-                                    $insert_data['total'] = (!empty($cell_value))?ltrim(trim($cell_value," "),'£'):NULL;
                                 }elseif($cell_key == '6'){
-                                    $insert_data['amount_booked'] = (!empty($cell_value))?"'".ltrim(trim($cell_value," "),'£')."'":NULL;
+                                    $insert_data['total'] = (!empty($cell_value))?ltrim(trim($cell_value," "),'£'):NULL;
                                 }elseif($cell_key == '7'){
-                                    $insert_data['name'] = (!empty($cell_value))?"'".$cell_value."'":NULL;
+                                    $insert_data['amount_booked'] = (!empty($cell_value))?"'".ltrim(trim($cell_value," "),'£')."'":NULL;
                                 }elseif($cell_key == '8'){
-                                    $insert_data['wages'] = (!empty($cell_value))?"'".$cell_value."'":NULL;
+                                    $insert_data['name'] = (!empty($cell_value))?"'".$cell_value."'":NULL;
                                 }elseif($cell_key == '9'){
-                                    $insert_data['quantity'] = (!empty($cell_value))?"'".$cell_value."'":NULL;
+                                    $insert_data['wages'] = (!empty($cell_value))?"'".$cell_value."'":NULL;
                                 }elseif($cell_key == '10'){
-                                    $insert_data['booking_description'] = (!empty($cell_value))?"'".str_replace("'","''",$cell_value)."'":NULL;
+                                    $insert_data['quantity'] = (!empty($cell_value))?"'".$cell_value."'":NULL;
                                 }elseif($cell_key == '11'){
+                                    $insert_data['booking_description'] = (!empty($cell_value))?"'".str_replace("'","''",$cell_value)."'":NULL;
+                                }elseif($cell_key == '12'){
                                     $insert_data['floor'] = $floor_name??null;
                                 }
                                 
