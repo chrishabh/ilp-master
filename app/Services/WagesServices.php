@@ -43,6 +43,7 @@ class WagesServices{
             //$records['Level'] = $value['level'];    // Coloumn C
             $records['Block'] = BlockDetails::getBlockName($value['block_id'])->block_name;     // Coloumn D
             $records['Plot/room'] = $value['plot_or_room'];     // Coloumn E
+            $records['Level'] = $value['floor_name']; 
             $records['Description of work'] = $value['description_work'];       // Coloumn F
             $records['m2 (or hours)'] = $value['m2_or_hours'];      // Coloumn G
             $records['Rate'] = $value['rate'];      // Coloumn H
