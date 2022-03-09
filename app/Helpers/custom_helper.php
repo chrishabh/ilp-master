@@ -449,6 +449,7 @@ if (! function_exists('envparam')) {
 
     function downloadConstructionExcelFile($details,$file)
     {
+        ini_set('max_execution_time', 240);
          //Give our xlsx file a name.
          $xlsxFileName = $file.'_'.date('Y_m_d_H_i_s').'.xlsx';
     
