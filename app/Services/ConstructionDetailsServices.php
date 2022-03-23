@@ -10,6 +10,7 @@ use App\Models\ApartmentDetails;
 use App\Models\BlockDetails;
 use App\Models\ConstructionDetails;
 use App\Models\Floor;
+use App\Models\ImportExcelTable;
 use App\Models\PayToDetails;
 use App\Models\ProjectDetails;
 use App\Models\UserAuthorization;
@@ -115,7 +116,20 @@ class ConstructionDetailsServices{
             $video_data['video_name'] =  $_FILES['request']['name']['file'];
             $video_data['video_path'] = $dir_name.$video_saved_name;
             $request->file->move($dir_name, $video_saved_name);
-            importExcelToDB($video_data['video_path']);
+            $data = [
+                'file_path' => $video_data['video_path'],
+                'cron_timing' => '* * * * *',
+                'progress' => '0'
+            ];
+            ImportExcelTable::insertFilePath($data);
+            //importExcelToDB($video_data['video_path']);
+        }
+    }
+
+    public static function importExcelFile(){
+        $file_path = ImportExcelTable::getFile();
+        if(!empty($file_path)){
+            importExcelToDB($file_path);
         }
     }
 

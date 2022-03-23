@@ -13,6 +13,7 @@ use App\Http\Requests\GetConstructionDetailsFormRequest;
 use App\Http\Requests\GetProjectConstructionDetailsFormRequest;
 use App\Http\Requests\GetProjectDetialsFormRequest;
 use App\Http\Requests\UpdateConstructionDetailsFormRequest;
+use App\Models\ImportExcelTable;
 use App\Services\ConstructionDetailsServices;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -126,5 +127,13 @@ class ConstructionDetailsController extends Controller
         ConstructionDetailsServices::editConstructionDetails($request);
 
         return  response()->success();
+    }
+
+    public static function getExportExcelProgress()
+    {
+
+        $return = ImportExcelTable::getProgress();
+
+        return  response()->data(['progress' => $return]);
     }
 }

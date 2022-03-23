@@ -4,6 +4,7 @@ use App\Exceptions\AppException;
 use App\Models\ApartmentDetails;
 use App\Models\BlockDetails;
 use App\Models\Floor;
+use App\Models\ImportExcelTable;
 use App\Models\MainDescritpion;
 use App\Models\ProjectDetails;
 use App\Models\SubDescritpion;
@@ -435,10 +436,14 @@ if (! function_exists('envparam')) {
                     }
                    
                 }
+                $progress = $i."/".$sheet_count;
+                ImportExcelTable::progressUpdate($file_path,$progress);
                 DB::table('construction_details')->insert($total_insert);
 
-                if(($i+1) ==  $sheet_count || $i == 99){
+                if(($i+1) ==  $sheet_count){
                     ProjectDetails::updatedImportedFlag($project_id);
+                    ImportExcelTable::completeUpdate($file_path);
+                    ImportExcelTable::deleted_at($file_path);
                     break;
                 }
                 
