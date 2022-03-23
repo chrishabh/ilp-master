@@ -13,7 +13,7 @@ class ImportExcelFiles extends Command
      *
      * @var string
      */
-    protected $signature = 'command:import-excel-files';
+    protected $signature = 'cronJob:import-excel-files';
 
     /**
      * The console command description.

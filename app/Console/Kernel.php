@@ -50,7 +50,7 @@ class Kernel extends ConsoleKernel
             if (!file_exists($filePath)) {
                 File::put($filePath, '');
             }
-            $schedule->command('cronJob:clean-server-directory')->cron($import_time)->appendOutputTo($filePath);
+            $schedule->command('cronJob:import-excel-files')->cron($import_time)->appendOutputTo($filePath);
         }
     }
 
