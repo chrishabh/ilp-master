@@ -50,7 +50,11 @@ class ImportExcelTable extends Model
 
         $return = ImportExcelTable::select('progress')->whereNull('deleted_at')->orderBy('id','DESC')->first();
         if(!empty($return['progress'])){
-            return $return['progress'];
+            $divide = explode("/",$return['progress']);
+            $completed = $divide[0]+1/$divide[1];
+            $final_return['progress'] = $return['progress'];
+            $final_return['completed'] = ($completed == '1')?true:false;
+            return $final_return;
         }
         return 0;
     }

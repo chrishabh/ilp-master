@@ -43,7 +43,7 @@ use Illuminate\Support\Facades\Route;
                 Route::post('add-pay-details','WagesBookingController@addPayToDetails');
 
                 Route::get('clean-directory','UserController@test');
-                Route::post('get-expot-excel-progress','WagesBookingController@getWagesExcel');
+                Route::post('get-expot-excel-progress','ConstructionDetailsController@getExportExcelProgress');
 
             //});
             Route::post('upload-excel','ConstructionDetailsController@uploadExelForConstructionDetails');
