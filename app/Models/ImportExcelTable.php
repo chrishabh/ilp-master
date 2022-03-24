@@ -56,6 +56,6 @@ class ImportExcelTable extends Model
             $final_return['completed'] = ($completed == '1')?true:false;
             return $final_return;
         }
-        return 0;
+        return ['completed' => true];
     }
 }
