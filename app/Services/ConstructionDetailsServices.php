@@ -126,7 +126,6 @@ class ConstructionDetailsServices{
             ];
             ImportExcelTable::insertFilePath($data);
             ImportExcel::dispatch($video_data['video_path'])->onQueue('high');
-            sleep(5);
             //importExcelToDB($video_data['video_path']);
         }
     }
