@@ -14,6 +14,7 @@ class ImportExcel implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
     private $file = '';
+    public $timeout = 3600;  
 
     /**
      * Create a new job instance.
