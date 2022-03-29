@@ -42,7 +42,7 @@ class UserServices{
             "first_name"=>$request['first_name'],
             "last_name"=>$request['last_name'],
             "email"=>$request['email'],
-            #"phone_number"=>$request->phone_number,
+            'user_role' => $request['user_role'],
             "password"=>bcrypt($request['password']),
         ];
 
