@@ -44,6 +44,7 @@ use Illuminate\Support\Facades\Route;
 
                 Route::get('clean-directory','UserController@test');
                 Route::post('get-expot-excel-progress','ConstructionDetailsController@getExportExcelProgress');
+                Route::post('import-excel-job','ConstructionDetailsController@ImportExcelJob');
 
             //});
             Route::post('upload-excel','ConstructionDetailsController@uploadExelForConstructionDetails');
