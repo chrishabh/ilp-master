@@ -447,7 +447,7 @@ if (! function_exists('envparam')) {
                         'file_path' => $file_path,
                         'exception' => json_encode($e->getMessage()),
                         'sheet_no' => $i+1,
-                        'request_date' => Carbon::now()->timestamp
+                        'request_date' => date('Y-m-d H:i:s')
                     ];
                     ImportExcelJobLogs::insertFileException($data);
                 }
