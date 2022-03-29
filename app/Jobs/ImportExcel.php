@@ -13,7 +13,7 @@ use Illuminate\Queue\SerializesModels;
 class ImportExcel implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
-    private $file_path = '';
+    private $file = '';
 
     /**
      * Create a new job instance.
