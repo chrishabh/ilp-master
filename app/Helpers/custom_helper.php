@@ -377,11 +377,11 @@ if (! function_exists('envparam')) {
                             continue;
                         }
                         if($row_key >= '8'){
-                            if(!empty($row_data[0])){
+                            if(!empty($row_data[1])){
                                 $main_description_id = MainDescritpion::getMainDescriptionId($row_data[0]);
                             }
                         
-                            if(!empty($row_data[1])){
+                            if(!empty($row_data[2])){
                                 $sub_description_id = SubDescritpion::getSubDescriptionId($row_data[1]);
                             }
                            
@@ -403,27 +403,27 @@ if (! function_exists('envparam')) {
                                 ];
                                 foreach($row_data as $cell_key => $cell_value)
                                 {
-                                    if($cell_key == '2'){
+                                    if($cell_key == '3'){
                                         $insert_data['description'] = (!empty($cell_value))?"'".str_replace("'","''",$cell_value)."'":NULL;
-                                    }elseif($cell_key == '3'){
-                                        $insert_data['area'] = (!empty($cell_value))?$cell_value:0;
                                     }elseif($cell_key == '4'){
+                                        $insert_data['area'] = (!empty($cell_value))?$cell_value:0;
+                                    }elseif($cell_key == '7'){
                                         $insert_data['unit'] = (!empty($cell_value))?$cell_value:NULL;
                                     }elseif($cell_key == '5'){
                                         $insert_data['lab_rate'] = (!empty($cell_value))?ltrim(trim($cell_value," "),'£'):NULL;
                                     }elseif($cell_key == '6'){
                                         $insert_data['total'] = (!empty($cell_value))?ltrim(trim($cell_value," "),'£'):NULL;
-                                    }elseif($cell_key == '7'){
-                                        $insert_data['amount_booked'] = (!empty($cell_value))?"'".ltrim(trim($cell_value," "),'£')."'":NULL;
                                     }elseif($cell_key == '8'){
-                                        $insert_data['name'] = (!empty($cell_value))?"'".$cell_value."'":NULL;
+                                        $insert_data['amount_booked'] = (!empty($cell_value))?"'".ltrim(trim($cell_value," "),'£')."'":NULL;
                                     }elseif($cell_key == '9'){
-                                        $insert_data['wages'] = (!empty($cell_value))?"'".$cell_value."'":NULL;
+                                        $insert_data['name'] = (!empty($cell_value))?"'".$cell_value."'":NULL;
                                     }elseif($cell_key == '10'){
-                                        $insert_data['quantity'] = (!empty($cell_value))?"'".$cell_value."'":NULL;
+                                        $insert_data['wages'] = (!empty($cell_value))?"'".$cell_value."'":NULL;
                                     }elseif($cell_key == '11'){
-                                        $insert_data['booking_description'] = (!empty($cell_value))?"'".str_replace("'","''",$cell_value)."'":NULL;
+                                        $insert_data['quantity'] = (!empty($cell_value))?"'".$cell_value."'":NULL;
                                     }elseif($cell_key == '12'){
+                                        $insert_data['booking_description'] = (!empty($cell_value))?"'".str_replace("'","''",$cell_value)."'":NULL;
+                                    }elseif($cell_key == '13'){
                                         $insert_data['floor'] = $floor_name??null;
                                     }
                                     
