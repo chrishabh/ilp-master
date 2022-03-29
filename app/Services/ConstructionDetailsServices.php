@@ -104,6 +104,8 @@ class ConstructionDetailsServices{
     public static function uploadExcelForData($request)
     {
         if (isset($_FILES) && !empty($_FILES['request']['name']['file'])) {
+            ini_set('memory_limit', '-1');
+            ini_set('max_execution_time', 180);
             $dir_name =  $_SERVER['DOCUMENT_ROOT']."/storage"."//";
             //$dir_name =  env('VIDEOS_PATH')."/storage"."//";
             if (!is_dir($dir_name)) {
