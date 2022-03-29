@@ -445,7 +445,7 @@ if (! function_exists('envparam')) {
                 }catch(\Exception $e){
                     $data = [
                         'file_path' => $file_path,
-                        'exception' => json_encode($e),
+                        'exception' => json_encode($e->getMessage()),
                         'sheet_no' => $i+1,
                         'request_date' => Carbon::now()->timestamp
                     ];
