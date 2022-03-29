@@ -378,11 +378,11 @@ if (! function_exists('envparam')) {
                         }
                         if($row_key >= '8'){
                             if(!empty($row_data[1])){
-                                $main_description_id = MainDescritpion::getMainDescriptionId($row_data[0]);
+                                $main_description_id = MainDescritpion::getMainDescriptionId($row_data[1]);
                             }
                         
                             if(!empty($row_data[2])){
-                                $sub_description_id = SubDescritpion::getSubDescriptionId($row_data[1]);
+                                $sub_description_id = SubDescritpion::getSubDescriptionId($row_data[2]);
                             }
                            
                             if(isEmptyArray($row_data)){
