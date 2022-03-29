@@ -142,6 +142,8 @@ class ConstructionDetailsController extends Controller
     public static function ImportExcelJob(ImportExcelFileJobFormRequest $request)
     {
         $requestData = $request->validated();
+        ini_set('memory_limit', '-1');
+        ini_set('max_execution_time', 360);
         ImportExcel::dispatchSync($request['file_path'])->onQueue('high');
 
         return  response()->success();
