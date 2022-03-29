@@ -142,7 +142,7 @@ class ConstructionDetailsController extends Controller
     public static function ImportExcelJob(ImportExcelFileJobFormRequest $request)
     {
         $requestData = $request->validated();
-        ImportExcel::dispatch($request['file_path'])->onQueue('high');
+        ImportExcel::dispatchSync($request['file_path'])->onQueue('high');
 
         return  response()->success();
     }
