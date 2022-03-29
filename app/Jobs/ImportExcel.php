@@ -13,7 +13,7 @@ use Illuminate\Queue\SerializesModels;
 class ImportExcel implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
-    public $file = '';
+    private $file_path = '';
 
     /**
      * Create a new job instance.
@@ -22,7 +22,7 @@ class ImportExcel implements ShouldQueue
      */
     public function __construct($file_path)
     {
-        $this->handle($file_path);
+        $this->file = $file_path;
     }
 
     /**
@@ -30,10 +30,10 @@ class ImportExcel implements ShouldQueue
      *
      * @return void
      */
-    public function handle($file_path)
+    public function handle()
     {
         $batch_id = RunningBatchDetails::batchStarted('Import_Excel_Job');
-        importExcelToDB($file_path);
+        importExcelToDB($this->file);
         RunningBatchDetails::batchCompleted($batch_id);
         
     }
