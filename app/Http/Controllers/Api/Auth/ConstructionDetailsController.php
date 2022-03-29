@@ -88,7 +88,7 @@ class ConstructionDetailsController extends Controller
         //$requestData = $request->validated();
         $return = ConstructionDetailsServices::uploadExcelForData($request);
 
-        return  response()->success();
+        return  response()->data($return);
     }
 
     public function readExcel(Request $request)
