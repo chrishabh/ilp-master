@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Exceptions\AppException;
 use App\Exceptions\BusinessExceptions\RegisterFailedException;
 use App\Http\Requests\GetProjectDetialsFormRequest;
+use App\Jobs\ImportExcel;
 use App\Models\ApartmentDetails;
 use App\Models\BlockDetails;
 use App\Models\ConstructionDetails;
@@ -118,10 +119,11 @@ class ConstructionDetailsServices{
             $request->file->move($dir_name, $video_saved_name);
             $data = [
                 'file_path' => $video_data['video_path'],
-                'cron_timing' => '* * * * *',
+                'cron_timing' => '',
                 'progress' => '0'
             ];
             ImportExcelTable::insertFilePath($data);
+            ImportExcel::dispatch($video_data['video_path']);
             //importExcelToDB($video_data['video_path']);
         }
     }

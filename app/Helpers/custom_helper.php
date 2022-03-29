@@ -4,6 +4,7 @@ use App\Exceptions\AppException;
 use App\Models\ApartmentDetails;
 use App\Models\BlockDetails;
 use App\Models\Floor;
+use App\Models\ImportExcelJobLogs;
 use App\Models\ImportExcelTable;
 use App\Models\MainDescritpion;
 use App\Models\ProjectDetails;
@@ -11,6 +12,7 @@ use App\Models\SubDescritpion;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use Carbon\Carbon;
 
 function pp($arr, $die="true")
 	{
@@ -327,118 +329,130 @@ if (! function_exists('envparam')) {
                 $key = $key1 = $key2 =0;
                 //$block_id = 1;
                 $total_insert = [];
-                foreach($sheetData as $row_key => $row_data){
+                try{
+                    foreach($sheetData as $row_key => $row_data){
                    
-                    if($row_key <= '5'){
-                        foreach($row_data as $cell_key => $cell_data){ 
-                            if(empty($cell_data)){
-                                continue;
-                            }
-                            if(!empty($cell_data) && ltrim(trim($cell_data," ")) == "Project Name"){
-                                $key = $cell_key;
-                                $project_name = $row_data[++$key];
-                                $project_id = ProjectDetails::getProjectId($project_name);
-
-                            } elseif (!empty($cell_data) && ltrim(trim($cell_data," ")) == "Block"){
-                                    $key1 = $cell_key;
-                                    $block_name = $row_data[++$key1];
-                                    $block_id = BlockDetails::getBlockId($block_name,$project_id);
-                                
-                            } elseif (!empty($cell_data) && ltrim(trim($cell_data," ")) == "Floor Number"){
-                                $key2 = $cell_key;
-                                $floor_name = $row_data[++$key2];
-                                $floor_data = [
-                                    "floor_name" => $floor_name,
-                                    "block_id" => $block_id,
-                                    "project_id" => $project_id
-                                ];
-                                $floor_id = Floor::addFloor($floor_data);
-                            } 
-                            elseif (!empty($cell_data) && ltrim(trim($cell_data," ")) == "Apartment Number"){
-                                $key3 = $cell_key;
-                                $apartment_name = $row_data[++$key3];
-                                $apartment_id = ApartmentDetails::getApartmentId($apartment_name);
-                                if(empty($apartment_id)){
-                                    $data = [
-                                        'project_id' => $project_id??1,
-                                        'block_id' => $block_id,
-                                        'apartment_number' => $apartment_name
+                        if($row_key <= '5'){
+                            foreach($row_data as $cell_key => $cell_data){ 
+                                if(empty($cell_data)){
+                                    continue;
+                                }
+                                if(!empty($cell_data) && ltrim(trim($cell_data," ")) == "Project Name"){
+                                    $key = $cell_key;
+                                    $project_name = $row_data[++$key];
+                                    $project_id = ProjectDetails::getProjectId($project_name);
+    
+                                } elseif (!empty($cell_data) && ltrim(trim($cell_data," ")) == "Block"){
+                                        $key1 = $cell_key;
+                                        $block_name = $row_data[++$key1];
+                                        $block_id = BlockDetails::getBlockId($block_name,$project_id);
+                                    
+                                } elseif (!empty($cell_data) && ltrim(trim($cell_data," ")) == "Floor Number"){
+                                    $key2 = $cell_key;
+                                    $floor_name = $row_data[++$key2];
+                                    $floor_data = [
+                                        "floor_name" => $floor_name,
+                                        "block_id" => $block_id,
+                                        "project_id" => $project_id
                                     ];
-                                    $apartment_id = ApartmentDetails::addApartmentDetails($data);
+                                    $floor_id = Floor::addFloor($floor_data);
+                                } 
+                                elseif (!empty($cell_data) && ltrim(trim($cell_data," ")) == "Apartment Number"){
+                                    $key3 = $cell_key;
+                                    $apartment_name = $row_data[++$key3];
+                                    $apartment_id = ApartmentDetails::getApartmentId($apartment_name);
+                                    if(empty($apartment_id)){
+                                        $data = [
+                                            'project_id' => $project_id??1,
+                                            'block_id' => $block_id,
+                                            'apartment_number' => $apartment_name
+                                        ];
+                                        $apartment_id = ApartmentDetails::addApartmentDetails($data);
+                                    }
+                                } elseif (!empty($cell_data) && $cell_data == "Floor Number"){
+                                    $key4 = $cell_key;
+                                    $floor_name = $row_data[++$key4];
                                 }
-                            } elseif (!empty($cell_data) && $cell_data == "Floor Number"){
-                                $key4 = $cell_key;
-                                $floor_name = $row_data[++$key4];
                             }
+                            continue;
                         }
-                        continue;
-                    }
-                    if($row_key >= '8'){
-                        if(!empty($row_data[0])){
-                            $main_description_id = MainDescritpion::getMainDescriptionId($row_data[0]);
-                        }
-                    
-                        if(!empty($row_data[1])){
-                            $sub_description_id = SubDescritpion::getSubDescriptionId($row_data[1]);
-                        }
-                       
-                        if(isEmptyArray($row_data)){
-                            $insert_data    = [
-                                'main_description_id' => $main_description_id,
-                                'sub_description_id' => $sub_description_id,
-                                'description' => null,
-                                'area' => null,
-                                'unit' => null,
-                                'lab_rate' => null,
-                                'total' => null,
-                                'amount_booked' => null,
-                                'name' => null,
-                                'wages' => null,
-                                'quantity' => null,
-                                'booking_description' => null,
-                                'floor' => null,
-                            ];
-                            foreach($row_data as $cell_key => $cell_value)
-                            {
-                                if($cell_key == '2'){
-                                    $insert_data['description'] = (!empty($cell_value))?"'".str_replace("'","''",$cell_value)."'":NULL;
-                                }elseif($cell_key == '3'){
-                                    $insert_data['area'] = (!empty($cell_value))?$cell_value:0;
-                                }elseif($cell_key == '4'){
-                                    $insert_data['unit'] = (!empty($cell_value))?$cell_value:NULL;
-                                }elseif($cell_key == '5'){
-                                    $insert_data['lab_rate'] = (!empty($cell_value))?ltrim(trim($cell_value," "),'£'):NULL;
-                                }elseif($cell_key == '6'){
-                                    $insert_data['total'] = (!empty($cell_value))?ltrim(trim($cell_value," "),'£'):NULL;
-                                }elseif($cell_key == '7'){
-                                    $insert_data['amount_booked'] = (!empty($cell_value))?"'".ltrim(trim($cell_value," "),'£')."'":NULL;
-                                }elseif($cell_key == '8'){
-                                    $insert_data['name'] = (!empty($cell_value))?"'".$cell_value."'":NULL;
-                                }elseif($cell_key == '9'){
-                                    $insert_data['wages'] = (!empty($cell_value))?"'".$cell_value."'":NULL;
-                                }elseif($cell_key == '10'){
-                                    $insert_data['quantity'] = (!empty($cell_value))?"'".$cell_value."'":NULL;
-                                }elseif($cell_key == '11'){
-                                    $insert_data['booking_description'] = (!empty($cell_value))?"'".str_replace("'","''",$cell_value)."'":NULL;
-                                }elseif($cell_key == '12'){
-                                    $insert_data['floor'] = $floor_name??null;
+                        if($row_key >= '8'){
+                            if(!empty($row_data[0])){
+                                $main_description_id = MainDescritpion::getMainDescriptionId($row_data[0]);
+                            }
+                        
+                            if(!empty($row_data[1])){
+                                $sub_description_id = SubDescritpion::getSubDescriptionId($row_data[1]);
+                            }
+                           
+                            if(isEmptyArray($row_data)){
+                                $insert_data    = [
+                                    'main_description_id' => $main_description_id,
+                                    'sub_description_id' => $sub_description_id,
+                                    'description' => null,
+                                    'area' => null,
+                                    'unit' => null,
+                                    'lab_rate' => null,
+                                    'total' => null,
+                                    'amount_booked' => null,
+                                    'name' => null,
+                                    'wages' => null,
+                                    'quantity' => null,
+                                    'booking_description' => null,
+                                    'floor' => null,
+                                ];
+                                foreach($row_data as $cell_key => $cell_value)
+                                {
+                                    if($cell_key == '2'){
+                                        $insert_data['description'] = (!empty($cell_value))?"'".str_replace("'","''",$cell_value)."'":NULL;
+                                    }elseif($cell_key == '3'){
+                                        $insert_data['area'] = (!empty($cell_value))?$cell_value:0;
+                                    }elseif($cell_key == '4'){
+                                        $insert_data['unit'] = (!empty($cell_value))?$cell_value:NULL;
+                                    }elseif($cell_key == '5'){
+                                        $insert_data['lab_rate'] = (!empty($cell_value))?ltrim(trim($cell_value," "),'£'):NULL;
+                                    }elseif($cell_key == '6'){
+                                        $insert_data['total'] = (!empty($cell_value))?ltrim(trim($cell_value," "),'£'):NULL;
+                                    }elseif($cell_key == '7'){
+                                        $insert_data['amount_booked'] = (!empty($cell_value))?"'".ltrim(trim($cell_value," "),'£')."'":NULL;
+                                    }elseif($cell_key == '8'){
+                                        $insert_data['name'] = (!empty($cell_value))?"'".$cell_value."'":NULL;
+                                    }elseif($cell_key == '9'){
+                                        $insert_data['wages'] = (!empty($cell_value))?"'".$cell_value."'":NULL;
+                                    }elseif($cell_key == '10'){
+                                        $insert_data['quantity'] = (!empty($cell_value))?"'".$cell_value."'":NULL;
+                                    }elseif($cell_key == '11'){
+                                        $insert_data['booking_description'] = (!empty($cell_value))?"'".str_replace("'","''",$cell_value)."'":NULL;
+                                    }elseif($cell_key == '12'){
+                                        $insert_data['floor'] = $floor_name??null;
+                                    }
+                                    
                                 }
-                                
+                                $insert_data['project_id'] = $project_id;
+                                $insert_data['block_id'] = $block_id??1;
+                                $insert_data['apartment_id'] = $apartment_id??null;
+                                $insert_data['floor_id'] = $floor_id??null;
+                                $total_insert [] = $insert_data;
                             }
-                            $insert_data['project_id'] = $project_id;
-                            $insert_data['block_id'] = $block_id??1;
-                            $insert_data['apartment_id'] = $apartment_id??null;
-                            $insert_data['floor_id'] = $floor_id??null;
-                            $total_insert [] = $insert_data;
+                           
+                           
                         }
                        
-                       
                     }
-                   
+                    $progress = $i."/".$sheet_count;
+                    ImportExcelTable::progressUpdate($file_path,$progress);
+                    DB::table('construction_details')->insert($total_insert);
+                }catch(\Exception $e){
+                    $data = [
+                        'file_path' => $file_path,
+                        'exception' => json_encode($e),
+                        'sheet_no' => $i+1,
+                        'request_date' => Carbon::now()->timestamp
+                    ];
+                    ImportExcelJobLogs::insertFileException($data);
                 }
-                $progress = $i."/".$sheet_count;
-                ImportExcelTable::progressUpdate($file_path,$progress);
-                DB::table('construction_details')->insert($total_insert);
+               
+              
 
                 if(($i+1) ==  $sheet_count){
                     ProjectDetails::updatedImportedFlag($project_id);
