@@ -12,7 +12,9 @@ use App\Http\Requests\GetBlockDetailsFormRequest;
 use App\Http\Requests\GetConstructionDetailsFormRequest;
 use App\Http\Requests\GetProjectConstructionDetailsFormRequest;
 use App\Http\Requests\GetProjectDetialsFormRequest;
+use App\Http\Requests\ImportExcelFileJobFormRequest;
 use App\Http\Requests\UpdateConstructionDetailsFormRequest;
+use App\Jobs\ImportExcel;
 use App\Models\ImportExcelTable;
 use App\Services\ConstructionDetailsServices;
 use Carbon\Carbon;
@@ -135,5 +137,13 @@ class ConstructionDetailsController extends Controller
         $return = ImportExcelTable::getProgress();
 
         return  response()->data(['progress' => $return]);
+    }
+
+    public static function ImportExcelJob(ImportExcelFileJobFormRequest $request)
+    {
+        $requestData = $request->validated();
+        ImportExcel::dispatch($request['file_path'])->onQueue('high');
+
+        return  response()->success();
     }
 }
