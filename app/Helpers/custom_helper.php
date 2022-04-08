@@ -169,7 +169,7 @@ if (! function_exists('envparam')) {
             $url = env('APP_URL').'/ipl/public/wages_data'.'/'.$xlsxFileName;
         }else{
             //throw new AppException('No wages exists to download',null,1001);
-            $url = env('APP_URL');
+            $url = env('WEB_URL');
         }
         return $url;
     }
@@ -558,7 +558,7 @@ if (! function_exists('envparam')) {
          if($uploaded){
              $url = env('APP_URL').'/ipl/public/construction_data'.'/'.$xlsxFileName;
          }else{
-             $url = env('APP_URL');
+             $url = env('WEB_URL');
          }
          return $url;
     }
