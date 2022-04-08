@@ -283,7 +283,8 @@ if (! function_exists('envparam')) {
     function importExcelToDB($file_path)
     {
         ini_set('memory_limit', '-1');
-        //ini_set('max_execution_time', 240);
+        ini_set('max_execution_time', '-1');
+        set_time_limit(0);
         if(!empty($file_path)){
             $excel_data = [];
             $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
@@ -323,7 +324,18 @@ if (! function_exists('envparam')) {
                 if($i == 1){
                     continue;
                 }
-                $sheetData = $spreadsheet->getSheet($i)->toArray();
+                try{
+                    $sheetData = $spreadsheet->getSheet($i)->toArray();
+                }catch(\Exception $e){
+                    $data = [
+                        'file_path' => $file_path,
+                        'exception' => json_encode($e->getMessage()),
+                        'sheet_no' => $i+1,
+                        'request_date' => date('Y-m-d H:i:s')
+                    ];
+                    ImportExcelJobLogs::insertFileException($data);
+                    continue;
+                }
                 $sheetData = array_map('array_filter', $sheetData);
                 $sheetData = array_filter($sheetData);
                 $key = $key1 = $key2 =0;
@@ -331,7 +343,6 @@ if (! function_exists('envparam')) {
                 $total_insert = [];
                 try{
                     foreach($sheetData as $row_key => $row_data){
-                   
                         if($row_key <= '5'){
                             foreach($row_data as $cell_key => $cell_data){ 
                                 if(empty($cell_data)){
