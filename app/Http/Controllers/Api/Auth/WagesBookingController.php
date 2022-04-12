@@ -65,8 +65,8 @@ class WagesBookingController extends Controller
     {
         $requestData = $request->validated();
 
-        WagesServices::finalSubmissionWages($request);
+        $data = WagesServices::finalSubmissionWages($request);
 
-        return  response()->success();
+        return  response()->data($data);
     }
 }

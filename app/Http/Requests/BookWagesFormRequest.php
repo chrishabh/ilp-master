@@ -69,7 +69,9 @@ class BookWagesFormRequest extends FormRequest
 
             case Constants::LAST_SUBMIT_WAGES:
                 return [
-                    'user_id' => 'required'
+                    'user_id' => 'required',
+                    'project_id' => 'required',
+                    'wages_number' => 'required',
                 ];
             break;
 

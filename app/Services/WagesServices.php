@@ -62,7 +62,7 @@ class WagesServices{
             $excel_data [] = $records;
         }
 
-        $return['excel_url'] = getXlsxFile($excel_data, 'Wages_Booking');
+        $return['excel_url'] = getXlsxFile($excel_data, 'Wages_Booking_'.$request['wages_number']);
 
         return $return;
     }
@@ -122,6 +122,38 @@ class WagesServices{
     public static function finalSubmissionWages($request)
     {
         WagesDetails::finalWagesSubmission($request);
+
+        $download_data = WagesDetails::getWages($request,true);
+        $records = $excel_data = [];
+        foreach($download_data['wages_details'] as $value){
+
+            $records['Pay To:'] = $value['pay_to'];     // Coloumn A
+            $records['Trade'] = $value['trade'];    // Coloumn B
+            //$records['Level'] = $value['level'];    // Coloumn C
+            $records['Block'] = BlockDetails::getBlockName($value['block_id'])->block_name;     // Coloumn D
+            $records['Plot/room'] = $value['plot_or_room'];     // Coloumn E
+            $records['Level'] = $value['floor_name']; 
+            $records['Description of work'] = $value['description_work'];       // Coloumn F
+            $records['m2 (or hours)'] = $value['m2_or_hours'];      // Coloumn G
+            $records['Rate'] = $value['rate'];      // Coloumn H
+            $records['Booking Amount'] = "£".roundOff($value['amount']);     // Coloumn I
+            $records['Instruction required (y/n)'] = '';        // Coloumn J
+            $records['Instruction received (y/n)'] = '';        // Coloumn K
+            $records[' '] = '';         // Coloumn L
+            $records['Approved'] = "£".roundOff($value['amount']);       // Coloumn M
+            $records['Difference'] = '';        // Coloumn N
+            $records['Surveyor comments'] = '';     // Coloumn O
+            $records['measured'] = "£".roundOff($value['amount']);       // Coloumn P
+            $records['Possible VO'] = '';       // Coloumn Q
+            $records['variation'] = '';     // Coloumn R
+            $records['non recov'] ='';      // Coloumn S
+            $records['CHECK'] = '';     // Coloumn T
+            $excel_data [] = $records;
+        }
+
+        $return['excel_url'] = getXlsxFile($excel_data, 'Wages_Booking_'.$request['wages_number']);
+
+        return $return;
     }
 
 }

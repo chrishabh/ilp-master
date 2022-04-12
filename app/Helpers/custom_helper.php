@@ -86,7 +86,7 @@ if (! function_exists('envparam')) {
 
 	function getXlsxFile($details,$file){
         //Give our xlsx file a name.
-        $xlsxFileName = $file.'_'.date('Y_m_d_H_i_s').'.xlsx';
+        $xlsxFileName = $file.'.xlsx';
 
         // Set the Content-Type and Content-Disposition headers.
         //Open file pointer.
@@ -168,8 +168,8 @@ if (! function_exists('envparam')) {
         if($uploaded){
             $url = env('APP_URL').'/ipl/public/wages_data'.'/'.$xlsxFileName;
         }else{
-            //throw new AppException('No wages exists to download',null,1001);
-            $url = env('WEB_URL');
+            throw new AppException('No wages exists to download',null,1001);
+            //$url = env('WEB_URL');
         }
         return $url;
     }

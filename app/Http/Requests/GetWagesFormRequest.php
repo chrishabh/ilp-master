@@ -27,7 +27,7 @@ class GetWagesFormRequest extends FormRequest
             'no_of_records' => 'required',
             'page_no' => 'required',
             'project_id' => 'required',
-            #'block_id' => 'required',
+            'wages_number' => 'required',
             'user_id' => 'required',
             #'apartment_id' => 'required'
         ];
