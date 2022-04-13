@@ -37,7 +37,7 @@ use Illuminate\Support\Facades\Route;
                 Route::post('delete-booked-wages','WagesBookingController@deleteBookedWages');
                 Route::post('final-wages-submission','WagesBookingController@finalSubmissionWages');
                 Route::post('get-wages','WagesBookingController@getWages');
-                Route::post('download-wages','WagesBookingController@getWages');
+                Route::post('download-wages','WagesBookingController@downloadWages');
                 Route::post('get-wages-excel','WagesBookingController@downloadWages');
                 // Route::post('upload-videos','VideosController@uploadVideo');
                 // Route::post('download-videos','VideosController@downloadVideo');
