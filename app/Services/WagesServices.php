@@ -28,13 +28,13 @@ class WagesServices{
         
     }
 
-    public static function getWages($request)
+    public static function getWages($request,$excel_flag = false)
     {
-        $return = WagesDetails::getWages($request,false);
+        $return = WagesDetails::getWages($request,$excel_flag);
         foreach($return['wages_details'] as &$value){
             $value['remaining_amount'] = ConstructionDetails::getRemaingAmountForWages($value);
         }
-        $download_data = WagesDetails::getWages($request,true);
+        $download_data = WagesDetails::getWages($request,$excel_flag);
         $records = $excel_data = [];
         foreach($download_data['wages_details'] as $value){
 
@@ -62,7 +62,11 @@ class WagesServices{
             $excel_data [] = $records;
         }
 
-        $return['excel_url'] = getXlsxFile($excel_data, 'Wages_Booking_'.$request['wages_number']);
+        if($excel_flag){
+            $return['excel_url'] = getXlsxFile($excel_data, 'Wages_Booking_'.$request['wages_number']);
+        }
+
+
 
         return $return;
     }

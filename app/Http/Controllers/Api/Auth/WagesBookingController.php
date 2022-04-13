@@ -29,6 +29,14 @@ class WagesBookingController extends Controller
         return  response()->data($data);
     }
 
+    public static function downloadWages(GetWagesFormRequest $request)
+    {
+        $requestData = $request->validated();
+        $data =  WagesServices::getWages($request,true);
+
+        return  response()->data($data);
+    }
+
     public static function getWagesExcel(GetWagesFormRequest $request)
     {
         $requestData = $request->validated();
