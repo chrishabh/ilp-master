@@ -520,6 +520,14 @@ if (! function_exists('envparam')) {
                      $sheet->setCellValueByColumnAndRow($j,$i+2,$x_value);
                      $j=$j+1;
                  }
+                 $sheet->getStyle('A1:A1')->getAlignment()->setHorizontal('center');
+                 $sheet->getStyle('B1:B1')->getAlignment()->setHorizontal('center');
+                 $sheet->getStyle('C1:C1')->getAlignment()->setHorizontal('center');
+                 $sheet->getStyle('D1:D1')->getAlignment()->setHorizontal('center');
+                 $sheet->getStyle('E1:E1')->getAlignment()->setHorizontal('center');
+                 $sheet->getStyle('F1:F1')->getAlignment()->setHorizontal('center');
+                 $sheet->getStyle('G1:G1')->getAlignment()->setHorizontal('center');
+
                  
                  }
                  // get last row and column for formatting
@@ -537,8 +545,87 @@ if (! function_exists('envparam')) {
                      $doc->getActiveSheet()->getStyle('A1:' . $last_column . '1')->getFont()->setBold(true);
                  }
                  // format all columns as text
-                 $doc->getActiveSheet()->getStyle('A2:' . $last_column . $last_row)
+                $doc->getActiveSheet()->getStyle('A2:' . $last_column . $last_row)
                      ->getNumberFormat()->setFormatCode(\PhpOffice\PhpSpreadsheet\Style\NumberFormat::FORMAT_TEXT);
+
+                $doc->getActiveSheet()
+                     ->getStyle('A1')
+                     ->getFont()
+                     ->getColor()
+                     ->setRGB ('ffffff');
+                $doc->getActiveSheet()
+                     ->getStyle('B1')
+                     ->getFont()
+                     ->getColor()
+                     ->setRGB ('ffffff');
+                $doc->getActiveSheet()
+                     ->getStyle('C1')
+                     ->getFont()
+                     ->getColor()
+                     ->setRGB ('ffffff');
+                $doc->getActiveSheet()
+                     ->getStyle('D1')
+                     ->getFont()
+                     ->getColor()
+                     ->setRGB ('ffffff');
+                $doc->getActiveSheet()
+                     ->getStyle('E1')
+                     ->getFont()
+                     ->getColor()
+                     ->setRGB ('ffffff');
+                $doc->getActiveSheet()
+                     ->getStyle('F1')
+                     ->getFont()
+                     ->getColor()
+                     ->setRGB ('ffffff');
+                $doc->getActiveSheet()
+                     ->getStyle('G1')
+                     ->getFont()
+                     ->getColor()
+                     ->setRGB ('ffffff');
+
+                $doc->getActiveSheet()
+                    ->getStyle('A1:A1')
+                    ->getFill()
+                    ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+                    ->getStartColor()
+                    ->setARGB('3333ff');
+                $doc->getActiveSheet()
+                    ->getStyle('B1:B1')
+                    ->getFill()
+                    ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+                    ->getStartColor()
+                    ->setARGB('3333ff');
+                $doc->getActiveSheet()
+                    ->getStyle('C1:C1')
+                    ->getFill()
+                    ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+                    ->getStartColor()
+                    ->setARGB('3333ff');
+                $doc->getActiveSheet()
+                    ->getStyle('D1:D1')
+                    ->getFill()
+                    ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+                    ->getStartColor()
+                    ->setARGB('3333ff');
+                $doc->getActiveSheet()
+                    ->getStyle('E1:E1')
+                    ->getFill()
+                    ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+                    ->getStartColor()
+                    ->setARGB('3333ff');
+                $doc->getActiveSheet()
+                    ->getStyle('F1:F1')
+                    ->getFill()
+                    ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+                    ->getStartColor()
+                    ->setARGB('3333ff');
+                $doc->getActiveSheet()
+                    ->getStyle('G1:G1')
+                    ->getFill()
+                    ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+                    ->getStartColor()
+                    ->setARGB('3333ff');
                  
                  $writer = new PhpOffice\PhpSpreadsheet\Writer\Xlsx($doc);
                  //$writer->save($fp);
