@@ -548,41 +548,41 @@ if (! function_exists('envparam')) {
                 $doc->getActiveSheet()->getStyle('A2:' . $last_column . $last_row)
                      ->getNumberFormat()->setFormatCode(\PhpOffice\PhpSpreadsheet\Style\NumberFormat::FORMAT_TEXT);
 
-                $doc->getActiveSheet()
-                     ->getStyle('A1')
-                     ->getFont()
-                     ->getColor()
-                     ->setRGB ('ffffff');
-                $doc->getActiveSheet()
-                     ->getStyle('B1')
-                     ->getFont()
-                     ->getColor()
-                     ->setRGB ('ffffff');
-                $doc->getActiveSheet()
-                     ->getStyle('C1')
-                     ->getFont()
-                     ->getColor()
-                     ->setRGB ('ffffff');
-                $doc->getActiveSheet()
-                     ->getStyle('D1')
-                     ->getFont()
-                     ->getColor()
-                     ->setRGB ('ffffff');
-                $doc->getActiveSheet()
-                     ->getStyle('E1')
-                     ->getFont()
-                     ->getColor()
-                     ->setRGB ('ffffff');
-                $doc->getActiveSheet()
-                     ->getStyle('F1')
-                     ->getFont()
-                     ->getColor()
-                     ->setRGB ('ffffff');
-                $doc->getActiveSheet()
-                     ->getStyle('G1')
-                     ->getFont()
-                     ->getColor()
-                     ->setRGB ('ffffff');
+                // $doc->getActiveSheet()
+                //      ->getStyle('A1')
+                //      ->getFont()
+                //      ->getColor()
+                //      ->setRGB ('ffffff');
+                // $doc->getActiveSheet()
+                //      ->getStyle('B1')
+                //      ->getFont()
+                //      ->getColor()
+                //      ->setRGB ('ffffff');
+                // $doc->getActiveSheet()
+                //      ->getStyle('C1')
+                //      ->getFont()
+                //      ->getColor()
+                //      ->setRGB ('ffffff');
+                // $doc->getActiveSheet()
+                //      ->getStyle('D1')
+                //      ->getFont()
+                //      ->getColor()
+                //      ->setRGB ('ffffff');
+                // $doc->getActiveSheet()
+                //      ->getStyle('E1')
+                //      ->getFont()
+                //      ->getColor()
+                //      ->setRGB ('ffffff');
+                // $doc->getActiveSheet()
+                //      ->getStyle('F1')
+                //      ->getFont()
+                //      ->getColor()
+                //      ->setRGB ('ffffff');
+                // $doc->getActiveSheet()
+                //      ->getStyle('G1')
+                //      ->getFont()
+                //      ->getColor()
+                //      ->setRGB ('ffffff');
 
                 $doc->getActiveSheet()
                     ->getStyle('A1:A1')
