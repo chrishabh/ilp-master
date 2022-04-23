@@ -589,43 +589,43 @@ if (! function_exists('envparam')) {
                     ->getFill()
                     ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
                     ->getStartColor()
-                    ->setARGB('3333ff');
+                    ->setARGB('FF0000FF');
                 $doc->getActiveSheet()
                     ->getStyle('B1:B1')
                     ->getFill()
                     ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
                     ->getStartColor()
-                    ->setARGB('3333ff');
+                    ->setARGB('FF0000FF');
                 $doc->getActiveSheet()
                     ->getStyle('C1:C1')
                     ->getFill()
                     ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
                     ->getStartColor()
-                    ->setARGB('3333ff');
+                    ->setARGB('FF0000FF');
                 $doc->getActiveSheet()
                     ->getStyle('D1:D1')
                     ->getFill()
                     ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
                     ->getStartColor()
-                    ->setARGB('3333ff');
+                    ->setARGB('FF0000FF');
                 $doc->getActiveSheet()
                     ->getStyle('E1:E1')
                     ->getFill()
                     ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
                     ->getStartColor()
-                    ->setARGB('3333ff');
+                    ->setARGB('FF0000FF');
                 $doc->getActiveSheet()
                     ->getStyle('F1:F1')
                     ->getFill()
                     ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
                     ->getStartColor()
-                    ->setARGB('3333ff');
+                    ->setARGB('FF0000FF');
                 $doc->getActiveSheet()
                     ->getStyle('G1:G1')
                     ->getFill()
                     ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
                     ->getStartColor()
-                    ->setARGB('3333ff');
+                    ->setARGB('FF0000FF');
                  
                  $writer = new PhpOffice\PhpSpreadsheet\Writer\Xlsx($doc);
                  //$writer->save($fp);
