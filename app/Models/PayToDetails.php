@@ -32,4 +32,9 @@ class PayToDetails extends Model
     {
         return PayToDetails::insertGetId($data);
     }
+
+    public static function getPayToCode($pay_name)
+    {
+        return PayToDetails::whereNull('deleted_at')->where('pay_to_name',$pay_name)->first();
+    }
 }

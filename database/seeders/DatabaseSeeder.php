@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
         $this->call(MainDescriptionDetails::class);
         $this->call(SubDescriptionDetails::class);
         $this->call(ConstructionDetails::class);
+        $this->call(LookUpValueDetails::class);
       
     }
 }

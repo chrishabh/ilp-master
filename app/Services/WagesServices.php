@@ -37,7 +37,8 @@ class WagesServices{
         $download_data = WagesDetails::getWages($request,$excel_flag);
         $records = $excel_data = [];
         foreach($download_data['wages_details'] as $value){
-
+            ;
+            $records['Pay Code'] = PayToDetails::getPayToCode($value['pay_to'])->pay_to_code??" ";
             $records['Pay To:'] = $value['pay_to'];     // Coloumn A
             $records['Trade'] = $value['trade'];    // Coloumn B
             //$records['Level'] = $value['level'];    // Coloumn C
@@ -47,18 +48,18 @@ class WagesServices{
             $records['Description of work'] = $value['description_work'];       // Coloumn F
             $records['m2 (or hours)'] = $value['m2_or_hours'];      // Coloumn G
             $records['Rate'] = $value['rate'];      // Coloumn H
-            $records['Booking Amount'] = "£".roundOff($value['amount']);     // Coloumn I
+            $records['Booking Amount'] = roundOff($value['amount']);     // Coloumn I
             $records['Instruction required (y/n)'] = '';        // Coloumn J
             $records['Instruction received (y/n)'] = '';        // Coloumn K
-            $records[' '] = '';         // Coloumn L
-            $records['Approved'] = "£".roundOff($value['amount']);       // Coloumn M
+            //$records[' '] = '';         // Coloumn L
+            $records['Approved'] = roundOff($value['amount']);       // Coloumn M
             $records['Difference'] = '';        // Coloumn N
             $records['Surveyor comments'] = '';     // Coloumn O
             $records['measured'] = "£".roundOff($value['amount']);       // Coloumn P
             $records['Possible VO'] = '';       // Coloumn Q
             $records['variation'] = '';     // Coloumn R
             $records['non recov'] ='';      // Coloumn S
-            $records['CHECK'] = '';     // Coloumn T
+            //$records['CHECK'] = '';     // Coloumn T
             $excel_data [] = $records;
         }
 

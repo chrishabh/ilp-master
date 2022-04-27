@@ -7,6 +7,7 @@ use App\Http\Requests\RegisterFormRequest;
 use App\Services\UserServices;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\SignUpFormRequest;
+use App\Models\LookUpValue;
 use GuzzleHttp\Psr7\Request as Psr7Request;
 use Illuminate\Http\Client\Request as ClientRequest;
 use Illuminate\Http\Request as HttpRequest;
@@ -34,6 +35,12 @@ class UserController extends Controller
         $data = $user->login($request);
         return  response()->data(['user'=>$data]);
 
+    }
+
+    public static function lookUpValue()
+    {
+        $data = LookUpValue::getLookUpValue();
+        return  response()->data(['look_up'=>$data]);
     }
 
     public static function test()
