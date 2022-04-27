@@ -42,7 +42,7 @@ class WagesServices{
             $records['Pay To:'] = $value['pay_to'];     // Coloumn A
             $records['Trade'] = $value['trade'];    // Coloumn B
             //$records['Level'] = $value['level'];    // Coloumn C
-            $records['Block'] = BlockDetails::getBlockName($value['block_id'])->block_name;     // Coloumn D
+            $records['Block'] = BlockDetails::getBlockName($value['block_id'])->block_name?? " ";     // Coloumn D
             $records['Plot/room'] = $value['plot_or_room'];     // Coloumn E
             $records['Level'] = $value['floor_name']; 
             $records['Description of work'] = $value['description_work'];       // Coloumn F
