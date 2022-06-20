@@ -106,4 +106,19 @@ class UserServices{
 
     }
 
+    public static function getUserList()
+    {
+        return User::getUserList();
+    }
+
+    public static function updateUserRole($request)
+    {
+        if($request['role_request'] == 'delete')
+        {
+            User::deleteUser($request['id']);
+        }else{
+            User::updateUserRole($request['id'],$request['role_request']);
+        }
+    }
+
 }

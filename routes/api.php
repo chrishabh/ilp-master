@@ -17,6 +17,8 @@ use Illuminate\Support\Facades\Route;
         Route::group(['namespace' => 'Api\Auth'], function () {
             Route::post('login','UserController@userLogin');		
             Route::post('register','UserController@userSignUp');
+            Route::get('user-list','UserController@getUserList');
+            Route::post('update-user','UserController@updateUser');
             
         });
 

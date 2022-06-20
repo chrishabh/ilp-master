@@ -7,6 +7,7 @@ use App\Http\Requests\RegisterFormRequest;
 use App\Services\UserServices;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\SignUpFormRequest;
+use App\Http\Requests\UpdateUserRoleFormRequest;
 use App\Models\LookUpValue;
 use GuzzleHttp\Psr7\Request as Psr7Request;
 use Illuminate\Http\Client\Request as ClientRequest;
@@ -46,6 +47,20 @@ class UserController extends Controller
     public static function test()
     {
         UserServices::cleanServerDirectory();
+    }
+
+    public static function getUserList()
+    {
+        $user = new UserServices();
+        $data = $user->getUserList();
+        return  response()->data(['user_list'=>$data]);
+    }
+
+    public static function updateUser(UpdateUserRoleFormRequest  $request)
+    {
+        $user = new UserServices();
+        $data = $user->updateUserRole($request);
+        return  response()->sucess();
     }
     
 }

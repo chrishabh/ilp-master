@@ -52,7 +52,7 @@ class User extends Authenticatable
 
     public static function getUserByEmail($email)
     {
-        return User::where('email', $email)->first();
+        return User::whereNull('deleted_at')->where('email', $email)->first();
     }
 
     public static function getUserById($user_id)
@@ -68,5 +68,26 @@ class User extends Authenticatable
             
         }
         return (object)[];
+    }
+
+    public static function getUserList()
+    {
+        $return = User::whereNull('deleted_at')->get();
+
+        if(count($return)>0){
+            return $return->toArray();
+        }
+
+        return [];
+    }
+
+    public static function deleteUser($id)
+    {
+        User::where('id',$id)->update(['deleted_at' =>date('Y-m-d')]);
+    }
+
+    public static function updateUserRole($id,$role)
+    {
+        User::whereNull('deleted_at')->where('id',$id)->update(['user_role' =>$role]);
     }
 }
