@@ -60,7 +60,7 @@ class UserController extends Controller
     {
         $user = new UserServices();
         $data = $user->updateUserRole($request);
-        return  response()->sucess();
+        return  response()->success();
     }
     
 }
