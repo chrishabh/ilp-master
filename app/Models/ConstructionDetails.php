@@ -34,7 +34,7 @@ class ConstructionDetails extends Model
         if(!empty($apartment_id)){
             $return['total_records'] = $return['total_records']->where('apartment_id',$request['apartment_id'])->count('id');
         }else{
-            $return['total_records'] = $return['total_records']->where('floor_id',$floor_id)->count('id');
+            $return['total_records'] = $return['total_records']->where('floor_id',$floor_id)->whereNull('apartment_id')->count('id');
         }
 
 
@@ -44,7 +44,7 @@ class ConstructionDetails extends Model
         if(!empty($apartment_id)){
             $distinct_main_header = $distinct_main_header->where('construction_details.apartment_id',$request['apartment_id'])->distinct()->offset($offset)->limit($noOfRecord)->get();
         }else{
-            $distinct_main_header = $distinct_main_header->where('construction_details.floor_id',$request['floor_id'])->distinct()->offset($offset)->limit($noOfRecord)->get();
+            $distinct_main_header = $distinct_main_header->whereNull('construction_details.apartment_id')->where('construction_details.floor_id',$request['floor_id'])->distinct()->offset($offset)->limit($noOfRecord)->get();
         }
         
 
@@ -60,7 +60,7 @@ class ConstructionDetails extends Model
             if(!empty($apartment_id)){
                 $distinct_sub_headers = $distinct_sub_headers->where('construction_details.apartment_id',$request['apartment_id'])->distinct()->get();
             }else{
-                $distinct_sub_headers = $distinct_sub_headers->where('construction_details.floor_id',$request['floor_id'])->distinct()->get();
+                $distinct_sub_headers = $distinct_sub_headers->whereNull('construction_details.apartment_id')->where('construction_details.floor_id',$request['floor_id'])->distinct()->get();
             }
             
             foreach($distinct_sub_headers as $sub_header){
@@ -73,7 +73,7 @@ class ConstructionDetails extends Model
                 if(!empty($apartment_id)){
                     $data = $data->where('construction_details.apartment_id',$request['apartment_id'])->get();
                 }else{
-                    $data = $data->where('construction_details.floor_id',$request['floor_id'])->get();
+                    $data = $data->whereNull('construction_details.apartment_id')->where('construction_details.floor_id',$request['floor_id'])->get();
                 }
                 
                 foreach($data->toArray() as $records){
