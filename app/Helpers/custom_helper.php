@@ -342,9 +342,10 @@ if (! function_exists('envparam')) {
                 //$block_id = 1;
                 $total_insert = [];
                 try{
+                    $apartment_id = $block_id   =   $project_id =   $floor_id   =   null;
                     foreach($sheetData as $row_key => $row_data){
                         if($row_key <= '5'){
-                            $apartment_id = $block_id   =   $project_id =   $floor_id   =   null;
+                       
                             foreach($row_data as $cell_key => $cell_data){ 
                                 if(empty($cell_data)){
                                     continue;
