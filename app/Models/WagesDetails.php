@@ -48,7 +48,7 @@ class WagesDetails extends Model
         //->where('wages_details.apartment_id',$request['apartment_id'])
         if($excel_data == true){
             $data = $data->whereRaw("final_submission_date = (select max(final_submission_date) from wages_details where project_id = '$project_id' and user_id = '$user_id')")
-            ->offset($offset)->limit($noOfRecord)->get();
+            ->get();
         }else{
             $data = $data->whereNull('wages_details.final_submission_date')->offset($offset)->limit($noOfRecord)->get();
         }
