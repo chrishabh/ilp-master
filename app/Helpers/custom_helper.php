@@ -324,24 +324,24 @@ if (! function_exists('envparam')) {
                 if($i == 1){
                     continue;
                 }
-                try{
+                // try{
                     $sheetData = $spreadsheet->getSheet($i)->toArray();
-                }catch(\Exception $e){
-                    $data = [
-                        'file_path' => $file_path,
-                        'exception' => json_encode($e->getMessage()),
-                        'sheet_no' => $i+1,
-                        'request_date' => date('Y-m-d H:i:s')
-                    ];
-                    ImportExcelJobLogs::insertFileException($data);
-                    continue;
-                }
+                //  }catch(\Exception $e){
+                //     $data = [
+                //         'file_path' => $file_path,
+                //         'exception' => json_encode($e->getMessage()),
+                //         'sheet_no' => $i+1,
+                //         'request_date' => date('Y-m-d H:i:s')
+                //     ];
+                //     ImportExcelJobLogs::insertFileException($data);
+                //     continue;
+                // }
                 $sheetData = array_map('array_filter', $sheetData);
                 $sheetData = array_filter($sheetData);
                 $key = $key1 = $key2 =0;
                 //$block_id = 1;
                 $total_insert = [];
-                try{
+                // try{
                     $apartment_id = $block_id   =   $project_id =   $floor_id   =   null;
                     foreach($sheetData as $row_key => $row_data){
                         if($row_key <= '5'){
@@ -455,15 +455,15 @@ if (! function_exists('envparam')) {
                     $progress = $i."/".$sheet_count;
                     ImportExcelTable::progressUpdate($file_path,$progress);
                     DB::table('construction_details')->insert($total_insert);
-                }catch(\Exception $e){
-                    $data = [
-                        'file_path' => $file_path,
-                        'exception' => json_encode($e->getMessage()),
-                        'sheet_no' => $i+1,
-                        'request_date' => date('Y-m-d H:i:s')
-                    ];
-                    ImportExcelJobLogs::insertFileException($data);
-                }
+                // }catch(\Exception $e){
+                //     $data = [
+                //         'file_path' => $file_path,
+                //         'exception' => json_encode($e->getMessage()),
+                //         'sheet_no' => $i+1,
+                //         'request_date' => date('Y-m-d H:i:s')
+                //     ];
+                //     ImportExcelJobLogs::insertFileException($data);
+                // }
                
               
 
