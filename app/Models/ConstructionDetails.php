@@ -115,7 +115,7 @@ class ConstructionDetails extends Model
         $return['total_records'] = ConstructionDetails::whereNull('deleted_at')->where('project_id',$request['project_id'])->where('block_id',$request['block_id'])->distinct()->count('main_description_id');
 
         $data = ConstructionDetails::join('main_descritpions', 'main_descritpions.id', '=', 'construction_details.main_description_id')
-        ->select('construction_details.main_description_id',$field,'main_descritpions.description as description_header',DB::raw("CASE WHEN sum(construction_details.total) IS NULL THEN 0 WHEN sum(construction_details.amount_booked) IS NULL THEN ROUND(sum(construction_details.total),2) ELSE ROUND(sum(construction_details.total)-sum(construction_details.amount_booked),2) END as remaining_booking_amount"))->whereNull('construction_details.deleted_at')
+        ->select('construction_details.main_description_id',$field,'main_descritpions.description as description_header',DB::raw("CASE WHEN sum(construction_details.total) IS NULL THEN 0 ELSE ROUND(sum(construction_details.total)) END as remaining_booking_amount"))->whereNull('construction_details.deleted_at')
         ->where('construction_details.project_id',$request['project_id'])
         ->where('construction_details.block_id',$request['block_id']);
 
@@ -135,11 +135,31 @@ class ConstructionDetails extends Model
             $sub_final['main_description_id'] = $value['main_description_id'];
             if(count($apartment_id)>0){
                 $sub_final['apartment_id'] = $value['apartment_id'];
+                $booked_amount = ConstructionDetails::select('amount_booked')->whereNull('construction_details.deleted_at')
+                ->where('construction_details.project_id',$request['project_id'])->where('construction_details.main_description_id',$value['main_description_id'])
+                ->where('construction_details.block_id',$request['block_id'])->whereIn('construction_details.apartment_id',$request['apartment_id'])->get();
+                $total_amount_booked = 0;
+                if(count($booked_amount)>0){
+                    foreach($booked_amount->toArray() as $booked_amount_value){
+                        $res = explode(',',str_replace("'", "", $booked_amount_value['amount_booked']));
+                        $total_amount_booked +=  array_sum($res);
+                    }
+                }
             }else{
                 $sub_final['floor_id'] = $value['floor_id'];
+                $booked_amount = ConstructionDetails::select('amount_booked')->whereNull('construction_details.deleted_at')
+                ->where('construction_details.project_id',$request['project_id'])->where('construction_details.main_description_id',$value['main_description_id'])
+                ->where('construction_details.block_id',$request['block_id'])->whereIn('construction_details.floor_id',$request['floor_id'])->get();
+                $total_amount_booked = 0;
+                if(count($booked_amount)>0){
+                    foreach($booked_amount->toArray() as $booked_amount_value){
+                        $res = explode(',',str_replace("'", "", $booked_amount_value['amount_booked']));
+                        $total_amount_booked +=  array_sum($res);
+                    }
+                }
             }
             
-            $sub_final['remaining_booking_amount'] = $value['remaining_booking_amount'];
+            $sub_final['remaining_booking_amount'] = $value['remaining_booking_amount']-$total_amount_booked;
             $response[$value['description_header']]['records'][] =  $sub_final;
 
         }
