@@ -17,6 +17,9 @@ class WagesServices{
         foreach($data['book_wages'] as &$value){
             if(!empty($value['apartment_id']) || !empty($value['floor_id'])){
                 $value['floor'] = $value['level'];
+                if($value['sum'] <= 0){
+                    throw new AppException("Invalid amount");
+                }
                 //$value['user_id'] = User::details()->id;
                 unset($value['level']);
                WagesDetails::bookWages($value);
