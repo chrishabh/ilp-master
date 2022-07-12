@@ -159,7 +159,7 @@ class ConstructionDetails extends Model
                 }
             }
             
-            $sub_final['remaining_booking_amount'] = $value['remaining_booking_amount']-$total_amount_booked;
+            $sub_final['remaining_booking_amount'] = (($value['remaining_booking_amount']-$total_amount_booked) < 0)?0:$value['remaining_booking_amount']-$total_amount_booked;
             $response[$value['description_header']]['records'][] =  $sub_final;
 
         }
