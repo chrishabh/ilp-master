@@ -137,7 +137,7 @@ class ConstructionDetails extends Model
                 $sub_final['apartment_id'] = $value['apartment_id'];
                 $booked_amount = ConstructionDetails::select('amount_booked')->whereNull('construction_details.deleted_at')
                 ->where('construction_details.project_id',$request['project_id'])->where('construction_details.main_description_id',$value['main_description_id'])
-                ->where('construction_details.block_id',$request['block_id'])->whereIn('construction_details.apartment_id',$request['apartment_id'])->get();
+                ->where('construction_details.block_id',$request['block_id'])->where('construction_details.apartment_id',$value['apartment_id'])->get();
                 $total_amount_booked = 0;
                 if(count($booked_amount)>0){
                     foreach($booked_amount->toArray() as $booked_amount_value){
@@ -149,7 +149,7 @@ class ConstructionDetails extends Model
                 $sub_final['floor_id'] = $value['floor_id'];
                 $booked_amount = ConstructionDetails::select('amount_booked')->whereNull('construction_details.deleted_at')
                 ->where('construction_details.project_id',$request['project_id'])->where('construction_details.main_description_id',$value['main_description_id'])
-                ->where('construction_details.block_id',$request['block_id'])->whereIn('construction_details.floor_id',$request['floor_id'])->get();
+                ->where('construction_details.block_id',$request['block_id'])->where('construction_details.floor_id',$value['floor_id'])->get();
                 $total_amount_booked = 0;
                 if(count($booked_amount)>0){
                     foreach($booked_amount->toArray() as $booked_amount_value){
