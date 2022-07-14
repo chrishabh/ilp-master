@@ -129,7 +129,7 @@ class ConstructionDetails extends Model
         if(count($data)>0){
             $records = $data->toArray();
         }
-
+        $array  =   [];
         foreach($records as $value){
             $response[$value['description_header']]['description_header'] = $value['description_header'];
             $sub_final['main_description_id'] = $value['main_description_id'];
@@ -158,14 +158,22 @@ class ConstructionDetails extends Model
                     }
                 }
             }
-            
+            $array[$value['description_header']][] = $value['remaining_booking_amount'];
             $sub_final['remaining_booking_amount'] = (($value['remaining_booking_amount']-$total_amount_booked) < 0)?0:$value['remaining_booking_amount']-$total_amount_booked;
+            //$sub_final['total'] = $value['remaining_booking_amount'];
+            //$response[$value['description_header']]['total_sum'] += $value['remaining_booking_amount'];
             $response[$value['description_header']]['records'][] =  $sub_final;
 
         }
         $main_description = MainDescritpion::getDistinctDescription();
         foreach($main_description as $value){
             if(isset($response[$value['description_header']])){
+                if(isset($array[$value['description_header']])){
+                    $response[$value['description_header']]['total'] = array_sum($array[$value['description_header']]);
+                } else {
+                    $response[$value['description_header']]['total'] = 0;
+                }
+                
                 $final[] =  $response[$value['description_header']];
             }
         }
