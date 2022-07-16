@@ -48,7 +48,7 @@ class WagesDetails extends Model
         //->where('wages_details.apartment_id',$request['apartment_id'])
         if($excel_data == true){
             $latest_sunday =  date('Y-m-d',strtotime('last monday')); //pp($latest_sunday);
-            $data = $data->whereRaw("final_submission_date <= $latest_sunday")
+            $data = $data->whereRaw("final_submission_date >= $latest_sunday")
             ->get();
         }else{
             $data = $data->whereNull('wages_details.final_submission_date')->offset($offset)->limit($noOfRecord)->get();
