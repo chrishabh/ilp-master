@@ -671,11 +671,6 @@ if (! function_exists('envparam')) {
 
     function remainingBalanceCheck($project_id,$block_id,$apartment_id,$floor_id,$main_description_id){
 
-        $floor_array  =  $apartment_array = [];
-        $apartment_array = $apartment_id;
-        $floor_array  = $floor_id;
-
-
         return ConstructionDetails::remainingBalanceCheck($project_id,$block_id,$apartment_array,$floor_array,$main_description_id);
 
     }

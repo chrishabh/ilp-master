@@ -115,7 +115,7 @@ class ConstructionDetails extends Model
         $return['total_records'] = ConstructionDetails::whereNull('deleted_at')->where('project_id',$request['project_id'])->where('block_id',$request['block_id'])->distinct()->count('main_description_id');
 
         $data = ConstructionDetails::join('main_descritpions', 'main_descritpions.id', '=', 'construction_details.main_description_id')
-        ->select('construction_details.main_description_id',$field,'main_descritpions.description as description_header',DB::raw("CASE WHEN sum(construction_details.total) IS NULL THEN 0 ELSE ROUND(sum(construction_details.total)) END as remaining_booking_amount"))->whereNull('construction_details.deleted_at')
+        ->select('construction_details.main_description_id',$field,'main_descritpions.description as description_header',DB::raw("CASE WHEN sum(construction_details.total) IS NULL THEN 0 ELSE ROUND(sum(construction_details.total),2) END as remaining_booking_amount"))->whereNull('construction_details.deleted_at')
         ->where('construction_details.project_id',$request['project_id'])
         ->where('construction_details.block_id',$request['block_id']);
 
@@ -410,7 +410,7 @@ class ConstructionDetails extends Model
 
     public static function remainingBalanceCheck($project_id,$block_id,$apartment_id,$floor_id,$main_description_id)
     {
-        if(count($apartment_id)>0){
+        if(!empty($apartment_id)){
             $booked_amount = ConstructionDetails::select('total','amount_booked')->whereNull('construction_details.deleted_at')
             ->where('construction_details.project_id',$project_id)->where('construction_details.main_description_id',$main_description_id)
             ->where('construction_details.block_id',$block_id)->where('construction_details.apartment_id',$floor_id)->get();
@@ -435,7 +435,6 @@ class ConstructionDetails extends Model
                 }
             }
         }
-
         return $total_amount-$total_amount_booked;
     }
 }

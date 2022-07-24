@@ -21,13 +21,17 @@ class WagesServices{
                 //     throw new AppException("Invalid amount");
                 // }
                 //$value['user_id'] = User::details()->id;
-                if($value['sum'] <= remainingBalanceCheck($value['project_id'],$value['block_id'],$value['apartment_id'],$value['floor_id'],$value['main_description_id'])){
-                    unset($value['level']);
-                    WagesDetails::bookWages($value);
-                    ConstructionDetails::addWagesBookValue($value);
-                }else{
+             
+                if((float)$value['sum'] > roundOff(remainingBalanceCheck($value['project_id'],$value['block_id'],!empty($value['apartment_id'])?$value['apartment_id']:null,!empty($value['floor_id'])?$value['floor_id']:null,$value['main_description_id']))){
                     throw new AppException("For booking wages Booking Amount is Insufficient.");
-                }
+                
+             }else{
+                  unset($value['level']);
+                 WagesDetails::bookWages($value);
+                 ConstructionDetails::addWagesBookValue($value);
+              
+             }
+
 
             }else{
                 throw new AppException("For booking wages apartment or floor is required.");
