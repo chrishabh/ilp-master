@@ -3,6 +3,7 @@
 use App\Exceptions\AppException;
 use App\Models\ApartmentDetails;
 use App\Models\BlockDetails;
+use App\Models\ConstructionDetails;
 use App\Models\Floor;
 use App\Models\ImportExcelJobLogs;
 use App\Models\ImportExcelTable;
@@ -666,6 +667,17 @@ if (! function_exists('envparam')) {
         $number=(double)$number;
         $return=round($number,$upto);
         return $return;
+    }
+
+    function remainingBalanceCheck($project_id,$block_id,$apartment_id,$floor_id,$main_description_id){
+
+        $floor_array  =  $apartment_array = [];
+        $apartment_array = $apartment_id;
+        $floor_array  = $floor_id;
+
+
+        return ConstructionDetails::remainingBalanceCheck($project_id,$block_id,$apartment_array,$floor_array,$main_description_id);
+
     }
 
 ?>
