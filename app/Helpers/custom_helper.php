@@ -345,6 +345,9 @@ if (! function_exists('envparam')) {
                  try{
                     $apartment_id = $block_id   =   $project_id =   $floor_id   =   null;
                     foreach($sheetData as $row_key => $row_data){
+                        if(ltrim(trim($row_data[1]," ")) == 'MASTER OST'){
+                            break 2;
+                        }
                         if($row_key <= '5'){
                        
                             foreach($row_data as $cell_key => $cell_data){ 
