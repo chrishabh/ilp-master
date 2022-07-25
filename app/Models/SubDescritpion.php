@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Exceptions\AppException;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class SubDescritpion extends Model
 {
@@ -32,5 +33,23 @@ class SubDescritpion extends Model
             }
         }
         return ;
+    }
+
+    public static function insertSubDescription($sub_description_array = [])
+    {
+        $inserted_data = [];
+        foreach($sub_description_array as $value){
+            $return = SubDescritpion::whereNull('deleted_at')->where('sub_description',ltrim(trim($value," ")))->exists();
+            if(!$return){
+                $insert['sub_description'] = ltrim(trim($value," "));
+                $insert['main_description_id'] = '1';
+                $insert['apartment_id'] = '0';
+                $insert['block_id'] = '0';
+                $insert['project_id'] = '0';
+                DB::table('sub_descritpions')->insert($insert);
+                $inserted_data  [] = $insert;
+            }
+        }
+        return $inserted_data ;
     }
 }

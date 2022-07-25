@@ -12,6 +12,7 @@ use App\Models\BlockDetails;
 use App\Models\ConstructionDetails;
 use App\Models\Floor;
 use App\Models\ImportExcelTable;
+use App\Models\MainDescritpion;
 use App\Models\PayToDetails;
 use App\Models\ProjectDetails;
 use App\Models\UserAuthorization;
@@ -131,10 +132,10 @@ class ConstructionDetailsServices{
         }
     }
 
-    public static function importExcelFile(){
-        $file_path = ImportExcelTable::getFile();
-        if(!empty($file_path)){
-            importExcelToDB($file_path);
+    public static function importExcelFile($request){
+        
+        if($request['module'] == "main_description" && !empty($request['file_path'])){
+            return MainDescritpion::importMainDesc($request['file_path']);
         }
     }
 
