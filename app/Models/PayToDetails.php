@@ -30,7 +30,7 @@ class PayToDetails extends Model
 
     public static function addPayToDetails($data)
     {
-        return PayToDetails::insertGetId($data);
+        return PayToDetails::insertGetId($data->toArray());
     }
 
     public static function getPayToCode($pay_name)
