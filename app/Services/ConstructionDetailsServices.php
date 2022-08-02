@@ -149,7 +149,13 @@ class ConstructionDetailsServices{
 
     public static function getProjectExcelForConstructionDetails($request)
     {
-        $details = ConstructionDetails::getConstructionDetailsForProject($request['project_id']);
+        if(isset($request['part'])){
+            $block_id = BlockDetails::getBlockIdForPart($request['project_id'],$request['part']);
+            $details = ConstructionDetails::getConstructionDetailsForProject($request['project_id'],$block_id);
+        }else{
+            $details = ConstructionDetails::getConstructionDetailsForProject($request['project_id']);
+        }
+        
         $aparment_aaray = [];
         $floor_array = [];
         $final_data = [];

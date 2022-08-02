@@ -270,19 +270,35 @@ class ConstructionDetails extends Model
         return ConstructionDetails::WhereNull('deleted_at')->where('id',$id)->update($data);
     }
 
-    public static function getConstructionDetailsForProject($project_id)
+    public static function getConstructionDetailsForProject($project_id,$block_id = [])
     {
-        $return = ConstructionDetails::join('main_descritpions', 'main_descritpions.id', '=', 'construction_details.main_description_id')
-        ->join('sub_descritpions', 'sub_descritpions.id', '=', 'construction_details.sub_description_id')
-        ->leftjoin('apartment_details', 'apartment_details.id', '=', 'construction_details.apartment_id')
-        ->leftjoin('floors', 'floors.id', '=', 'construction_details.floor_id')
-        ->select('main_descritpions.description as Main Description','sub_descritpions.sub_description as Sub Description','construction_details.description as Description','construction_details.area as Area','construction_details.unit as Unit','construction_details.lab_rate as Rate'
-        ,'construction_details.total as Total','construction_details.amount_booked as Amount','construction_details.name as Pay To:','construction_details.wages as Wages No.','construction_details.quantity as Qty.','construction_details.booking_description as Description of work','apartment_details.apartment_number as Apartment','floors.floor_name as Floor')
-        ->WhereNull('construction_details.deleted_at')->where('construction_details.project_id',$project_id)->get();
 
-        if(count($return)>0){
-            return $return->toArray();
+        if(count($block_id)>0){
+            $return = ConstructionDetails::join('main_descritpions', 'main_descritpions.id', '=', 'construction_details.main_description_id')
+            ->join('sub_descritpions', 'sub_descritpions.id', '=', 'construction_details.sub_description_id')
+            ->leftjoin('apartment_details', 'apartment_details.id', '=', 'construction_details.apartment_id')
+            ->leftjoin('floors', 'floors.id', '=', 'construction_details.floor_id')
+            ->select('main_descritpions.description as Main Description','sub_descritpions.sub_description as Sub Description','construction_details.description as Description','construction_details.area as Area','construction_details.unit as Unit','construction_details.lab_rate as Rate'
+            ,'construction_details.total as Total','construction_details.amount_booked as Amount','construction_details.name as Pay To:','construction_details.wages as Wages No.','construction_details.quantity as Qty.','construction_details.booking_description as Description of work','apartment_details.apartment_number as Apartment','floors.floor_name as Floor')
+            ->WhereNull('construction_details.deleted_at')->where('construction_details.project_id',$project_id)->whereIn('construction_details.block_id',$block_id)->get();
+    
+            if(count($return)>0){
+                return $return->toArray();
+            }
+        }else {
+            $return = ConstructionDetails::join('main_descritpions', 'main_descritpions.id', '=', 'construction_details.main_description_id')
+            ->join('sub_descritpions', 'sub_descritpions.id', '=', 'construction_details.sub_description_id')
+            ->leftjoin('apartment_details', 'apartment_details.id', '=', 'construction_details.apartment_id')
+            ->leftjoin('floors', 'floors.id', '=', 'construction_details.floor_id')
+            ->select('main_descritpions.description as Main Description','sub_descritpions.sub_description as Sub Description','construction_details.description as Description','construction_details.area as Area','construction_details.unit as Unit','construction_details.lab_rate as Rate'
+            ,'construction_details.total as Total','construction_details.amount_booked as Amount','construction_details.name as Pay To:','construction_details.wages as Wages No.','construction_details.quantity as Qty.','construction_details.booking_description as Description of work','apartment_details.apartment_number as Apartment','floors.floor_name as Floor')
+            ->WhereNull('construction_details.deleted_at')->where('construction_details.project_id',$project_id)->get();
+    
+            if(count($return)>0){
+                return $return->toArray();
+            }
         }
+       
 
         return [];
     }

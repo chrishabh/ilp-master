@@ -70,4 +70,26 @@ class BlockDetails extends Model
     {
         return BlockDetails::insertGetId($data);
     }
+
+    public static function getBlockIdForPart($project,$part){
+
+        $return = BlockDetails::whereNull('deleted_at')->where('project_id',$project)->get();
+        $firt_part = $second_part = [];
+        if(count($return)>0){
+            $data = $return->toArray();
+            if($part == '1'){
+                for($i=0; $i<count($data)/2; $i++){
+                    $firt_part [] = $data[$i];
+                }
+                return $firt_part;
+            }elseif($part == '2'){
+                for($i=count($data)/2; $i<count($data); $i++){
+                    $second_part [] = $data[$i];
+                }
+                return $second_part;
+            }
+        }else{
+            return [];
+        }
+    }
 }
