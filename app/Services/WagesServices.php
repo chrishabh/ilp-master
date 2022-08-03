@@ -125,8 +125,13 @@ class WagesServices{
     public static function editBookedWages($request)
     {
         $request->floor = $request->level;
-        WagesDetails::updateWages($request->id,$request->toArray());
-        ConstructionDetails::updateConstructionEditWagesCase($request->toArray());
+        if((float)$request->sum > roundOff(remainingBalanceCheck($request->project_id,$request->block_id,!empty($request->apartment_id)?$request->apartment_id:null,!empty($request->floor_id)?$request->floor_id:null,$request->main_description_id))){
+            throw new AppException("Booking Amount is Insufficient.");
+        
+        }else{
+            WagesDetails::updateWages($request->id,$request->toArray());
+            ConstructionDetails::updateConstructionEditWagesCase($request->toArray());
+        }
     }
 
     public static function deleteBookedWages($request)

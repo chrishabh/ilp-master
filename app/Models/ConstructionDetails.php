@@ -429,7 +429,7 @@ class ConstructionDetails extends Model
         if(!empty($apartment_id)){
             $booked_amount = ConstructionDetails::select('total','amount_booked')->whereNull('construction_details.deleted_at')
             ->where('construction_details.project_id',$project_id)->where('construction_details.main_description_id',$main_description_id)
-            ->where('construction_details.block_id',$block_id)->where('construction_details.apartment_id',$floor_id)->get();
+            ->where('construction_details.block_id',$block_id)->where('construction_details.apartment_id',$apartment_id)->get();
             $total_amount   =   $total_amount_booked = 0;
             if(count($booked_amount)>0){
                 foreach($booked_amount->toArray() as $booked_amount_value){
