@@ -125,7 +125,7 @@ class WagesServices{
     public static function editBookedWages($request)
     {
         $request->floor = $request->level;
-        if((float)$request->sum > roundOff(remainingBalanceCheck($request->project_id,$request->block_id,!empty($request->apartment_id)?$request->apartment_id:null,!empty($request->floor_id)?$request->floor_id:null,$request->main_description_id))){
+        if((float)$request->sum > roundOff(remainingBalanceCheck($request->project_id,$request->block_id,!empty($request->apartment_id)?$request->apartment_id:null,!empty($request->floor_id)?$request->floor_id:null,$request->main_description_id) + $request->old_amount)){
             throw new AppException("Booking Amount is Insufficient.");
         
         }else{
