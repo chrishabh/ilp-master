@@ -31,6 +31,7 @@ class GetConstructionDetailsFormRequest extends FormRequest
                 'page_no' => 'required',
                 'project_id' => 'required',
                 'block_id' => 'required',
+                'floor_id' => 'required'
             ];
         }else{
             return [
@@ -38,6 +39,7 @@ class GetConstructionDetailsFormRequest extends FormRequest
                 #'page_no' => 'required',
                 'project_id' => 'required',
                 'block_id' => 'required',
+                'floor_id' => 'required'
             ];
         }
       
@@ -50,6 +52,7 @@ class GetConstructionDetailsFormRequest extends FormRequest
             'project_id.required' => 'Project Id is required',
             'block_id.required' => 'Block Id is required',
             'apartment_id.required' => 'Apartment Id is required',
+            'floor_id.required' => 'Floor is required',
         ];
     }
 }
