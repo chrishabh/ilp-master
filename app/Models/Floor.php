@@ -46,4 +46,10 @@ class Floor extends Model
     {
         return Floor::where('project_id',$project_id)->update(['deleted_at' =>date('Y-m-d')]);
     }
+
+    public static function getFloorTotalRecords($request)
+    {
+        return Floor::whereNull('deleted_at')->where('project_id',$request['project_id'])
+        ->where('block_id',$request['block_id'])->count('id');
+    }
 }

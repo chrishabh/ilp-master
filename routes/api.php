@@ -27,6 +27,7 @@ use Illuminate\Support\Facades\Route;
                 Route::get('get-lookup-value','UserController@lookUpValue');
                 Route::post('get-project-details','ConstructionDetailsController@getProjectDetails');
                 Route::post('get-block-details','ConstructionDetailsController@getBlockDetails');
+                Route::post('get-floor-details','ConstructionDetailsController@getFloorDetails');
                 Route::post('get-apartment-details','ConstructionDetailsController@getApartmentDetails');
                 Route::post('get-construction-details','ConstructionDetailsController@getConstructionDetails');
                 Route::post('get-description-work','ConstructionDetailsController@getDescriptionWork');

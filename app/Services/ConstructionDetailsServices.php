@@ -42,6 +42,13 @@ class ConstructionDetailsServices{
     {
         $return['total_records'] = ApartmentDetails::getApartmentTotalRecords($request);
         $return['apartment_details'] = ApartmentDetails::getApartmentDetails($request);
+
+        return  $return;
+    }
+
+    public static function getFloorDetails($request)
+    {
+        $return['total_records'] = Floor::getFloorTotalRecords($request);
         $return['floor_details'] = Floor::getFloorDetails($request);
 
         return  $return;

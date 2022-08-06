@@ -10,6 +10,7 @@ use App\Http\Requests\EditConstructionDetailsFormRequest;
 use App\Http\Requests\GetApartmentFormRequest;
 use App\Http\Requests\GetBlockDetailsFormRequest;
 use App\Http\Requests\GetConstructionDetailsFormRequest;
+use App\Http\Requests\GetFloorFormRequest;
 use App\Http\Requests\GetProjectConstructionDetailsFormRequest;
 use App\Http\Requests\GetProjectDetialsFormRequest;
 use App\Http\Requests\ImportExcelFileJobFormRequest;
@@ -35,6 +36,14 @@ class ConstructionDetailsController extends Controller
     {
         $requestData = $request->validated();
         $data = ConstructionDetailsServices::getBlockDetails($request);
+
+        return  response()->data($data);
+    }
+
+    public static function getFloorDetails(GetFloorFormRequest $request)
+    {
+        $requestData = $request->validated();
+        $data = ConstructionDetailsServices::getFloorDetails($request);
 
         return  response()->data($data);
     }

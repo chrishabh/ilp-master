@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class GetApartmentFormRequest extends FormRequest
+class GetFloorFormRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -28,7 +28,6 @@ class GetApartmentFormRequest extends FormRequest
             'page_no' => 'required',
             'project_id' => 'required',
             'block_id' => 'required',
-            'floor_id' => 'required',
         ];
     }
 
@@ -38,7 +37,6 @@ class GetApartmentFormRequest extends FormRequest
             'page_no.required' => 'Page Number is required',
             'project_id.required' => 'Project Id is required',
             'block_id.required' => 'Block Id is required',
-            'floor_id.required' => 'Floor Id is required',
         ];
     }
 }

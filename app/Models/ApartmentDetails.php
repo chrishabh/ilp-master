@@ -23,7 +23,7 @@ class ApartmentDetails extends Model
         $offset = ($current_page*$noOfRecord)-$noOfRecord;
 
         $data = ApartmentDetails::whereNull('deleted_at')->where('project_id',$request['project_id'])
-        ->where('block_id',$request['block_id'])->offset($offset)->limit($noOfRecord)->get();
+        ->where('block_id',$request['block_id'])->where('floor_id',$request['floor_id'])->offset($offset)->limit($noOfRecord)->get();
 
         if(count($data)>0){
             return $data->toArray();
@@ -34,7 +34,7 @@ class ApartmentDetails extends Model
     public static function getApartmentTotalRecords($request)
     {
         return ApartmentDetails::whereNull('deleted_at')->where('project_id',$request['project_id'])
-        ->where('block_id',$request['block_id'])->count('id');
+        ->where('block_id',$request['block_id'])->where('floor_id',$request['floor_id'])->count('id');
     }
 
     public static function addApartmentDetails($data){
