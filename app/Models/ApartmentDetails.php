@@ -22,8 +22,14 @@ class ApartmentDetails extends Model
         $current_page = $request['page_number'] ?? 1;
         $offset = ($current_page*$noOfRecord)-$noOfRecord;
 
-        $data = ApartmentDetails::whereNull('deleted_at')->where('project_id',$request['project_id'])
-        ->where('block_id',$request['block_id'])->where('floor_id',$request['floor_id'])->offset($offset)->limit($noOfRecord)->get();
+        $query = ApartmentDetails::whereNull('deleted_at')->where('project_id',$request['project_id'])
+        ->where('block_id',$request['block_id']);
+        if(is_array($request['floor_id'])){
+            $data = $query->whereIn('floor_id',$request['floor_id'])->offset($offset)->limit($noOfRecord)->get();
+        }else{
+            $data = $query->where('floor_id',$request['floor_id'])->offset($offset)->limit($noOfRecord)->get();
+        }
+        
 
         if(count($data)>0){
             return $data->toArray();
