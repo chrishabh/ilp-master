@@ -14,23 +14,25 @@ class WagesServices{
     public static function bookWages($request)
     {
         $data = $request->toArray();
+        $is_multiple = (count($data['book_wages'])>1)?true:false;
         foreach($data['book_wages'] as &$value){
             if(!empty($value['apartment_id']) || !empty($value['floor_id'])){
+                if($is_multiple && empty($value['sub_description_id'])){
+                    throw new AppException("For booking wages sub description id is required.");
+                }
                 $value['floor'] = $value['level'];
                 // if($value['sum'] < 0){
                 //     throw new AppException("Invalid amount");
                 // }
                 //$value['user_id'] = User::details()->id;
-             
-                if((float)$value['sum'] > roundOff(remainingBalanceCheck($value['project_id'],$value['block_id'],!empty($value['apartment_id'])?$value['apartment_id']:null,!empty($value['floor_id'])?$value['floor_id']:null,$value['main_description_id']))){
+                $remaining_balance = ($is_multiple)?roundOff(remainingBalanceCheckMultipleCase($value['project_id'],$value['block_id'],!empty($value['apartment_id'])?$value['apartment_id']:null,!empty($value['floor_id'])?$value['floor_id']:null,$value['main_description_id'],!empty($value['sub_description_id'])?$value['sub_description_id']:null)) : roundOff(remainingBalanceCheck($value['project_id'],$value['block_id'],!empty($value['apartment_id'])?$value['apartment_id']:null,!empty($value['floor_id'])?$value['floor_id']:null,$value['main_description_id']));
+                if((float)$value['sum'] > $remaining_balance){
                     throw new AppException("For booking wages Booking Amount is Insufficient.");
-                
-             }else{
-                  unset($value['level']);
-                 WagesDetails::bookWages($value);
-                 ConstructionDetails::addWagesBookValue($value);
-              
-             }
+                }else{
+                    unset($value['level']);
+                    WagesDetails::bookWages($value);
+                    ConstructionDetails::addWagesBookValue($value,$is_multiple);
+                }  
 
 
             }else{
