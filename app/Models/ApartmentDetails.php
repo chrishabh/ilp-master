@@ -24,11 +24,13 @@ class ApartmentDetails extends Model
 
         $query = ApartmentDetails::whereNull('deleted_at')->where('project_id',$request['project_id'])
         ->where('block_id',$request['block_id']);
-        if(is_array($request['floor_id'])){
-            $data = $query->whereIn('floor_id',$request['floor_id'])->offset($offset)->limit($noOfRecord)->get();
-        }else{
-            $data = $query->where('floor_id',$request['floor_id'])->offset($offset)->limit($noOfRecord)->get();
-        }
+        // if(is_array($request['floor_id'])){
+        //     $data = $query->whereIn('floor_id',$request['floor_id'])->offset($offset)->limit($noOfRecord)->get();
+        // }else{
+        //     $data = $query->where('floor_id',$request['floor_id'])->offset($offset)->limit($noOfRecord)->get();
+        // }
+
+        $data = $query->offset($offset)->limit($noOfRecord)->get();
         
 
         if(count($data)>0){
