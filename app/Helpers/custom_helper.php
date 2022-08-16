@@ -681,10 +681,4 @@ if (! function_exists('envparam')) {
 
     }
 
-    function remainingBalanceCheckMultipleCase($project_id,$block_id,$apartment_id,$floor_id,$main_description_id,$sub_description_id){
-
-        return ConstructionDetails::remainingBalanceCheck($project_id,$block_id,$apartment_id,$floor_id,$main_description_id,$sub_description_id);
-
-    }
-
 ?>
