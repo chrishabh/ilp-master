@@ -186,7 +186,7 @@ class ConstructionDetails extends Model
                 //$sub_final['total'] = $value['remaining_booking_amount'];
                 //$response[$value['description_header']]['total_sum'] += $value['remaining_booking_amount'];
                 $sub_response[$value['description_header']][$sub_value['sub_description_header']]['sub_records'][] = $sub_final;
-                $sub_response[$value['description_header']][$sub_value['sub_description_header']]['sub_total'] = count($total_sum)>0 ? ($total_sum->toArray()['remaining_booking_amount']??0) : 0;
+                $sub_response[$value['description_header']][$sub_value['sub_description_header']]['sub_total'] = count($total_sum)>0 ? ($total_sum->toArray()[0]['remaining_booking_amount']??0) : 0;
                 $sub[$value['description_header']] [] = $sub_response[$value['description_header']][$sub_value['sub_description_header']];
 
             }
