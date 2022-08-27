@@ -167,4 +167,14 @@ class ConstructionDetailsController extends Controller
 
         return  response()->data(['inserted_data' => $return]);
     }
+
+    public static function getWagesNumber()
+    {
+        for($i=199; $i<1000; $i++)
+        {
+            $return [] = $i;
+        }
+
+        return  response()->data(['wages_number' => $return]);
+    }
 }

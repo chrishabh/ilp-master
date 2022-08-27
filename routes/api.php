@@ -25,6 +25,7 @@ use Illuminate\Support\Facades\Route;
         Route::group(['namespace' => 'Api\Auth'], function () {
             //Route::group(['middleware' => ['userAuth']], function () {
                 Route::get('get-lookup-value','UserController@lookUpValue');
+                Route::get('wages-number','ConstructionDetailsController@getWagesNumber');
                 Route::post('get-project-details','ConstructionDetailsController@getProjectDetails');
                 Route::post('get-block-details','ConstructionDetailsController@getBlockDetails');
                 Route::post('get-floor-details','ConstructionDetailsController@getFloorDetails');
