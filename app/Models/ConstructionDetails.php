@@ -66,6 +66,8 @@ class ConstructionDetails extends Model
             foreach($distinct_sub_headers as $sub_header){
                 $sub_final['sub_description'] = $sub_header['sub_description'];
                 $sub_final['records'] = [];
+                $sub_total = 0;
+                $sub_amount_booked = 0;
                 $data = ConstructionDetails::whereNull('construction_details.deleted_at')
                 ->where('construction_details.project_id',$request['project_id'])
                 ->where('construction_details.block_id',$request['block_id'])
@@ -79,10 +81,13 @@ class ConstructionDetails extends Model
                 foreach($data->toArray() as $records){
                     $sub_final['records'][] =  $records;
                     $total += floatval(preg_replace('/[^\d.]/', '',$records['total']));
+                    $sub_total += floatval(preg_replace('/[^\d.]/', '',$records['total']));
                     $res = explode(',',str_replace("'", "", $records['amount_booked']));
                     $total_amount_booked +=  array_sum($res);
+                    $sub_amount_booked +=  array_sum($res);
                 }
-
+                $sub_final['sub_total'] = $sub_total;
+                $sub_final['sub total_amount_booked'] = $sub_amount_booked;
                 $final['sub_description_records'][] =  $sub_final;
                 $final['total'] = roundOff($total);
                 $final['total_amount_booked'] = roundOff($total_amount_booked);

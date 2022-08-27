@@ -31,7 +31,7 @@ class BookWagesFormRequest extends FormRequest
                     'book_wages.*.pay_to' => 'required',
                     'book_wages.*.trade' => 'required',
                     'book_wages.*.wages' => 'required',
-
+                    'book_wages.*.sub_description_id' => 'required',
                     'book_wages.*.block_id' => 'required',
                     'book_wages.*.plot_or_room' => 'required',
                     'book_wages.*.description_work' => 'required',
@@ -49,7 +49,7 @@ class BookWagesFormRequest extends FormRequest
                     'id' => 'required',
                     'pay_to' => 'required',
                     'trade' => 'required',
-                  
+                    'sub_description_id' => 'required',
                     'block_id' => 'required',
                     'plot_or_room' => 'required',
                     'description_work' => 'required',
