@@ -87,7 +87,7 @@ class ConstructionDetails extends Model
                     $sub_amount_booked +=  array_sum($res);
                 }
                 $sub_final['sub_total'] = $sub_total;
-                $sub_final['sub total_amount_booked'] = $sub_amount_booked;
+                $sub_final['sub_total_amount_booked'] = $sub_amount_booked;
                 $final['sub_description_records'][] =  $sub_final;
                 $final['total'] = roundOff($total);
                 $final['total_amount_booked'] = roundOff($total_amount_booked);
@@ -472,12 +472,13 @@ class ConstructionDetails extends Model
         }
     }
 
-    public static function remainingBalanceCheck($project_id,$block_id,$apartment_id,$floor_id,$main_description_id)
+    public static function remainingBalanceCheck($project_id,$block_id,$apartment_id,$floor_id,$main_description_id,$sub_description_id)
     {
         if(!empty($apartment_id)){
             $booked_amount = ConstructionDetails::select('total','amount_booked')->whereNull('construction_details.deleted_at')
             ->where('construction_details.project_id',$project_id)->where('construction_details.main_description_id',$main_description_id)
-            ->where('construction_details.block_id',$block_id)->where('construction_details.apartment_id',$apartment_id)->get();
+            ->where('construction_details.block_id',$block_id)->where('construction_details.apartment_id',$apartment_id)
+            ->where('construction_details.sub_description_id',$sub_description_id)->get();
             $total_amount   =   $total_amount_booked = 0;
             if(count($booked_amount)>0){
                 foreach($booked_amount->toArray() as $booked_amount_value){
@@ -489,7 +490,8 @@ class ConstructionDetails extends Model
         }else{
             $booked_amount = ConstructionDetails::select('total','amount_booked')->whereNull('construction_details.deleted_at')
             ->where('construction_details.project_id',$project_id)->where('construction_details.main_description_id',$main_description_id)
-            ->where('construction_details.block_id',$block_id)->whereNull('construction_details.apartment_id')->where('construction_details.floor_id',$floor_id)->get();
+            ->where('construction_details.block_id',$block_id)->whereNull('construction_details.apartment_id')->where('construction_details.floor_id',$floor_id)
+            ->where('construction_details.sub_description_id',$sub_description_id)->get();
             $total_amount   =   $total_amount_booked = 0;
             if(count($booked_amount)>0){
                 foreach($booked_amount->toArray() as $booked_amount_value){

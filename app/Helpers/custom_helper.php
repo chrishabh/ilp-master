@@ -675,9 +675,9 @@ if (! function_exists('envparam')) {
         return $return;
     }
 
-    function remainingBalanceCheck($project_id,$block_id,$apartment_id,$floor_id,$main_description_id){
+    function remainingBalanceCheck($project_id,$block_id,$apartment_id,$floor_id,$main_description_id,$sub_description_id){
 
-        return ConstructionDetails::remainingBalanceCheck($project_id,$block_id,$apartment_id,$floor_id,$main_description_id);
+        return ConstructionDetails::remainingBalanceCheck($project_id,$block_id,$apartment_id,$floor_id,$main_description_id,$sub_description_id);
 
     }
 
