@@ -31,7 +31,7 @@ class WagesServices{
                 }else{
                     unset($value['level']);
                     WagesDetails::bookWages($value);
-                    ConstructionDetails::addWagesBookValue($value,$is_multiple);
+                    ConstructionDetails::addWagesBookValue($value,true);
                 }  
 
 
@@ -127,7 +127,7 @@ class WagesServices{
     public static function editBookedWages($request)
     {
         $request->floor = $request->level;
-        if((float)$request->sum > roundOff(remainingBalanceCheck($request->project_id,$request->block_id,!empty($request->apartment_id)?$request->apartment_id:null,!empty($request->floor_id)?$request->floor_id:null,$request->main_description_id) + $request->old_amount)){
+        if((float)$request->sum > roundOff(remainingBalanceCheck($request->project_id,$request->block_id,!empty($request->apartment_id)?$request->apartment_id:null,!empty($request->floor_id)?$request->floor_id:null,$request->main_description_id,$request->sub_description_id) + $request->old_amount)){
             throw new AppException("Booking Amount is Insufficient.");
         
         }else{
