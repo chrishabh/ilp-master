@@ -49,7 +49,7 @@ class BookWagesFormRequest extends FormRequest
                     'id' => 'required',
                     'pay_to' => 'required',
                     'trade' => 'required',
-                    'sub_description_id' => 'required',
+                    #'sub_description_id' => 'required',
                     'block_id' => 'required',
                     'plot_or_room' => 'required',
                     'description_work' => 'required',
