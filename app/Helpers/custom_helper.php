@@ -384,7 +384,7 @@ if (! function_exists('envparam')) {
                                         $data = [
                                             'project_id' => $project_id??1,
                                             'block_id' => $block_id,
-                                            'floor_id' => $floor_id,
+                                            #'floor_id' => $floor_id,
                                             'apartment_number' => $apartment_name
                                         ];
                                         $apartment_id = ApartmentDetails::addApartmentDetails($data);
