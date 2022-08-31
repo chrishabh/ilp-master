@@ -141,8 +141,14 @@ class ConstructionDetails extends Model
             $sub_data = ConstructionDetails::join('sub_descritpions', 'sub_descritpions.id', '=', 'construction_details.sub_description_id')
                     ->select('construction_details.sub_description_id','sub_descritpions.sub_description as sub_description_header',DB::raw("CASE WHEN sum(construction_details.total) IS NULL THEN 0 ELSE ROUND(sum(construction_details.total),2) END as remaining_booking_amount"))->whereNull('construction_details.deleted_at')
                     ->where('construction_details.project_id',$request['project_id'])->where('construction_details.main_description_id',$value['main_description_id'])
-                    ->where('construction_details.block_id',$request['block_id'])->where('construction_details.apartment_id',$value['apartment_id'])
-                    ->groupBy('sub_description_header','construction_details.sub_description_id')->get();
+                    ->where('construction_details.block_id',$request['block_id']);
+                if(count($apartment_id)>0){
+                    $sub_data = $sub_data->where('construction_details.apartment_id',$value['apartment_id']);
+                }else{
+                    $sub_data = $sub_data->where('construction_details.floor_id',$value['floor_id']);
+                }
+                    
+                $sub_data = $sub_data->groupBy('sub_description_header','construction_details.sub_description_id')->get();
 
             if(count($data)>0){
                 $sub_records = $sub_data->toArray();
