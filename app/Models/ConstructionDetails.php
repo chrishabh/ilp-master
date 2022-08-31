@@ -158,8 +158,14 @@ class ConstructionDetails extends Model
             {$sub_final = [];
                 $total_sum = ConstructionDetails::select(DB::raw("CASE WHEN sum(construction_details.total) IS NULL THEN 0 ELSE ROUND(sum(construction_details.total),2) END as remaining_booking_amount"))->whereNull('construction_details.deleted_at')
                 ->where('construction_details.project_id',$request['project_id'])->where('construction_details.main_description_id',$value['main_description_id'])
-                ->where('construction_details.block_id',$request['block_id'])->whereIn('construction_details.apartment_id',$request['apartment_id'])
-                ->where('construction_details.sub_description_id',$sub_value['sub_description_id'])->get();
+                ->where('construction_details.block_id',$request['block_id']);
+                if(count($apartment_id)>0){
+                    $total_sum = $total_sum->whereIn('construction_details.apartment_id',$request['apartment_id']);
+                }else{
+                    $total_sum = $total_sum->whereIn('construction_details.floor_id',$request['floor_id']);
+                }
+                
+                $total_sum = $total_sum->where('construction_details.sub_description_id',$sub_value['sub_description_id'])->get();
 
                 $sub_response[$value['description_header']][$sub_value['sub_description_header']]['sub_description_header'] = $sub_value['sub_description_header'];
                 $sub_final['main_description_id'] = $value['main_description_id'];
