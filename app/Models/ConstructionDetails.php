@@ -515,7 +515,8 @@ class ConstructionDetails extends Model
                 }
             }
         }
-        return $total_amount-$total_amount_booked;
+        $return = (($total_amount-$total_amount_booked)<0)?0:$total_amount-$total_amount_booked;
+        return $return;
     }
 
     public static function remainingBalanceCheckMultipleCase($project_id,$block_id,$apartment_id,$floor_id,$main_description_id,$sub_description_id)
@@ -545,6 +546,7 @@ class ConstructionDetails extends Model
                 }
             }
         }
-        return $total_amount-$total_amount_booked;
+        $return = (($total_amount-$total_amount_booked)<0)?0:$total_amount-$total_amount_booked;
+        return $return;
     }
 }
