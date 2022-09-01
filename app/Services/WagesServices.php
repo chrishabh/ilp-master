@@ -59,6 +59,7 @@ class WagesServices{
             $records['Plot/room'] = $value['plot_or_room'];     // Coloumn E
             $records['Level'] = $value['floor_name']; 
             $records['Description of work'] = $value['description_work'];       // Coloumn F
+            $records['Sub Description'] = $value['sub_description_header'];
             $records['m2 (or hours)'] = $value['m2_or_hours'];      // Coloumn G
             $records['Rate'] = $value['rate'];      // Coloumn H
             $records['Booking Amount'] = roundOff($value['amount']);     // Coloumn I
@@ -159,7 +160,8 @@ class WagesServices{
             $records['Block'] = BlockDetails::getBlockName($value['block_id'])->block_name?? " ";     // Coloumn D
             $records['Plot/room'] = $value['plot_or_room'];     // Coloumn E
             $records['Level'] = $value['floor_name']; 
-            $records['Description of work'] = $value['description_work'];       // Coloumn F
+            $records['Description of work'] = $value['description_work']; 
+            $records['Sub Description'] = $value['sub_description_header'];      // Coloumn F
             $records['m2 (or hours)'] = $value['m2_or_hours'];      // Coloumn G
             $records['Rate'] = $value['rate'];      // Coloumn H
             $records['Booking Amount'] = roundOff($value['amount']);     // Coloumn I
