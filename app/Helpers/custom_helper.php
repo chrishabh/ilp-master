@@ -137,7 +137,7 @@ if (! function_exists('envparam')) {
                 $doc->getActiveSheet()->getStyle('L1:L'.$last_row)->getAlignment()->setHorizontal('center');
                 $doc->getActiveSheet()->getStyle('O1:O'.$last_row)->getAlignment()->setHorizontal('center');
                 $doc->getActiveSheet()->getColumnDimension('G')->setAutoSize(FALSE);
-                $doc->getActiveSheet()->getColumnDimension('G')->setWidth('16');
+                $doc->getActiveSheet()->getColumnDimension('G')->setWidth('20');
                 $doc->getActiveSheet()->getColumnDimension('I')->setAutoSize(FALSE);
                 $doc->getActiveSheet()->getColumnDimension('I')->setWidth('16');
                 $doc->getActiveSheet()->getColumnDimension('J')->setAutoSize(FALSE);
