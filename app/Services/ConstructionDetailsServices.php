@@ -182,6 +182,7 @@ class ConstructionDetailsServices{
                
             }
             $value['Amount'] = implode(",",$array_value);
+            $value['Qty'] = number_format($value['Qty'],2);
             if(!empty($value['Apartment'])){
                 $aparment_aaray [] = $value;
             }else{
