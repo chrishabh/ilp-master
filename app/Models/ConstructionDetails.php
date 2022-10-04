@@ -112,7 +112,7 @@ class ConstructionDetails extends Model
         $apartment_id = $request['apartment_id']??[];
 
         if(count($apartment_id)>0){
-            $field = 'construction_details.apartment_id';
+            $field = "construction_details.apartment_id,construction_details.floor_id";
         }else{
             $field = 'construction_details.floor_id';
         }
@@ -125,7 +125,7 @@ class ConstructionDetails extends Model
         ->where('construction_details.block_id',$request['block_id']);
 
         if(count($apartment_id)>0){
-            $data = $data->groupBy('description_header','construction_details.main_description_id','construction_details.apartment_id',)->whereIn('construction_details.apartment_id',$request['apartment_id'])->get();
+            $data = $data->groupBy('description_header','construction_details.main_description_id','construction_details.apartment_id','construction_details.floor_id')->whereIn('construction_details.apartment_id',$request['apartment_id'])->get();
         }else{
             $data = $data->groupBy('description_header','construction_details.main_description_id','construction_details.floor_id',)->whereNull('construction_details.apartment_id')->whereIn('construction_details.floor_id',$request['floor_id'])->get();
         }
@@ -173,6 +173,7 @@ class ConstructionDetails extends Model
                 if(count($apartment_id)>0){
                     //$sub_description []
                     $sub_final['apartment_id'] = $value['apartment_id'];
+                    $sub_final['floor_id'] = $value['floor_id'];
                     $booked_amount = ConstructionDetails::select('amount_booked')->whereNull('construction_details.deleted_at')
                     ->where('construction_details.project_id',$request['project_id'])->where('construction_details.main_description_id',$value['main_description_id'])
                     ->where('construction_details.sub_description_id',$sub_value['sub_description_id'])
