@@ -45,8 +45,11 @@ class WagesServices{
     public static function getWages($request,$excel_flag = false)
     {
         $return = WagesDetails::getWages($request,$excel_flag);
+        $total_booking = 0;
         foreach($return['wages_details'] as &$value){
             $value['remaining_amount'] = ConstructionDetails::getRemaingAmountForWages($value);
+            $total_booking += $value['amount'];
+            $value['total_booking'] = $total_booking;
         }
         $download_data = WagesDetails::getWages($request,$excel_flag);
         $records = $excel_data = [];
