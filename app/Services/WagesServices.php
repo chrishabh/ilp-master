@@ -49,7 +49,6 @@ class WagesServices{
         foreach($return['wages_details'] as &$value){
             $value['remaining_amount'] = ConstructionDetails::getRemaingAmountForWages($value);
             $total_booking += $value['amount'];
-            $value['total_booking'] = $total_booking;
         }
         $download_data = WagesDetails::getWages($request,$excel_flag);
         $records = $excel_data = [];
@@ -82,6 +81,8 @@ class WagesServices{
 
         if($excel_flag){
             $return['excel_url'] = getXlsxFile($excel_data, 'Wages_Booking_'.$request['wages_number']);
+        }else{
+            $return['total_booking'] = $total_booking;
         }
 
 
