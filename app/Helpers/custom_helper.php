@@ -486,7 +486,11 @@ if (! function_exists('envparam')) {
                     
                     $progress = $i."/".$sheet_count;
                     ImportExcelTable::progressUpdate($file_path,$progress);
-                    DB::table('construction_details')->insert($total_insert);
+                    foreach (array_chunk($total_insert,1000) as $t)  
+                    {
+                        DB::table('construction_details')->insert($t);
+                    }
+                    
                 // }catch(\Exception $e){
                 //     $data = [
                 //         'file_path' => $file_path,
