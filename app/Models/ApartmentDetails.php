@@ -48,6 +48,19 @@ class ApartmentDetails extends Model
         return ApartmentDetails::insertGetId($data);
     }
 
+    public static function addApartmentDetailsAndFetch($data){
+
+        $return = ApartmentDetails::whereNull('deleted_at')->where('apartment_number',$data['apartment_number'])->where('floor_id',$data['floor_id'])->where('block_id',$data['block_id'])->where('project_id',$data['project_id'])->first();
+
+        if(isset($return->id)){
+            return $return->id;
+           
+        } else {
+            return ApartmentDetails::insertGetId($data);
+        }
+    }
+
+
     public static function getApartmentId($apartment_name)
     {
         $return = ApartmentDetails::whereNull('deleted_at')->where('apartment_number',$apartment_name)->first();

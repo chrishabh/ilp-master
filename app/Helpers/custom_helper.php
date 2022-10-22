@@ -418,7 +418,7 @@ if (! function_exists('envparam')) {
                                     'floor_id' => $floor_id,
                                     'apartment_number' => $row_data[2]
                                 ];
-                                $apartment_id = ApartmentDetails::addApartmentDetails($data);
+                                $apartment_id = ApartmentDetails::addApartmentDetailsAndFetch($data);
                             }
 
                             if(!empty($row_data[3])){
