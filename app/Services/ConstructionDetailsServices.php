@@ -183,16 +183,17 @@ class ConstructionDetailsServices{
             }
             $value['Amount'] = implode(",",$array_value);
             $value['Qty.'] = (number_format((float)$value['Qty.'],2)>0)?number_format((float)$value['Qty.'],2):'';
-            if(!empty($value['Apartment'])){
-                $aparment_aaray [] = $value;
-            }else{
-                $floor_array [] = $value;
-            }
+            // if(!empty($value['Apartment'])){
+            //     $aparment_aaray [] = $value;
+            // }else{
+            //     $floor_array [] = $value;
+            // }
         }
-        $aparment_aaray = group_by('Apartment',$aparment_aaray);
-        $floor_array = group_by('Floor',$floor_array);
-        $final_data = array_merge($floor_array,$aparment_aaray);
-        $return['download_url'] = downloadConstructionExcelFile($final_data,"Project_details");
+        
+        // $aparment_aaray = group_by('Apartment',$aparment_aaray);
+        // $floor_array = group_by('Floor',$floor_array);
+        // $final_data = array_merge($floor_array,$aparment_aaray);
+        $return['download_url'] = downloadConstructionExcelFile($details,"Project_details");
         return $return;
        
     }
