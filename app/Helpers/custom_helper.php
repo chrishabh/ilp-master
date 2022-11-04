@@ -290,7 +290,7 @@ if (! function_exists('envparam')) {
         if(!empty($file_path)){
             $excel_data = [];
             $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
-            $chunkSize = 1000;
+            $chunkSize = 10000;
           
             for ($startRow = 1; $startRow <= 30000; $startRow += $chunkSize) {
                 $chunkFilter = new ChunkReadFilter(1,$startRow,$chunkSize,'New Format');
@@ -494,10 +494,10 @@ if (! function_exists('envparam')) {
                         
                         $progress = $i."/".$sheet_count;
                         ImportExcelTable::progressUpdate($file_path,$progress);
-                        // foreach (array_chunk($total_insert,1000) as $t)  
-                        // {
-                            DB::table('construction_details')->insert($total_insert);
-                        // }
+                        foreach (array_chunk($total_insert,1000) as $t)  
+                        {
+                            DB::table('construction_details')->insert($t);
+                        }
                         
                     // }catch(\Exception $e){
                     //     $data = [
