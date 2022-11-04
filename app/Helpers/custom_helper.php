@@ -553,7 +553,7 @@ if (! function_exists('envparam')) {
                  $sheet->setTitle($key);
                  //Loop through the associative array.
                  foreach($records as $i => $row){
-                     unset($row['Apartment']);
+                    // unset($row['Apartment']);
                  if ($i ==0) {
                      $firstLineKeys = array_keys($row);
                      $j=1;
