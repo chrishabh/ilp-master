@@ -8,6 +8,7 @@ use App\Models\ConstructionDetails;
 use App\Models\PayToDetails;
 use App\Models\User;
 use App\Models\WagesDetails;
+use Carbon\Carbon;
 
 class WagesServices{
 
@@ -127,6 +128,34 @@ class WagesServices{
     public static function addPayToDetails($request)
     {
        return PayToDetails::addPayToDetails($request);
+    }
+
+    public static function deletePayToDetails($request)
+    {
+       return PayToDetails::deletePayToDetails($request);
+    }
+
+    public static function uploadPayToDetails($request)
+    {
+        if (isset($_FILES) && !empty($_FILES['request']['name']['file'])) {
+            ini_set('memory_limit', '-1');
+            ini_set('max_execution_time', 180);
+            $dir_name =  $_SERVER['DOCUMENT_ROOT']."/storage/pay_to_files"."//";
+            //$dir_name =  env('VIDEOS_PATH')."/storage"."//";
+            if (!is_dir($dir_name)) {
+                @mkdir($dir_name, "0777", true);
+            }
+
+            $current_timestamp  = Carbon::now()->timestamp;
+            $video_saved_name = $current_timestamp . $_FILES['request']['name']['file'];
+            
+
+            $video_data['video_name'] =  $_FILES['request']['name']['file'];
+            $video_data['video_path'] = $dir_name.$video_saved_name;
+            $request->file->move($dir_name, $video_saved_name);
+            
+            PayToDetails::importPayToDetails($video_data['video_path']);
+        }
     }
 
     public static function editBookedWages($request)

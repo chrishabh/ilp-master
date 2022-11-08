@@ -53,6 +53,22 @@ class WagesBookingController extends Controller
         return  response()->data(['id'=>$data]);
     }
 
+    public static function deletePayTODetails(AddPayToDetailsFormRequest $request)
+    {
+        $requestData = $request->validated();
+        WagesServices::deletePayToDetails($request);
+
+        return  response()->success();
+    }
+
+    public static function uploadPayTODetails(AddPayToDetailsFormRequest $request)
+    {
+        $requestData = $request->validated();
+        $data =  WagesServices::uploadPayToDetails($request);
+
+        return  response()->data(['id'=>$data]);
+    }
+
     public static function editBookedWages(BookWagesFormRequest $request)
     {
         $requestData = $request->validated();

@@ -47,6 +47,8 @@ use Illuminate\Support\Facades\Route;
                 // Route::post('upload-videos','VideosController@uploadVideo');
                 // Route::post('download-videos','VideosController@downloadVideo');
                 Route::post('add-pay-details','WagesBookingController@addPayToDetails');
+                Route::post('delete-pay-details','WagesBookingController@deletePayTODetails');
+                Route::post('upload-pay-details','WagesBookingController@uploadPayTODetails');
 
                 Route::get('clean-directory','UserController@test');
                 Route::post('get-expot-excel-progress','ConstructionDetailsController@getExportExcelProgress');
