@@ -66,7 +66,7 @@ class WagesBookingController extends Controller
         $requestData = $request->validated();
         $data =  WagesServices::uploadPayToDetails($request);
 
-        return  response()->data(['id'=>$data]);
+        return  response()->success();
     }
 
     public static function editBookedWages(BookWagesFormRequest $request)
