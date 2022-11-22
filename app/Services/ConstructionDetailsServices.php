@@ -189,7 +189,6 @@ class ConstructionDetailsServices{
                 $floor_array [] = $value;
             }
         }
-        
         $aparment_aaray = group_by('Apartment',$aparment_aaray);
         $floor_array = group_by('Floor',$floor_array);
         $final_data = array_merge($floor_array,$aparment_aaray);
