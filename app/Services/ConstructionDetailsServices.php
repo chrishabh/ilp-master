@@ -19,6 +19,7 @@ use App\Models\UserAuthorization;
 use Carbon\Carbon;
 use Illuminate\Console\Application;
 use Illuminate\Support\Facades\Storage;
+use PhpParser\Node\Expr\Cast\Unset_;
 
 class ConstructionDetailsServices{
 
@@ -166,8 +167,10 @@ class ConstructionDetailsServices{
         $aparment_aaray = [];
         $floor_array = [];
         $final_data = [];
+        $project_name = null;
         foreach($details as &$value)
         {
+            $value['Area.'] = ($value['Rate'] != '0')?roundOff((float)$value['Total']/(float)$value['Rate'],2):'';
             $array_value = [];
             if(!empty($value['Total'])){
                 $value['Total'] = "£".roundOff($value['Total']);
@@ -183,6 +186,8 @@ class ConstructionDetailsServices{
             }
             $value['Amount'] = implode(",",$array_value);
             $value['Qty.'] = (number_format((float)$value['Qty.'],2)>0)?number_format((float)$value['Qty.'],2):'';
+            $project_name = $value['project_name'];
+            unset($value['project_name']);
             // if(!empty($value['Apartment'])){
             //     $aparment_aaray [] = $value;
             // }else{
@@ -192,7 +197,7 @@ class ConstructionDetailsServices{
         // $aparment_aaray = group_by('Apartment',$aparment_aaray);
         // $floor_array = group_by('Floor',$floor_array);
         // $final_data = array_merge($floor_array,$aparment_aaray);
-        $return['download_url'] = downloadConstructionExcelFile($details,"Project_details");
+        $return['download_url'] = downloadConstructionExcelFile($details,"Project_details",$project_name);
         return $return;
        
     }

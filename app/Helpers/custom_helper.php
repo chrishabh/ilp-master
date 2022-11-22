@@ -524,7 +524,7 @@ if (! function_exists('envparam')) {
        
     }
 
-    function downloadConstructionExcelFile($details,$file)
+    function downloadConstructionExcelFile($details,$file,$project_name)
     {
         ini_set('max_execution_time', 360);
          //Give our xlsx file a name.
@@ -538,7 +538,7 @@ if (! function_exists('envparam')) {
          $uploaded = false;
          $count = 0;
          if(!empty($details)){
-             foreach($details as $key => $records){
+            foreach(array_chunk($details,4500) as $key => $records){
                  
                   $fp = fopen('php://output', 'w+');
                   //if($count>0){
@@ -550,30 +550,33 @@ if (! function_exists('envparam')) {
                    
                  //}
               
-                 $sheet->setTitle($key);
+                 $sheet->setTitle('Data');
+                 $sheet->setCellValueByColumnAndRow(1,1,'Project Name');
+                 $sheet->setCellValueByColumnAndRow(2,1,$project_name);
                  //Loop through the associative array.
                  foreach($records as $i => $row){
                     // unset($row['Apartment']);
                  if ($i ==0) {
+                    $row_gap = 3;
                      $firstLineKeys = array_keys($row);
                      $j=1;
                      foreach($firstLineKeys as $x_value){
-                         $sheet->setCellValueByColumnAndRow($j,1,$x_value);
+                         $sheet->setCellValueByColumnAndRow($j,$row_gap,$x_value);
                          $j=$j+1;
                      }
                  }
                  $j=1;
                  foreach($row as $x => $x_value) {
-                     $sheet->setCellValueByColumnAndRow($j,$i+2,$x_value);
+                     $sheet->setCellValueByColumnAndRow($j,$i+2+$row_gap,$x_value);
                      $j=$j+1;
                  }
-                 $sheet->getStyle('A1:A1')->getAlignment()->setHorizontal('center');
-                 $sheet->getStyle('B1:B1')->getAlignment()->setHorizontal('center');
-                 $sheet->getStyle('C1:C1')->getAlignment()->setHorizontal('center');
-                 $sheet->getStyle('D1:D1')->getAlignment()->setHorizontal('center');
-                 $sheet->getStyle('E1:E1')->getAlignment()->setHorizontal('center');
-                 $sheet->getStyle('F1:F1')->getAlignment()->setHorizontal('center');
-                 $sheet->getStyle('G1:G1')->getAlignment()->setHorizontal('center');
+                 $sheet->getStyle('A3:A3')->getAlignment()->setHorizontal('center');
+                 $sheet->getStyle('B3:B3')->getAlignment()->setHorizontal('center');
+                 $sheet->getStyle('C3:C3')->getAlignment()->setHorizontal('center');
+                 $sheet->getStyle('D3:D3')->getAlignment()->setHorizontal('center');
+                 $sheet->getStyle('E3:E3')->getAlignment()->setHorizontal('center');
+                 $sheet->getStyle('F3:F3')->getAlignment()->setHorizontal('center');
+                 $sheet->getStyle('G3:G3')->getAlignment()->setHorizontal('center');
 
                  
                  }
@@ -588,87 +591,120 @@ if (! function_exists('envparam')) {
      
                  // if $keys, freeze the header row and make it bold
                  if (!empty($firstLineKeys)) {
-                     $doc->getActiveSheet()->freezePane('A2');
-                     $doc->getActiveSheet()->getStyle('A1:' . $last_column . '1')->getFont()->setBold(true);
+                     $doc->getActiveSheet()->freezePane('A5');
+                     $doc->getActiveSheet()->getStyle('A3:' . $last_column . '3')->getFont()->setBold(true);
                  }
                  // format all columns as text
-                $doc->getActiveSheet()->getStyle('A2:' . $last_column . $last_row)
+                $doc->getActiveSheet()->getStyle('A5:' . $last_column . $last_row)
                      ->getNumberFormat()->setFormatCode(\PhpOffice\PhpSpreadsheet\Style\NumberFormat::FORMAT_TEXT);
 
                 $doc->getActiveSheet()
-                     ->getStyle('A1')
+                     ->getStyle('A3')
                      ->getFont()
                      ->getColor()
                      ->setRGB ('ffffff');
                 $doc->getActiveSheet()
-                     ->getStyle('B1')
+                     ->getStyle('B3')
                      ->getFont()
                      ->getColor()
                      ->setRGB ('ffffff');
                 $doc->getActiveSheet()
-                     ->getStyle('C1')
+                     ->getStyle('C3')
                      ->getFont()
                      ->getColor()
                      ->setRGB ('ffffff');
                 $doc->getActiveSheet()
-                     ->getStyle('D1')
+                     ->getStyle('D3')
                      ->getFont()
                      ->getColor()
                      ->setRGB ('ffffff');
                 $doc->getActiveSheet()
-                     ->getStyle('E1')
+                     ->getStyle('E3')
                      ->getFont()
                      ->getColor()
                      ->setRGB ('ffffff');
                 $doc->getActiveSheet()
-                     ->getStyle('F1')
+                     ->getStyle('F3')
                      ->getFont()
                      ->getColor()
                      ->setRGB ('ffffff');
                 $doc->getActiveSheet()
-                     ->getStyle('G1')
+                     ->getStyle('G3')
+                     ->getFont()
+                     ->getColor()
+                     ->setRGB ('ffffff');
+                $doc->getActiveSheet()
+                     ->getStyle('H3')
+                     ->getFont()
+                     ->getColor()
+                     ->setRGB ('ffffff');
+                $doc->getActiveSheet()
+                     ->getStyle('I3')
+                     ->getFont()
+                     ->getColor()
+                     ->setRGB ('ffffff');
+                $doc->getActiveSheet()
+                     ->getStyle('J3')
                      ->getFont()
                      ->getColor()
                      ->setRGB ('ffffff');
 
                 $doc->getActiveSheet()
-                    ->getStyle('A1:A1')
+                    ->getStyle('A3:A3')
                     ->getFill()
                     ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
                     ->getStartColor()
                     ->setARGB('FF0000FF');
                 $doc->getActiveSheet()
-                    ->getStyle('B1:B1')
+                    ->getStyle('B3:B3')
                     ->getFill()
                     ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
                     ->getStartColor()
                     ->setARGB('FF0000FF');
                 $doc->getActiveSheet()
-                    ->getStyle('C1:C1')
+                    ->getStyle('C3:C3')
                     ->getFill()
                     ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
                     ->getStartColor()
                     ->setARGB('FF0000FF');
                 $doc->getActiveSheet()
-                    ->getStyle('D1:D1')
+                    ->getStyle('D3:D3')
                     ->getFill()
                     ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
                     ->getStartColor()
                     ->setARGB('FF0000FF');
                 $doc->getActiveSheet()
-                    ->getStyle('E1:E1')
+                    ->getStyle('E3:E3')
                     ->getFill()
                     ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
                     ->getStartColor()
                     ->setARGB('FF0000FF');
                 $doc->getActiveSheet()
-                    ->getStyle('F1:F1')
+                    ->getStyle('F3:F3')
                     ->getFill()
                     ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
                     ->getStartColor()
                     ->setARGB('FF0000FF');
                 $doc->getActiveSheet()
-                    ->getStyle('G1:G1')
+                    ->getStyle('G3:G3')
+                    ->getFill()
+                    ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+                    ->getStartColor()
+                    ->setARGB('FF0000FF');
+                    $doc->getActiveSheet()
+                    ->getStyle('H3:H3')
+                    ->getFill()
+                    ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+                    ->getStartColor()
+                    ->setARGB('FF0000FF');
+                $doc->getActiveSheet()
+                    ->getStyle('I3:I3')
+                    ->getFill()
+                    ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+                    ->getStartColor()
+                    ->setARGB('FF0000FF');
+                $doc->getActiveSheet()
+                    ->getStyle('J3:J3')
                     ->getFill()
                     ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
                     ->getStartColor()
