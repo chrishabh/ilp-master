@@ -538,7 +538,7 @@ if (! function_exists('envparam')) {
          $uploaded = false;
          $count = 0;
          if(!empty($details)){
-            foreach(array_chunk($details,4500) as $key => $records){
+            foreach(array_chunk($details,5000) as $key => $records){
                  
                   $fp = fopen('php://output', 'w+');
                   //if($count>0){
@@ -557,7 +557,7 @@ if (! function_exists('envparam')) {
                  foreach($records as $i => $row){
                     // unset($row['Apartment']);
                  if ($i ==0) {
-                    $row_gap = 3;
+                    $row_gap = 4;
                      $firstLineKeys = array_keys($row);
                      $j=1;
                      foreach($firstLineKeys as $x_value){
@@ -567,7 +567,7 @@ if (! function_exists('envparam')) {
                  }
                  $j=1;
                  foreach($row as $x => $x_value) {
-                     $sheet->setCellValueByColumnAndRow($j,$i+2+$row_gap,$x_value);
+                     $sheet->setCellValueByColumnAndRow($j,$i+1+$row_gap,$x_value);
                      $j=$j+1;
                  }
                  $sheet->getStyle('A3:A3')->getAlignment()->setHorizontal('center');
