@@ -188,6 +188,7 @@ class WagesServices{
         foreach($download_data['wages_details'] as $value){
             $records['Pay Code'] = PayToDetails::getPayToCode($value['pay_to'])->pay_to_code??" ";
             $records['Pay To:'] = $value['pay_to'];     // Coloumn A
+            $records['Wages Number'] =$value['wages'];
             $records['Trade'] = $value['trade'];    // Coloumn B
             //$records['Level'] = $value['level'];    // Coloumn C
             $records['Block'] = BlockDetails::getBlockName($value['block_id'])->block_name?? " ";     // Coloumn D
