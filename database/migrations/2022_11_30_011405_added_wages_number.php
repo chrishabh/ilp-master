@@ -14,7 +14,7 @@ class AddedWagesNumber extends Migration
     public function up()
     {
         Schema::table('wages_details', function (Blueprint $table) {
-            $table->string('user_id',20)->after('user_id');
+            $table->string('wages',20)->after('user_id');
         });
     }
 
