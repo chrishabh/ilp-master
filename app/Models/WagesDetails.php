@@ -17,7 +17,7 @@ class WagesDetails extends Model
 
     public static function bookWages($request)
     {
-        unset($request['wages']);
+        
         WagesDetails::insert($request);
     }
 
