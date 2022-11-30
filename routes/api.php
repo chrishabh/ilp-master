@@ -19,6 +19,8 @@ use Illuminate\Support\Facades\Route;
             Route::post('register','UserController@userSignUp');
             Route::get('user-list','UserController@getUserList');
             Route::post('update-user','UserController@updateUser');
+            Route::post('forgot-password','UserController@forgotPassword');
+            Route::post('decyprt-password','UserController@decryptPassword');
             
         });
 

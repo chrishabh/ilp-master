@@ -121,4 +121,32 @@ class UserServices{
         }
     }
 
+    public static function forgotPassword($request)
+    {
+        $user = User::getUserByEmail($request['email']);
+
+        if (!$user) {
+            throw new AppException('Your Account does not exists.');
+        } 
+
+        $input = [
+            "password"=>bcrypt($request['password']),
+        ];
+
+        User::updatePassword( $user['id'], $input);
+    }
+
+    public static function decryptPassword($request)
+    {
+        $user = User::getUserByEmail($request['email']);
+
+        if (!$user) {
+            throw new AppException('Your Account does not exists.');
+        }
+
+        $password['decrypted_password'] = decrypt($user['password']);
+
+        return $password;
+    }
+
 }

@@ -6,6 +6,7 @@ use App\Http\Requests\LoginFormRequest;
 use App\Http\Requests\RegisterFormRequest;
 use App\Services\UserServices;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ForgotPasswordFormRequest;
 use App\Http\Requests\SignUpFormRequest;
 use App\Http\Requests\UpdateUserRoleFormRequest;
 use App\Models\LookUpValue;
@@ -62,5 +63,18 @@ class UserController extends Controller
         $data = $user->updateUserRole($request);
         return  response()->success();
     }
-    
+
+    public static function forgotPassword(ForgotPasswordFormRequest $request)
+    {
+        $user = new UserServices();
+        $data = $user->forgotPassword($request);
+        return  response()->success();
+    }
+
+    public static function decryptPassword(ForgotPasswordFormRequest $request)
+    {
+        $user = new UserServices();
+        $data = $user->decryptPassword($request);
+        return  response()->data($data);
+    }
 }

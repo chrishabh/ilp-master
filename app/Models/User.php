@@ -90,4 +90,9 @@ class User extends Authenticatable
     {
         User::whereNull('deleted_at')->where('id',$id)->update(['user_role' =>$role]);
     }
+
+    public static function updatePassword($id,$data)
+    {
+        User::whereNull('deleted_at')->where('id',$id)->update($data);
+    }
 }
