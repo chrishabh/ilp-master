@@ -53,6 +53,7 @@ use Illuminate\Support\Facades\Route;
                 Route::post('upload-pay-details','WagesBookingController@uploadPayTODetails');
 
                 Route::get('clean-directory','UserController@test');
+                Route::get('wages-controller','UserController@wagesPortalController');
                 Route::post('get-expot-excel-progress','ConstructionDetailsController@getExportExcelProgress');
                 Route::post('import-excel-job','ConstructionDetailsController@ImportExcelJob');
 

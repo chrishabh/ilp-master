@@ -50,6 +50,12 @@ class UserController extends Controller
         UserServices::cleanServerDirectory();
     }
 
+    public static function wagesPortalController()
+    {
+        UserServices::wagesPortalController();
+    }
+
+
     public static function getUserList()
     {
         $user = new UserServices();

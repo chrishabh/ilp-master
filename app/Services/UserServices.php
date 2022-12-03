@@ -106,6 +106,22 @@ class UserServices{
 
     }
 
+    public static function wagesPortalController()
+    {
+        $path = public_path('wages_data/');
+        if(file_exists($path)){
+            $files = scandir(public_path('wages_data/'));
+            //$files =  File::allFiles($path);
+            foreach($files as $value){
+                if ($value != "." && $value != "..") {
+                    if (file_exists($path.$value))
+                    $flag = unlink($path.$value);$wages_count++;
+                }
+            }
+            echo "Wages Portal files cleaned ".$wages_count."\n";
+        }
+    }
+
     public static function getUserList()
     {
         return User::getUserList();
