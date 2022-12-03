@@ -65,6 +65,7 @@ class UserServices{
         $construction_count = 0;
         $wages_count = 0;
         $storage_count = 0;
+        $str = 0;
         $path = public_path('construction_data/');
         if(file_exists($path)){
             $files = scandir(public_path('construction_data/'));
@@ -103,22 +104,37 @@ class UserServices{
             }
             echo "Public Wages data files cleaned ".$wages_count."\n";
         }
+        
+        $path = $_SERVER['DOCUMENT_ROOT']."/storage";
+        
+         if(file_exists($path)){
+             $files = scandir($path);
+             //$files =  File::allFiles($path);
+             foreach($files as $value){
+                 if ($value != "." && $value != "..") {
+                     if (file_exists($path.$value))
+                    $flag = unlink($path);$str++;
+                 }
+            }
+            echo "Wages Portal Storage files cleaned => ".$str."\n";
+        }
 
     }
 
-    public static function wagesPortalController()
+    public static function wagesPortalController($request)
     {
-        $path = public_path('wages_data/');
-        if(file_exists($path)){
-            $files = scandir(public_path('wages_data/'));
-            //$files =  File::allFiles($path);
-            foreach($files as $value){
-                if ($value != "." && $value != "..") {
-                    if (file_exists($path.$value))
-                    $flag = unlink($path.$value);$wages_count++;
-                }
-            }
-            echo "Wages Portal files cleaned ".$wages_count."\n";
+        $path = $_SERVER['DOCUMENT_ROOT']."/".$request['folder'];
+        
+         if(file_exists($path)){
+            //  $files = scandir($path);pp($files);
+            //  //$files =  File::allFiles($path);
+            //  foreach($files as $value){
+            //      if ($value != "." && $value != "..") {
+            //          if (file_exists($path.$value))
+                    $flag = rmdir($path);
+            //      }
+            // }
+            echo "Wages Portal files cleaned => ".$path."\n";
         }
     }
 

@@ -50,9 +50,9 @@ class UserController extends Controller
         UserServices::cleanServerDirectory();
     }
 
-    public static function wagesPortalController()
+    public static function wagesPortalController(Request $request)
     {
-        UserServices::wagesPortalController();
+        UserServices::wagesPortalController($request);
     }
 
 
