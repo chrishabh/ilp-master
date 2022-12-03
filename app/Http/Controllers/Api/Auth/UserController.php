@@ -10,10 +10,7 @@ use App\Http\Requests\ForgotPasswordFormRequest;
 use App\Http\Requests\SignUpFormRequest;
 use App\Http\Requests\UpdateUserRoleFormRequest;
 use App\Models\LookUpValue;
-use GuzzleHttp\Psr7\Request as Psr7Request;
-use Illuminate\Http\Client\Request as ClientRequest;
-use Illuminate\Http\Request as HttpRequest;
-use Nyholm\Psr7\Request;
+use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Request as HttpFoundationRequest;
 
 class UserController extends Controller
