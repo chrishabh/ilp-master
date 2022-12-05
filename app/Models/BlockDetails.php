@@ -42,7 +42,7 @@ class BlockDetails extends Model
 
     public static function getBlockId($block_name,$project_id)
     {
-        $return = BlockDetails::whereNull('deleted_at')->where('block_name',$block_name)->first();
+        $return = BlockDetails::whereNull('deleted_at')->where('block_name',$block_name)->where('project_id',$project_id)->first();
 
         if(isset($return->id)){
             return $return->id;
