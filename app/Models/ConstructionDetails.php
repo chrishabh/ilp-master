@@ -563,7 +563,7 @@ class ConstructionDetails extends Model
         ->where('block_id',$block_id)->where('apartment_id',$apartment_id)->where('floor_id',$floor_id)->get();
 
         if(count($return)>0){
-            return $return['lab_rate'];
+            return $return[0]['lab_rate'];
         }
         return '';
     }
