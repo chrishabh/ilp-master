@@ -559,10 +559,10 @@ class ConstructionDetails extends Model
 
     public static function getRates($project_id,$block_id,$apartment_id,$floor_id,$main_description_id,$sub_description_id)
     {
-        $return = ConstructionDetails::select('lab_rate')->whereNull('deleted_at') ->where('project_id',$project_id)->where('main_description_id',$main_description_id)->where('sub_description_id',$sub_description_id)
-        ->where('block_id',$block_id)->where('apartment_id',$apartment_id)->where('floor_id',$floor_id)->first();
+        $return = ConstructionDetails::select(DB::raw("SUM(lab_rate) as lab_rate"))->whereNull('deleted_at') ->where('project_id',$project_id)->where('main_description_id',$main_description_id)->where('sub_description_id',$sub_description_id)
+        ->where('block_id',$block_id)->where('apartment_id',$apartment_id)->where('floor_id',$floor_id)->get();
 
-        if(!empty($return['lab_rate'])){
+        if(count($return)>0){
             return $return['lab_rate'];
         }
         return '';
