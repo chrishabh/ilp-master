@@ -158,7 +158,7 @@ class ConstructionDetailsController extends Controller
         return  response()->success();
     }
 
-    public static function ImportMainExcelJob(ImportExcelFileJobFormRequest $request)
+    public static function ImportMainExcelJob(Request $request)
     {
         $requestData = $request->validated();
         ini_set('memory_limit', '-1');
