@@ -166,7 +166,7 @@ class ConstructionDetailsServices{
             // ImportExcelTable::insertFilePath($data);
             // return ['file_path' => $video_data['video_path']];
             // //importExcelToDB($video_data['video_path']);
-            if($request['module'] == "main_description" && !empty($video_data['video_path'])){
+            if(!empty($video_data['video_path'])){
                 return MainDescritpion::importMainDesc($video_data['video_path']);
             }
         }
