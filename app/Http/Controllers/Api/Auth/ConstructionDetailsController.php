@@ -160,7 +160,7 @@ class ConstructionDetailsController extends Controller
 
     public static function ImportMainExcelJob(Request $request)
     {
-        $requestData = $request->validated();
+        // $requestData = $request->validated();
         ini_set('memory_limit', '-1');
         ini_set('max_execution_time', 360);
         $return = ConstructionDetailsServices::importExcelFile($request);
