@@ -197,9 +197,9 @@ class WagesServices{
             $records['Description of work'] = $value['description_work'];  // Coloumn G
             $records['Sub Description'] = $value['sub_description_header'];      // Coloumn H
             $records['m2 (or hours)'] = $value['m2_or_hours'];      // Coloumn I
-            //$records['Rate'] = ConstructionDetails::getRates($value['project_id'],$value['block_id'],$value['apartment_id'],$value['floor_id'],$value['main_description_id'],$value['sub_description_id']);     // Coloumn J
+            $records['Rate'] = ConstructionDetails::getRates($value['project_id'],$value['block_id'],$value['apartment_id'],$value['floor_id'],$value['main_description_id'],$value['sub_description_id']);     // Coloumn J
             $records['Booking Amount'] = roundOff($value['amount']);     // Coloumn K
-            //$records['Area'] = ($records['Rate'] != '0')?roundOff($value['amount']/$records['Rate']):'';
+            $records['Area'] = ($records['Rate'] != '0')?roundOff($value['amount']/$records['Rate']):'';
             $records['Instruction required (y/n)'] = '';        // Coloumn L
             $records['Instruction received (y/n)'] = '';        // Coloumn M
             //$records[' '] = '';         // Coloumn 
