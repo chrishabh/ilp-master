@@ -141,9 +141,34 @@ class ConstructionDetailsServices{
     }
 
     public static function importExcelFile($request){
-        
-        if($request['module'] == "main_description" && !empty($request['file_path'])){
-            return MainDescritpion::importMainDesc($request['file_path']);
+
+        if (isset($_FILES) && !empty($_FILES['request']['name']['file'])) {
+            ini_set('memory_limit', '-1');
+            ini_set('max_execution_time', 180);
+            $dir_name =  $_SERVER['DOCUMENT_ROOT']."/storage/description_files"."//";
+            //$dir_name =  env('VIDEOS_PATH')."/storage"."//";
+            if (!is_dir($dir_name)) {
+                @mkdir($dir_name, "0777", true);
+            }
+
+            $current_timestamp  = Carbon::now()->timestamp;
+            $video_saved_name = $current_timestamp . $_FILES['request']['name']['file'];
+            
+
+            $video_data['video_name'] =  $_FILES['request']['name']['file'];
+            $video_data['video_path'] = $dir_name.$video_saved_name;
+            $request->file->move($dir_name, $video_saved_name);
+            // $data = [
+            //     'file_path' => $video_data['video_path'],
+            //     'cron_timing' => '',
+            //     'progress' => '0'
+            // ];
+            // ImportExcelTable::insertFilePath($data);
+            // return ['file_path' => $video_data['video_path']];
+            // //importExcelToDB($video_data['video_path']);
+            if(!empty($video_data['video_path'])){
+                return MainDescritpion::importMainDesc($video_data['video_path']);
+            }
         }
     }
 

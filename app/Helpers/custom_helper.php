@@ -491,7 +491,6 @@ if (! function_exists('envparam')) {
                             }
                             
                         }
-                        
                         $progress = $i."/".$sheet_count;
                         ImportExcelTable::progressUpdate($file_path,$progress);
                         foreach (array_chunk($total_insert,1000) as $t)  
