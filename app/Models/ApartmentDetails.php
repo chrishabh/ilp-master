@@ -18,7 +18,7 @@ class ApartmentDetails extends Model
 
     public static function getApartmentDetails($request)
     {
-        $noOfRecord =  130;
+        $noOfRecord =  700;
         $current_page = $request['page_number'] ?? 1;
         $offset = ($current_page*$noOfRecord)-$noOfRecord;
 
