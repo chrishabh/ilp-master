@@ -196,9 +196,10 @@ class WagesServices{
             $records['Main Description'] = $value['description_header'];      // Coloumn H
             $records['Sub Description'] = $value['sub_description_header'];      // Coloumn H
             $records['DESCRIPTION OF WORK'] = $value['description_work'];  // Coloumn G
-            $records['Quantity'] = ($records['Rate'] != '0')?roundOff($value['amount']/$records['Rate']):'';
+            $rate = ConstructionDetails::getRates($value['project_id'],$value['block_id'],$value['apartment_id'],$value['floor_id'],$value['main_description_id'],$value['sub_description_id']);
+            $records['Quantity'] = ($rate != '0')?roundOff($value['amount']/$rate):'';
             $records['Unit'] = $value['m2_or_hours'];      // Coloumn I
-            $records['RATE'] = ConstructionDetails::getRates($value['project_id'],$value['block_id'],$value['apartment_id'],$value['floor_id'],$value['main_description_id'],$value['sub_description_id']);     // Coloumn J
+            $records['RATE'] =    $rate;  // Coloumn J
             $records['Booking Amount'] = roundOff($value['amount']);     // Coloumn K
            
             $records['Instruction Req'] = '';        // Coloumn L
