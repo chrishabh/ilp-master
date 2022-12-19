@@ -186,30 +186,36 @@ class WagesServices{
         $download_data = WagesDetails::getWages($request,true);
         $records = $excel_data = [];
         foreach($download_data['wages_details'] as $value){
-            $records['Pay Code'] = PayToDetails::getPayToCode($value['pay_to'])->pay_to_code??" ";
-            $records['Pay To:'] = $value['pay_to'];     // Coloumn A
-            $records['Wages Number'] =$value['wages'];
-            $records['Trade'] = $value['trade'];    // Coloumn B
+            $records['Subcontractor Ref'] = PayToDetails::getPayToCode($value['pay_to'])->pay_to_code??" ";
+            $records['PAY TO:'] = $value['pay_to'];     // Coloumn A
+            $records['TRADE'] = $value['trade'];    // Coloumn B
             //$records['Level'] = $value['level'];    // Coloumn C
-            $records['Block'] = BlockDetails::getBlockName($value['block_id'])->block_name?? " ";     // Coloumn D
-            $records['Plot/room'] = $value['plot_or_room'];     // Coloumn E
-            $records['Level'] = $value['floor_name'];  // Coloumn F
-            $records['Description of work'] = $value['description_work'];  // Coloumn G
+            $records['BLOCK'] = BlockDetails::getBlockName($value['block_id'])->block_name?? " ";     // Coloumn D
+            $records['LEVEL'] = $value['floor_name'];  // Coloumn F
+            $records['PLOT/ROOM'] = $value['plot_or_room'];     // Coloumn E
+            $records['Main Description'] = $value['description_header'];      // Coloumn H
             $records['Sub Description'] = $value['sub_description_header'];      // Coloumn H
-            $records['m2 (or hours)'] = $value['m2_or_hours'];      // Coloumn I
-            $records['Rate'] = ConstructionDetails::getRates($value['project_id'],$value['block_id'],$value['apartment_id'],$value['floor_id'],$value['main_description_id'],$value['sub_description_id']);     // Coloumn J
+            $records['DESCRIPTION OF WORK'] = $value['description_work'];  // Coloumn G
+            $records['Quantity'] = ($records['Rate'] != '0')?roundOff($value['amount']/$records['Rate']):'';
+            $records['Unit'] = $value['m2_or_hours'];      // Coloumn I
+            $records['RATE'] = ConstructionDetails::getRates($value['project_id'],$value['block_id'],$value['apartment_id'],$value['floor_id'],$value['main_description_id'],$value['sub_description_id']);     // Coloumn J
             $records['Booking Amount'] = roundOff($value['amount']);     // Coloumn K
-            $records['Area'] = ($records['Rate'] != '0')?roundOff($value['amount']/$records['Rate']):'';
-            $records['Instruction required (y/n)'] = '';        // Coloumn L
-            $records['Instruction received (y/n)'] = '';        // Coloumn M
+           
+            $records['Instruction Req'] = '';        // Coloumn L
+            $records['Instruction Recd'] = '';        // Coloumn M
             //$records[' '] = '';         // Coloumn 
-            $records['Approved'] = roundOff($value['amount']);       // Coloumn N
+            $records['Approved (surveyor)'] = roundOff($value['amount']);       // Coloumn N
             $records['Difference'] = '';        // Coloumn O
             $records['Surveyor comments'] = '';     // Coloumn P
-            $records['measured'] = "£".roundOff($value['amount']);       // Coloumn Q
+            $records['Supervisor Comment'] = '';     // Coloumn P
+            $records['Measured'] = "£".roundOff($value['amount']);       // Coloumn Q
+            $records['Variation'] = '';     // Coloumn S
             $records['Possible VO'] = '';       // Coloumn R
-            $records['variation'] = '';     // Coloumn S
-            $records['non recov'] ='';      // Coloumn T
+          
+            $records['Non Rec'] ='';      // Coloumn T
+            $records['Mgt'] ='';      // Coloumn T
+            $records['CHECK'] ='';      // Coloumn T
+            $records['Wages No.'] =$value['wages'];
             //$records['CHECK'] = '';     // Coloumn T
             $excel_data [] = $records;
         }
