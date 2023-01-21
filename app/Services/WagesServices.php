@@ -181,9 +181,10 @@ class WagesServices{
 
     public static function finalSubmissionWages($request)
     {
-        WagesDetails::finalWagesSubmission($request);
+        
 
         $download_data = WagesDetails::getWages($request,true);
+        WagesDetails::finalWagesSubmission($request);
         $records = $excel_data = [];
         foreach($download_data['wages_details'] as $value){
             $records['Subcontractor Ref'] = PayToDetails::getPayToCode($value['pay_to'])->pay_to_code??" ";
