@@ -38,6 +38,7 @@ use Illuminate\Support\Facades\Route;
 
                 // wages booking
                 Route::post('book-wages','WagesBookingController@bookWages');
+                Route::post('add-wages-number','WagesBookingController@bookWages');
                 Route::post('edit-booked-wages','WagesBookingController@editBookedWages');
                 Route::post('delete-booked-wages','WagesBookingController@deleteBookedWages');
                 Route::post('final-wages-submission','WagesBookingController@finalSubmissionWages');
