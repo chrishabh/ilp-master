@@ -7,6 +7,7 @@ use App\Http\Requests\AddPayToDetailsFormRequest;
 use App\Http\Requests\BookWagesFormRequest;
 use App\Http\Requests\GetBlockDetailsFormRequest;
 use App\Http\Requests\GetWagesFormRequest;
+use App\Models\LookUpValue;
 use App\Services\ConstructionDetailsServices;
 use App\Services\WagesServices;
 
@@ -17,6 +18,14 @@ class WagesBookingController extends Controller
     {
         $requestData = $request->validated();
         WagesServices::bookWages($request);
+
+        return  response()->success();
+    }
+
+    public static function addWages(BookWagesFormRequest $request)
+    {
+        $requestData = $request->validated();
+        LookUpValue::addWagesNumber($request);
 
         return  response()->success();
     }

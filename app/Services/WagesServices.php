@@ -27,7 +27,11 @@ class WagesServices{
                 // }
                 //$value['user_id'] = User::details()->id;
                 $remaining_balance = ($is_multiple)?roundOff(remainingBalanceCheckMultipleCase($value['project_id'],$value['block_id'],!empty($value['apartment_id'])?$value['apartment_id']:null,!empty($value['floor_id'])?$value['floor_id']:null,$value['main_description_id'],!empty($value['sub_description_id'])?$value['sub_description_id']:null)) : roundOff(remainingBalanceCheck($value['project_id'],$value['block_id'],!empty($value['apartment_id'])?$value['apartment_id']:null,!empty($value['floor_id'])?$value['floor_id']:null,$value['main_description_id'],$value['sub_description_id']));
+                
                 if((float)$value['sum'] > $remaining_balance){
+                    if($is_multiple){
+                        continue;
+                    }
                     throw new AppException("For booking wages Booking Amount is Insufficient.");
                 }else{
                     unset($value['level']);
@@ -181,9 +185,10 @@ class WagesServices{
 
     public static function finalSubmissionWages($request)
     {
-        WagesDetails::finalWagesSubmission($request);
+        
 
         $download_data = WagesDetails::getWages($request,true);
+        WagesDetails::finalWagesSubmission($request);
         $records = $excel_data = [];
         foreach($download_data['wages_details'] as $value){
             $records['Subcontractor Ref'] = PayToDetails::getPayToCode($value['pay_to'])->pay_to_code??" ";

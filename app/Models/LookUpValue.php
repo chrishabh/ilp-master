@@ -23,4 +23,9 @@ class LookUpValue extends Model
         }
         return [];
     }
+
+    public static function addWagesNumber($request)
+    {
+        LookUpValue::whereNull('deleted_at')->where('module','wages_number')->where('type','wage-number')->where('key','number')->update(['text'=>$request['wages_number']]);
+    }
 }

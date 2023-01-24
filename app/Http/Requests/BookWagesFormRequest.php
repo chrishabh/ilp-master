@@ -75,6 +75,12 @@ class BookWagesFormRequest extends FormRequest
                 ];
             break;
 
+            case Constants::WAGES_NUMBER:
+                return [
+                    'wages_number' => 'required'
+                ];
+            break;
+
             default:
             return [];
             break;
