@@ -526,6 +526,7 @@ if (! function_exists('envparam')) {
     function downloadConstructionExcelFile($details,$file,$project_name)
     {
         ini_set('max_execution_time', 360);
+        ini_set('memory_limit', '-1');
          //Give our xlsx file a name.
          $xlsxFileName = $file.'_'.date('Y_m_d_H_i_s').'.xlsx';
     
@@ -537,7 +538,7 @@ if (! function_exists('envparam')) {
          $uploaded = false;
          $count = 0;
          if(!empty($details)){
-            foreach(array_chunk($details,5000) as $key => $records){
+            foreach(array_chunk($details,30000) as $key => $records){
                  
                   $fp = fopen('php://output', 'w+');
                   //if($count>0){
