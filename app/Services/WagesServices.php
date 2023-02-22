@@ -58,28 +58,37 @@ class WagesServices{
         $download_data = WagesDetails::getWagesExcelDownload($request,$excel_flag);
         $records = $excel_data = [];
         foreach($download_data['wages_details'] as $value){
-            $records['Pay Code'] = PayToDetails::getPayToCode($value['pay_to'])->pay_to_code??" ";
-            $records['Pay To:'] = $value['pay_to'];     // Coloumn A
-            $records['Trade'] = $value['trade'];    // Coloumn B
+            $records['Subcontractor Ref'] = PayToDetails::getPayToCode($value['pay_to'])->pay_to_code??" ";
+            $records['PAY TO:'] = $value['pay_to'];     // Coloumn A
+            $records['TRADE'] = $value['trade'];    // Coloumn B
             //$records['Level'] = $value['level'];    // Coloumn C
-            $records['Block'] = BlockDetails::getBlockName($value['block_id'])->block_name?? " ";     // Coloumn D
-            $records['Plot/room'] = $value['plot_or_room'];     // Coloumn E
-            $records['Level'] = $value['floor_name']; 
-            $records['Description of work'] = $value['description_work'];       // Coloumn F
-            $records['Sub Description'] = $value['sub_description_header'];
-            $records['m2 (or hours)'] = $value['m2_or_hours'];      // Coloumn G
-            $records['Rate'] = $value['rate'];      // Coloumn H
-            $records['Booking Amount'] = roundOff($value['amount']);     // Coloumn I
-            $records['Instruction required (y/n)'] = '';        // Coloumn J
-            $records['Instruction received (y/n)'] = '';        // Coloumn K
-            //$records[' '] = '';         // Coloumn L
-            $records['Approved'] = roundOff($value['amount']);       // Coloumn M
-            $records['Difference'] = '';        // Coloumn N
-            $records['Surveyor comments'] = '';     // Coloumn O
-            $records['measured'] = "£".roundOff($value['amount']);       // Coloumn P
-            $records['Possible VO'] = '';       // Coloumn Q
-            $records['variation'] = '';     // Coloumn R
-            $records['non recov'] ='';      // Coloumn S
+            $records['BLOCK'] = BlockDetails::getBlockName($value['block_id'])->block_name?? " ";     // Coloumn D
+            $records['LEVEL'] = $value['floor_name'];  // Coloumn F
+            $records['PLOT/ROOM'] = $value['plot_or_room'];     // Coloumn E
+            $records['Main Description'] = $value['description_header'];      // Coloumn H
+            $records['Sub Description'] = $value['sub_description_header'];      // Coloumn H
+            $records['DESCRIPTION OF WORK'] = $value['description_work'];  // Coloumn G
+            $rate = ConstructionDetails::getRates($value['project_id'],$value['block_id'],$value['apartment_id'],$value['floor_id'],$value['main_description_id'],$value['sub_description_id']);
+            $records['Quantity'] = ($rate != '0')?roundOff($value['amount']/$rate):'';
+            $records['Unit'] = $value['m2_or_hours'];      // Coloumn I
+            $records['RATE'] =    $rate;  // Coloumn J
+            $records['Booking Amount'] = roundOff($value['amount']);     // Coloumn K
+           
+            $records['Instruction Req'] = '';        // Coloumn L
+            $records['Instruction Recd'] = '';        // Coloumn M
+            //$records[' '] = '';         // Coloumn 
+            $records['Approved (surveyor)'] = roundOff($value['amount']);       // Coloumn N
+            $records['Difference'] = '';        // Coloumn O
+            $records['Surveyor comments'] = '';     // Coloumn P
+            $records['Supervisor Comment'] = '';     // Coloumn P
+            $records['Measured'] = "£".roundOff($value['amount']);       // Coloumn Q
+            $records['Variation'] = '';     // Coloumn S
+            $records['Possible VO'] = '';       // Coloumn R
+          
+            $records['Non Rec'] ='';      // Coloumn T
+            $records['Mgt'] ='';      // Coloumn T
+            $records['CHECK'] ='';      // Coloumn T
+            $records['Wages No.'] =$value['wages'];
             //$records['CHECK'] = '';     // Coloumn T
             $excel_data [] = $records;
         }
