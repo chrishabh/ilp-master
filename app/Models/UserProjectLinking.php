@@ -12,8 +12,8 @@ class UserProjectLinking extends Model
 
     public static function getUserProjectDetails($data)
     {
-        $data = UserProjectLinking::select('projects.project_name')
-        ->Join('projects','projects.id','=','user_project_linkings.project_id')->whereNull('projects.deleted_at')
+        $data = UserProjectLinking::select('project_details.project_name')
+        ->Join('project_details','project_details.id','=','user_project_linkings.project_id')->whereNull('project_details.deleted_at')
         ->whereNull('user_project_linkings.deleted_at')->where('user_id',$data['id'])->get();
 
         if(count($data)>0){
