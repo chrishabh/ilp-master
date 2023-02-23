@@ -69,9 +69,9 @@ class UserController extends Controller
     {
         $requestData    =   $request->validated();
         $user           =   new UserServices();
-        $data           = $user->getUserList($request);
+        $data           = $user->getUserProjectLinkingDetails($request);
 
-        return  response()->data(['user_list'=>$data]);
+        return  response()->data($data);
     }
 
     public static function linkUserAndProjects(LinkUserAndProjectsFormRequest $request)

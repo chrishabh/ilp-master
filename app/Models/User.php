@@ -105,4 +105,9 @@ class User extends Authenticatable
 
         return [];
     }
+
+    public static function getUserCount()
+    {
+        return User::whereNull('deleted_at')->count('id');
+    }
 }

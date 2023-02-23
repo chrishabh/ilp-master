@@ -125,14 +125,17 @@ class UserServices{
     public static function getUserProjectLinkingDetails($request)
     {
         $user_list = User::getUserListForLinking($request);
+        $total_count = User::getUserCount();
 
         foreach($user_list as &$value){
             $project_details = UserProjectLinking::getUserProjectDetails($value);
 
             $value['project_details'] = $project_details;
         }
+        $return['total_records'] = $total_count;
+        $return['user_list'] = $user_list;
 
-        return $user_list;
+        return $return;
         
     }
 
