@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Exceptions\AppException;
 use App\Exceptions\BusinessExceptions\RegisterFailedException;
 use App\Models\UserAuthorization;
+use App\Models\UserProjectLinking;
 use Illuminate\Console\Application;
 use Illuminate\Support\Facades\File;
 
@@ -119,6 +120,41 @@ class UserServices{
         }else{
             User::updateUserRole($request['id'],$request['role_request']);
         }
+    }
+
+    public static function getUserProjectLinkingDetails($request)
+    {
+        $user_list = User::getUserListForLinking($request);
+
+        foreach($user_list as &$value){
+            $project_details = UserProjectLinking::getUserProjectDetails($value);
+
+            $value['project_details'] = $project_details;
+        }
+
+        return $user_list;
+        
+    }
+
+    public static function linkUserAndProjects($request)
+    {
+        if($request['operation'] == 'remove'){
+            if(UserProjectLinking::deleteLinkedUser($request['user_id'],$request['project_id']))
+            {
+                return;
+            }
+            throw new AppException("No operation performed.");
+        }
+
+        if($request['operation'] == 'add')
+        {
+            if(UserProjectLinking::linkUserAndProjects(['user_id' => $request['user_id'],'project_id' => $request['project_id']]))
+            {
+                return;
+            }
+            throw new AppException("No operation performed.");
+        }
+        throw new AppException("No operation performed.");
     }
 
 }

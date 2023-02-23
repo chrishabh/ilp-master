@@ -6,6 +6,8 @@ use App\Http\Requests\LoginFormRequest;
 use App\Http\Requests\RegisterFormRequest;
 use App\Services\UserServices;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\GetProjectDetialsFormRequest;
+use App\Http\Requests\LinkUserAndProjectsFormRequest;
 use App\Http\Requests\SignUpFormRequest;
 use App\Http\Requests\UpdateUserRoleFormRequest;
 use App\Models\LookUpValue;
@@ -60,6 +62,24 @@ class UserController extends Controller
     {
         $user = new UserServices();
         $data = $user->updateUserRole($request);
+        return  response()->success();
+    }
+
+    public static function getUserProjectLinkingDetails(GetProjectDetialsFormRequest $request)
+    {
+        $requestData    =   $request->validated();
+        $user           =   new UserServices();
+        $data           = $user->getUserList($request);
+
+        return  response()->data(['user_list'=>$data]);
+    }
+
+    public static function linkUserAndProjects(LinkUserAndProjectsFormRequest $request)
+    {
+        $requestData    =   $request->validated();
+        $user           =   new UserServices();
+        $data           = $user->linkUserAndProjects($request);
+
         return  response()->success();
     }
     
