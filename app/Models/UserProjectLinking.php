@@ -12,7 +12,7 @@ class UserProjectLinking extends Model
 
     public static function getUserProjectDetails($data)
     {
-        $data = UserProjectLinking::select('project_details.project_name')
+        $data = UserProjectLinking::select('project_details.project_name','user_project_linkings.project_id')
         ->Join('project_details','project_details.id','=','user_project_linkings.project_id')->whereNull('project_details.deleted_at')
         ->whereNull('user_project_linkings.deleted_at')->where('user_id',$data['id'])->get();
 
