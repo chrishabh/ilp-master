@@ -195,7 +195,7 @@ class ConstructionDetailsServices{
         $project_name = null;
         foreach($details as &$value)
         {
-            $value['Area'] = ($value['Rate'] != '0' && is_numeric((float)$value['Rate']))?roundOff((float)$value['Total']/(float)$value['Rate'],1):'';
+            $value['Area'] = ($value['Rate'] != '0')?roundOff((float)$value['Total']/(float)$value['Rate'],1):'';
             $array_value = [];
             if(!empty($value['Total'])){
                 $value['Total'] = "£".roundOff($value['Total']);
