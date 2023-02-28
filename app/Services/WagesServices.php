@@ -49,12 +49,12 @@ class WagesServices{
 
     public static function getWages($request,$excel_flag = false)
     {
-        // $return = WagesDetails::getWagesExcelDownload($request,$excel_flag);
-        // $total_booking = 0;
-        // foreach($return['wages_details'] as &$value){
-        //     $value['remaining_amount'] = ConstructionDetails::getRemaingAmountForWages($value);
-        //     $total_booking += $value['amount'];
-        // }
+        $return = WagesDetails::getWagesExcelDownload($request,$excel_flag);
+        $total_booking = 0;
+        foreach($return['wages_details'] as &$value){
+            $value['remaining_amount'] = ConstructionDetails::getRemaingAmountForWages($value);
+            $total_booking += $value['amount'];
+        }
         $download_data = WagesDetails::getWagesExcelDownload($request,$excel_flag);
         $records = $excel_data = [];
         foreach($download_data['wages_details'] as $value){
@@ -93,11 +93,11 @@ class WagesServices{
             $excel_data [] = $records;
         }
 
-        // if($excel_flag){
+        if($excel_flag){
             $return['excel_url'] = getXlsxFile($excel_data, 'Wages_Booking_'.$request['wages_number']);
-        // }else{
-        //     // $return['total_booking'] = $total_booking;
-        // }
+        }else{
+             $return['total_booking'] = $total_booking;
+        }
 
 
 
