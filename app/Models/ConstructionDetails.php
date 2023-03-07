@@ -453,7 +453,7 @@ class ConstructionDetails extends Model
         $wages_name = $data['pay_to'];
         $apartment_id = $data['apartment_id']??null;
         $floor_id = $data['floor_id']??null;
-        $return = ConstructionDetails::select('amount_booked','name')->whereNull('deleted_at')->where('project_id',$data['project_id'])
+        $return = ConstructionDetails::select('amount_booked','name','wages')->whereNull('deleted_at')->where('project_id',$data['project_id'])
         ->where('block_id',$data['block_id'])->where('main_description_id',$data['main_description_id'])
         ->where('sub_description_id',$data['sub_description_id'])
         ->whereRaw("name like '%$wages_name%'" );
@@ -468,6 +468,7 @@ class ConstructionDetails extends Model
         if(!empty($return)){
             $amount = explode(",",$return['amount_booked']);
             $name = explode(",",$return['name']);
+            $wages_no = explode(",",$return['wages']);
            
             $j = count($amount);
             for($i = 0; $i<count($amount); $i++){
@@ -477,17 +478,19 @@ class ConstructionDetails extends Model
                     if($amount[$j] == $data['sum'] && $name[$j] == $wages_name){
                         unset($amount[$j]);
                         unset($name[$j]);
+                        unset($wages_no[$j]);
                     }
                 }
                
             }
             $updated_amount = implode(",",$amount);
             $updated_name = implode(",",$name);
+            $updated_wages_no = implode(",",$wages_no);
             //print_r($updated_amount);pp($updated_name);
             if(!empty($apartment_id)){
-                DB::select("UPDATE construction_details SET amount_booked = '$updated_amount',`name`= '$updated_name' WHERE id = ( SELECT * FROM(Select min(id) as id from construction_details where project_id = ".$data['project_id']." and block_id = ".$data['block_id']." and main_description_id =".$data['main_description_id']." and apartment_id =".$data['apartment_id']." and sub_description_id=".$data['sub_description_id']." and name like '%$wages_name%' ) as cunst)");
+                DB::select("UPDATE construction_details SET amount_booked = '$updated_amount',`name`= '$updated_name',`wages`= $updated_wages_no WHERE id = ( SELECT * FROM(Select min(id) as id from construction_details where project_id = ".$data['project_id']." and block_id = ".$data['block_id']." and main_description_id =".$data['main_description_id']." and apartment_id =".$data['apartment_id']." and sub_description_id=".$data['sub_description_id']." and name like '%$wages_name%' ) as cunst)");
             }else{
-                DB::select("UPDATE construction_details SET amount_booked = '$updated_amount',`name`= '$updated_name' WHERE id = ( SELECT * FROM(Select min(id) as id from construction_details where project_id = ".$data['project_id']." and block_id = ".$data['block_id']." and main_description_id =".$data['main_description_id']." and floor_id =".$data['floor_id']." and sub_description_id=".$data['sub_description_id']." and name like '%$wages_name%' ) as cunst)");
+                DB::select("UPDATE construction_details SET amount_booked = '$updated_amount',`name`= '$updated_name' ,`wages`= $updated_wages_no WHERE id = ( SELECT * FROM(Select min(id) as id from construction_details where project_id = ".$data['project_id']." and block_id = ".$data['block_id']." and main_description_id =".$data['main_description_id']." and floor_id =".$data['floor_id']." and sub_description_id=".$data['sub_description_id']." and name like '%$wages_name%' ) as cunst)");
             }
             
         }
