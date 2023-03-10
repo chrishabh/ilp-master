@@ -91,8 +91,30 @@ class User extends Authenticatable
         User::whereNull('deleted_at')->where('id',$id)->update(['user_role' =>$role]);
     }
 
+
     public static function updatePassword($id,$data)
     {
         User::whereNull('deleted_at')->where('id',$id)->update($data);
+    }
+    
+    public static function getUserListForLinking($request)
+    {
+        $noOfRecord = $request['no_of_records'] ?? 10;
+        $current_page = $request['page_no'] ?? 1;
+        $offset = ($current_page*$noOfRecord)-$noOfRecord;
+
+        $return = User::select( DB::raw("CONCAT(COALESCE(first_name,''),' ' ,COALESCE(last_name,'')) as user_name"),'user_role','id')->whereNull('deleted_at')->offset($offset)->limit($noOfRecord)->get();
+
+        if(count($return)>0){
+            return $return->toArray();
+        }
+
+        return [];
+    }
+
+    public static function getUserCount()
+    {
+        return User::whereNull('deleted_at')->count('id');
+
     }
 }

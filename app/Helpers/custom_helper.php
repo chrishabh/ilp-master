@@ -526,7 +526,7 @@ if (! function_exists('envparam')) {
     function downloadConstructionExcelFile($details,$file,$project_name)
     {
         ini_set('max_execution_time', 360);
-        ini_set('max_execution_time', '-1');
+        ini_set('memory_limit', '-1');
          //Give our xlsx file a name.
          $xlsxFileName = $file.'_'.date('Y_m_d_H_i_s').'.xlsx';
     

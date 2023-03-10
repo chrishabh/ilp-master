@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Exceptions\AppException;
 use App\Exceptions\BusinessExceptions\RegisterFailedException;
 use App\Models\UserAuthorization;
+use App\Models\UserProjectLinking;
 use Illuminate\Console\Application;
 use Illuminate\Support\Facades\File;
 
@@ -179,6 +180,44 @@ class UserServices{
         $password['decrypted_password'] = decrypt($user['password']);
 
         return $password;
+    }
+    public static function getUserProjectLinkingDetails($request)
+    {
+        $user_list = User::getUserListForLinking($request);
+        $total_count = User::getUserCount();
+
+        foreach($user_list as &$value){
+            $project_details = UserProjectLinking::getUserProjectDetails($value);
+
+            $value['project_details'] = $project_details;
+        }
+        $return['total_records'] = $total_count;
+        $return['user_list'] = $user_list;
+
+        return $return;
+        
+    }
+
+    public static function linkUserAndProjects($request)
+    {
+        if($request['operation'] == 'remove'){
+            if(UserProjectLinking::deleteLinkedUser($request['user_id'],$request['project_id']))
+            {
+                return;
+            }
+            throw new AppException("No operation performed.");
+        }
+
+        if($request['operation'] == 'add')
+        {
+            if(UserProjectLinking::linkUserAndProjects(['user_id' => $request['user_id'],'project_id' => $request['project_id']]))
+            {
+                return;
+            }
+            throw new AppException("No operation performed.");
+        }
+        throw new AppException("No operation performed.");
+
     }
 
 }
