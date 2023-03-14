@@ -97,7 +97,7 @@ class User extends Authenticatable
         $current_page = $request['page_no'] ?? 1;
         $offset = ($current_page*$noOfRecord)-$noOfRecord;
 
-        $return = User::select( DB::raw("CONCAT(COALESCE(first_name,''),' ' ,COALESCE(last_name,'')) as user_name"),'user_role','id')->whereNull('deleted_at')->offset($offset)->limit($noOfRecord)->get();
+        $return = User::select( DB::raw("CONCAT(COALESCE(first_name,''),' ' ,COALESCE(last_name,'')) as user_name"),'email','user_role','id')->whereNull('deleted_at')->offset($offset)->limit($noOfRecord)->get();
 
         if(count($return)>0){
             return $return->toArray();
