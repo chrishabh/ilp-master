@@ -6,6 +6,7 @@ use App\Http\Requests\LoginFormRequest;
 use App\Http\Requests\RegisterFormRequest;
 use App\Services\UserServices;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\GetPayToDetailsFormRequest;
 use App\Http\Requests\GetProjectDetialsFormRequest;
 use App\Http\Requests\LinkUserAndProjectsFormRequest;
 use App\Http\Requests\SignUpFormRequest;
@@ -65,7 +66,7 @@ class UserController extends Controller
         return  response()->success();
     }
 
-    public static function getUserProjectLinkingDetails(GetProjectDetialsFormRequest $request)
+    public static function getUserProjectLinkingDetails(GetPayToDetailsFormRequest $request)
     {
         $requestData    =   $request->validated();
         $user           =   new UserServices();
