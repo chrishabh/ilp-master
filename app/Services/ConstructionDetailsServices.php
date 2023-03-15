@@ -31,6 +31,14 @@ class ConstructionDetailsServices{
         return  $return;
     }
 
+    public static function getProject()
+    {
+       
+        $return['project_details'] = ProjectDetails::getProject();
+
+        return  $return;
+    }
+
     public static function getBlockDetails($request)
     {
         $return['total_records'] = BlockDetails::getBlockTotalRecords($request);

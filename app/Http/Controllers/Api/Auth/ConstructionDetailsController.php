@@ -32,6 +32,14 @@ class ConstructionDetailsController extends Controller
         return  response()->data($data);
     }
 
+    public static function getProject()
+    {
+        
+        $data = ConstructionDetailsServices::getProject();
+
+        return  response()->data($data);
+    }
+
     public static function getBlockDetails(GetBlockDetailsFormRequest $request)
     {
         $requestData = $request->validated();

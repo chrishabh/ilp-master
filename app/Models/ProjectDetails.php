@@ -33,6 +33,17 @@ class ProjectDetails extends Model
         return [];
     }
 
+    public static function getProject()
+    {
+
+        $data = ProjectDetails::whereNull('deleted_at')->get();
+
+        if(count($data)>0){
+            return $data->toArray();
+        }
+        return [];
+    }
+
     public static function getProjectTotalRecords()
     {
         return ProjectDetails::whereNull('deleted_at')->count('id');
