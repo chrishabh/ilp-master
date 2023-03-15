@@ -25,7 +25,8 @@ class GetProjectDetialsFormRequest extends FormRequest
     {
         return [
             'no_of_records' => 'required',
-            'page_no' => 'required'
+            'page_no' => 'required',
+            'user_id'   =>  'required'
         ];
     }
 
