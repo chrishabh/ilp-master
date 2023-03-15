@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Exceptions\AppException;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -30,6 +31,11 @@ class UserProjectLinking extends Model
 
     public static function linkUserAndProjects($data = [])
     {
-        return UserProjectLinking::insert($data);
+        if(!(UserProjectLinking::whereNull('deleted_at')->where('user_id',$data['user_id'])->where('project_id',$data['project_id'])->exists())){
+            return UserProjectLinking::insert($data);
+        }else{
+            throw new AppException('Project already linked please select another project');
+        }
+        
     }
 }
