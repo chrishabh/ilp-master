@@ -11,6 +11,7 @@ use App\Http\Requests\GetApartmentFormRequest;
 use App\Http\Requests\GetBlockDetailsFormRequest;
 use App\Http\Requests\GetConstructionDetailsFormRequest;
 use App\Http\Requests\GetFloorFormRequest;
+use App\Http\Requests\GetPayToDetailsFormRequest;
 use App\Http\Requests\GetProjectConstructionDetailsFormRequest;
 use App\Http\Requests\GetProjectDetialsFormRequest;
 use App\Http\Requests\ImportExcelFileJobFormRequest;
@@ -116,7 +117,7 @@ class ConstructionDetailsController extends Controller
         return  response()->success();
     }
 
-    public function getPayToDetails(GetProjectDetialsFormRequest $request)
+    public function getPayToDetails(GetPayToDetailsFormRequest $request)
     {
         $requestData = $request->validated();
         $return = ConstructionDetailsServices::getPayToDetails($request);
