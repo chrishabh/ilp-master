@@ -22,8 +22,8 @@ class ProjectDetails extends Model
         $current_page = $request['page_number'] ?? 1;
         $offset = ($current_page*$noOfRecord)-$noOfRecord;
 
-        $data = ProjectDetails::select('project_details.id','project_details.project_name
-        ')->join('user_project_linkings','user_project_linkings.project_id','=','project_details.id')
+        $data = ProjectDetails::select('project_details.id','project_details.project_name')
+        ->join('user_project_linkings','user_project_linkings.project_id','=','project_details.id')
         ->whereNull('project_details.deleted_at')
         ->whereNull('user_project_linkings.deleted_at')
         ->where('user_project_linkings.user_id',$request['user_id'])->offset($offset)->limit($noOfRecord)->get();
