@@ -488,9 +488,9 @@ class ConstructionDetails extends Model
             $updated_wages_no = implode(",",$wages_no);
             //print_r($updated_amount);pp($updated_name);
             if(!empty($apartment_id)){
-                DB::select("UPDATE construction_details SET amount_booked = '$updated_amount',`name`= '$updated_name',`wages`= $updated_wages_no WHERE id = ( SELECT * FROM(Select min(id) as id from construction_details where project_id = ".$data['project_id']." and block_id = ".$data['block_id']." and main_description_id =".$data['main_description_id']." and apartment_id =".$data['apartment_id']." and sub_description_id=".$data['sub_description_id']." and name like '%$wages_name%' ) as cunst)");
+                DB::select("UPDATE construction_details SET amount_booked = '$updated_amount',`name`= '$updated_name',`wages`= '$updated_wages_no' WHERE id = ( SELECT * FROM(Select min(id) as id from construction_details where project_id = ".$data['project_id']." and block_id = ".$data['block_id']." and main_description_id =".$data['main_description_id']." and apartment_id =".$data['apartment_id']." and sub_description_id=".$data['sub_description_id']." and name like '%$wages_name%' ) as cunst)");
             }else{
-                DB::select("UPDATE construction_details SET amount_booked = '$updated_amount',`name`= '$updated_name' ,`wages`= $updated_wages_no WHERE id = ( SELECT * FROM(Select min(id) as id from construction_details where project_id = ".$data['project_id']." and block_id = ".$data['block_id']." and main_description_id =".$data['main_description_id']." and floor_id =".$data['floor_id']." and sub_description_id=".$data['sub_description_id']." and name like '%$wages_name%' ) as cunst)");
+                DB::select("UPDATE construction_details SET amount_booked = '$updated_amount',`name`= '$updated_name' ,`wages`= '$updated_wages_no' WHERE id = ( SELECT * FROM(Select min(id) as id from construction_details where project_id = ".$data['project_id']." and block_id = ".$data['block_id']." and main_description_id =".$data['main_description_id']." and floor_id =".$data['floor_id']." and sub_description_id=".$data['sub_description_id']." and name like '%$wages_name%' ) as cunst)");
             }
             
         }
