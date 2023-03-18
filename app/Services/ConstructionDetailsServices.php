@@ -196,7 +196,11 @@ class ConstructionDetailsServices{
         foreach($details as &$value)
         {
             try{
-                $value['Area'] = ($value['Rate'] != '0')?roundOff((float)$value['Total']/(float)$value['Rate'],1):'';
+                if(($value['Total']>0 || $value['Total']<0) && ($value['Rate']>0 || $value['Rate']<0)){
+                    $value['Area'] = ($value['Rate'] != '0')?roundOff((float)$value['Total']/(float)$value['Rate'],1):'';
+                }else{
+                    $value['Area'] = '';
+                }
             }catch(\Exception $e){
                 throw new AppException('Something went wrong on Block =>'.$value['Block'].',Level=>'.$value['Level'].',Plot=>'.$value['Plot'].',Main Description=>'.$value['Main Description'].',Sub Description=>'.$value['Sub Description']);
             }
