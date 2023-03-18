@@ -538,7 +538,7 @@ if (! function_exists('envparam')) {
          $uploaded = false;
          $count = 0;
          if(!empty($details)){
-            foreach(array_chunk($details,30000) as $key => $records){
+            foreach(array_chunk($details,35000) as $key => $records){
                  
                   $fp = fopen('php://output', 'w+');
                   //if($count>0){
