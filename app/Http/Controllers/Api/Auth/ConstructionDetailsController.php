@@ -162,11 +162,7 @@ class ConstructionDetailsController extends Controller
         $requestData = $request->validated();
         ini_set('memory_limit', '-1');
         ini_set('max_execution_time', 360);
-        try{
-            ImportExcel::dispatch($request['file_path'])->onQueue('high');
-        }catch(\Exception $e){
-            throw new AppException("Something went wrong.");
-        }
+        ImportExcel::dispatch($request['file_path'])->onQueue('high');
 
         return  response()->success();
     }
