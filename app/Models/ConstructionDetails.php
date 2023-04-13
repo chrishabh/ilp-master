@@ -584,7 +584,7 @@ class ConstructionDetails extends Model
         }
 
         foreach($data as $value){
-            $total += $value['total'];
+            $total += (float)$value['total'];
             $res = explode(',',str_replace("'", "", $value['amount_booked']));
             $booked +=  array_sum($res);
         }
