@@ -285,6 +285,8 @@ if (! function_exists('envparam')) {
     function importExcelToDB($file_path)
     {
         ini_set('memory_limit', '-1');
+        ini_set('post_max_size', '-1');
+        ini_set('upload_max_filesize', '-1');
         ini_set('max_execution_time', '-1');
         set_time_limit(0);
         if(!empty($file_path)){
