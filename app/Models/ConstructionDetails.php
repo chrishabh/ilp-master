@@ -589,8 +589,8 @@ class ConstructionDetails extends Model
             $booked +=  array_sum($res);
         }
 
-        $response['total_amount'] = $total;
-        $response['booked_amount'] = $booked;
+        $response['total_amount'] = round($total,3);
+        $response['booked_amount'] = round($booked,3);
 
         return $response;
     }
