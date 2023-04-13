@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\Exceptions\AppException;
 use App\Models\RunningBatchDetails;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
@@ -34,7 +35,12 @@ class ImportExcel implements ShouldQueue
     public function handle()
     {
         $batch_id = RunningBatchDetails::batchStarted('Import_Excel_Job');
-        importExcelToDB($this->file);
+        try{
+            importExcelToDB($this->file);
+        }catch(\Exception $e){
+            throw new AppException("Something went wrong.");
+        }
+       
         RunningBatchDetails::batchCompleted($batch_id);
         
     }
