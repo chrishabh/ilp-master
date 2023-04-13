@@ -204,7 +204,7 @@ class ConstructionDetailsServices{
         foreach($details as &$value)
         {
             try{
-                $value['Area'] = ($value['Rate'] != '0')?roundOff((float)$value['Total']/(float)$value['Rate'],1):'';
+                $value['Area'] = ($value['Rate'] > '0')?roundOff((float)$value['Total']/(float)$value['Rate'],1):'';
             }catch(\Exception $e){
                 throw new AppException('Something went wrong on Block =>'.$value['Block'].',Level=>'.$value['Level'].',Plot=>'.$value['Plot'].',Main Description=>'.$value['Main Description'].',Sub Description=>'.$value['Sub Description']);
             }
@@ -263,6 +263,11 @@ class ConstructionDetailsServices{
        ];
 
        ConstructionDetails::updateConstructionDetails($request['id'],$data);
+    }
+
+    public static function getTotalOfProject($request)
+    {
+        return ConstructionDetails::getTotalOfProject($request);
     }
 
 }

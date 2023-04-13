@@ -34,6 +34,7 @@ use Illuminate\Support\Facades\Route;
                 Route::post('get-floor-details','ConstructionDetailsController@getFloorDetails');
                 Route::post('get-apartment-details','ConstructionDetailsController@getApartmentDetails');
                 Route::post('get-construction-details','ConstructionDetailsController@getConstructionDetails');
+                Route::post('total-construction-details','ConstructionDetailsController@getTotalProjectDetails');
                 Route::post('get-description-work','ConstructionDetailsController@getDescriptionWork');
                 Route::post('delete-project','ConstructionDetailsController@deleteProject');
                 Route::post('get-pay-to-details','ConstructionDetailsController@getPayToDetails');

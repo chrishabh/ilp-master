@@ -133,6 +133,14 @@ class ConstructionDetailsController extends Controller
         return  response()->data($return);
     }
 
+    public static function getTotalProjectDetails(GetProjectConstructionDetailsFormRequest $request)
+    {
+        $requestData = $request->validated();
+        $return = ConstructionDetailsServices::getTotalOfProject($request);
+
+        return  response()->data($return);
+    }
+
     public static function deleteProject(GetProjectConstructionDetailsFormRequest $request)
     {
         $requestData = $request->validated();
