@@ -213,16 +213,19 @@ class ConstructionDetailsServices{
                 $value['Total'] = "£".roundOff($value['Total']);
             }
             $amount = explode(",",$value['Amount']);
+            $booked_amount = 0;
             foreach($amount as $amount_value)
             {
                 if(!empty($amount_value)){
                     $amount_value = str_replace("'","",$amount_value);
-                    $array_value [] = "£".roundOff($amount_value);
+                    $array_value [] = roundOff($amount_value);
+                    $booked_amount += roundOff($amount_value);
                 }
                
             }
+            $quantity = ($value['Rate'] > '0' && $booked_amount > 0)?roundOff((float)$booked_amount/(float)$value['Rate'],1):'';
             $value['Amount'] = implode(",",$array_value);
-            $value['Qty.'] = (number_format((float)$value['Qty.'],2)>0)?number_format((float)$value['Qty.'],2):'';
+            $value['Qty.'] = (number_format((float)$quantity,2)>0)?number_format((float)$quantity,2):'';
             $project_name = $value['project_name'];
             unset($value['project_name']);
             // if(!empty($value['Apartment'])){
