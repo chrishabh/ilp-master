@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class GetProjectDetialsFormRequest extends FormRequest
+class GetPayToDetailsFormRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,8 +25,7 @@ class GetProjectDetialsFormRequest extends FormRequest
     {
         return [
             'no_of_records' => 'required',
-            'page_no' => 'required',
-            'user_id'   =>  'required'
+            'page_no' => 'required'
         ];
     }
 

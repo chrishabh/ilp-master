@@ -168,7 +168,7 @@ if (! function_exists('envparam')) {
         // return $url;
         // fclose($fp);
         if($uploaded){
-            $url = env('APP_URL').'/ipl/public/wages_data'.'/'.$xlsxFileName;
+            $url = env('APP_URL').'/public/wages_data'.'/'.$xlsxFileName;
         }else{
             throw new AppException('No wages exists to download',null,1001);
             //$url = env('WEB_URL');
@@ -285,6 +285,8 @@ if (! function_exists('envparam')) {
     function importExcelToDB($file_path)
     {
         ini_set('memory_limit', '-1');
+        ini_set('post_max_size', '-1');
+        ini_set('upload_max_filesize', '-1');
         ini_set('max_execution_time', '-1');
         set_time_limit(0);
         if(!empty($file_path)){
@@ -528,7 +530,7 @@ if (! function_exists('envparam')) {
         ini_set('max_execution_time', 360);
         ini_set('memory_limit', '-1');
          //Give our xlsx file a name.
-         $xlsxFileName = $file.'_'.date('Y_m_d_H_i_s').'.xlsx';
+         $xlsxFileName = $project_name.'_'.date('Y_m_d_H_i_s').'.xlsx';
     
          // Set the Content-Type and Content-Disposition headers.
          //Open file pointer.
@@ -726,7 +728,7 @@ if (! function_exists('envparam')) {
          // return $url;
          // fclose($fp);
          if($uploaded){
-             $url = env('APP_URL').'/ipl/public/construction_data'.'/'.$xlsxFileName;
+             $url = env('APP_URL').'/public/construction_data'.'/'.$xlsxFileName;
          }else{
              $url = env('WEB_URL');
          }

@@ -570,4 +570,28 @@ class ConstructionDetails extends Model
         }
         return '';
     }
+
+    public static function getTotalOfProject($request)
+    {
+        $total = $booked = 0;
+
+        $data = ConstructionDetails::select('total','amount_booked')->whereNull('deleted_at')->where('project_id', $request['project_id'])->get();
+
+        if(count($data)>0){
+            $data = $data->toArray();
+        }else{
+            $data = [];
+        }
+
+        foreach($data as $value){
+            $total += (float)$value['total'];
+            $res = explode(',',str_replace("'", "", $value['amount_booked']));
+            $booked +=  array_sum($res);
+        }
+
+        $response['total_amount'] = round($total,3);
+        $response['booked_amount'] = round($booked,3);
+
+        return $response;
+    }
 }
