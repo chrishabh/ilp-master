@@ -196,7 +196,7 @@ class ConstructionDetailsServices{
         }else{
             $details = ConstructionDetails::getConstructionDetailsForProject($request['project_id']);
         }
-        
+
         $aparment_aaray = [];
         $floor_array = [];
         $final_data = [];
@@ -221,7 +221,7 @@ class ConstructionDetailsServices{
                     $array_value [] = roundOff($amount_value);
                     $booked_amount += roundOff($amount_value);
                 }
-               
+
             }
             $quantity = ($value['Rate'] > '0' && $booked_amount > 0)?roundOff((float)$booked_amount/(float)$value['Rate'],1):'';
             $value['Amount'] = implode(",",$array_value);

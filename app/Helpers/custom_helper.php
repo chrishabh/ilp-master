@@ -559,7 +559,7 @@ if (! function_exists('envparam')) {
                  foreach($records as $i => $row){
                     // unset($row['Apartment']);
                  if ($i ==0) {
-                    $row_gap = 4;
+                    $row_gap = 6;
                      $firstLineKeys = array_keys($row);
                      $j=1;
                      foreach($firstLineKeys as $x_value){
