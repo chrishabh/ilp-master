@@ -559,7 +559,7 @@ if (! function_exists('envparam')) {
                  foreach($records as $i => $row){
                     // unset($row['Apartment']);
                  if ($i ==0) {
-                    $row_gap = 6;
+                    $row_gap = 7;
                      $firstLineKeys = array_keys($row);
                      $j=1;
                      foreach($firstLineKeys as $x_value){
@@ -601,112 +601,112 @@ if (! function_exists('envparam')) {
                      ->getNumberFormat()->setFormatCode(\PhpOffice\PhpSpreadsheet\Style\NumberFormat::FORMAT_TEXT);
 
                 $doc->getActiveSheet()
-                     ->getStyle('A4')
+                     ->getStyle('A7')
                      ->getFont()
                      ->getColor()
                      ->setRGB ('ffffff');
                 $doc->getActiveSheet()
-                     ->getStyle('B4')
+                     ->getStyle('B7')
                      ->getFont()
                      ->getColor()
                      ->setRGB ('ffffff');
                 $doc->getActiveSheet()
-                     ->getStyle('C4')
+                     ->getStyle('C7')
                      ->getFont()
                      ->getColor()
                      ->setRGB ('ffffff');
                 $doc->getActiveSheet()
-                     ->getStyle('D4')
+                     ->getStyle('D7')
                      ->getFont()
                      ->getColor()
                      ->setRGB ('ffffff');
                 $doc->getActiveSheet()
-                     ->getStyle('E4')
+                     ->getStyle('E7')
                      ->getFont()
                      ->getColor()
                      ->setRGB ('ffffff');
                 $doc->getActiveSheet()
-                     ->getStyle('F4')
+                     ->getStyle('F7')
                      ->getFont()
                      ->getColor()
                      ->setRGB ('ffffff');
                 $doc->getActiveSheet()
-                     ->getStyle('G4')
+                     ->getStyle('G7')
                      ->getFont()
                      ->getColor()
                      ->setRGB ('ffffff');
                 $doc->getActiveSheet()
-                     ->getStyle('H4')
+                     ->getStyle('H7')
                      ->getFont()
                      ->getColor()
                      ->setRGB ('ffffff');
                 $doc->getActiveSheet()
-                     ->getStyle('I4')
+                     ->getStyle('I7')
                      ->getFont()
                      ->getColor()
                      ->setRGB ('ffffff');
                 $doc->getActiveSheet()
-                     ->getStyle('J4')
+                     ->getStyle('J7')
                      ->getFont()
                      ->getColor()
                      ->setRGB ('ffffff');
 
                 $doc->getActiveSheet()
-                    ->getStyle('A4:A4')
+                    ->getStyle('A7:A7')
                     ->getFill()
                     ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
                     ->getStartColor()
                     ->setARGB('FF0000FF');
                 $doc->getActiveSheet()
-                    ->getStyle('B4:B4')
+                    ->getStyle('B7:B7')
                     ->getFill()
                     ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
                     ->getStartColor()
                     ->setARGB('FF0000FF');
                 $doc->getActiveSheet()
-                    ->getStyle('C4:C4')
+                    ->getStyle('C7:C7')
                     ->getFill()
                     ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
                     ->getStartColor()
                     ->setARGB('FF0000FF');
                 $doc->getActiveSheet()
-                    ->getStyle('D4:D4')
+                    ->getStyle('D7:D7')
                     ->getFill()
                     ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
                     ->getStartColor()
                     ->setARGB('FF0000FF');
                 $doc->getActiveSheet()
-                    ->getStyle('E4:E4')
+                    ->getStyle('E7:E7')
                     ->getFill()
                     ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
                     ->getStartColor()
                     ->setARGB('FF0000FF');
                 $doc->getActiveSheet()
-                    ->getStyle('F4:F4')
+                    ->getStyle('F7:F7')
                     ->getFill()
                     ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
                     ->getStartColor()
                     ->setARGB('FF0000FF');
                 $doc->getActiveSheet()
-                    ->getStyle('G4:G4')
+                    ->getStyle('G7:G7')
                     ->getFill()
                     ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
                     ->getStartColor()
                     ->setARGB('FF0000FF');
                     $doc->getActiveSheet()
-                    ->getStyle('H4:H4')
+                    ->getStyle('H7:H7')
                     ->getFill()
                     ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
                     ->getStartColor()
                     ->setARGB('FF0000FF');
                 $doc->getActiveSheet()
-                    ->getStyle('I4:I4')
+                    ->getStyle('I7:I7')
                     ->getFill()
                     ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
                     ->getStartColor()
                     ->setARGB('FF0000FF');
                 $doc->getActiveSheet()
-                    ->getStyle('J4:J4')
+                    ->getStyle('J7:J7')
                     ->getFill()
                     ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
                     ->getStartColor()
