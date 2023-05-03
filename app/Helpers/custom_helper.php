@@ -295,7 +295,7 @@ if (! function_exists('envparam')) {
             $chunkSize = 10000;
             $project_check = true;
           
-            for ($startRow = 1; $startRow <= 30000; $startRow += $chunkSize) {
+            for ($startRow = 1; $startRow <= 35000; $startRow += $chunkSize) {
                 $chunkFilter = new ChunkReadFilter(1,$startRow,$chunkSize,'New Format');
                 $reader->setReadFilter($chunkFilter);
                 $spreadsheet = $reader->load($file_path);
