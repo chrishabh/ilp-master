@@ -494,8 +494,6 @@ if (! function_exists('envparam')) {
                             }
                             
                         }
-                        $progress = $i."/".$sheet_count;
-                        ImportExcelTable::progressUpdate($file_path,$progress);
                         foreach (array_chunk($total_insert,1000) as $t)  
                         {
                             DB::table('construction_details')->insert($t);
@@ -510,18 +508,10 @@ if (! function_exists('envparam')) {
                     //     ];
                     //     ImportExcelJobLogs::insertFileException($data);
                     // }
-                
-                
 
-                    if(($i+1) ==  $sheet_count){
-                        ProjectDetails::updatedImportedFlag($project_id);
-                        ImportExcelTable::completeUpdate($file_path);
-                        ImportExcelTable::deleted_at($file_path);
-                        break;
-                    }
-                    
                 }
             }
+            ProjectDetails::updatedImportedFlag($project_id);
         }
        
     }
