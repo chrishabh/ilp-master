@@ -293,6 +293,7 @@ if (! function_exists('envparam')) {
             $excel_data = [];
             $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
             $chunkSize = 10000;
+            $project_check = true;
           
             for ($startRow = 1; $startRow <= 30000; $startRow += $chunkSize) {
                 $chunkFilter = new ChunkReadFilter(1,$startRow,$chunkSize,'New Format');
@@ -370,7 +371,7 @@ if (! function_exists('envparam')) {
                                     if(!empty($cell_data) && ltrim(trim($cell_data," ")) == "Project Name"){
                                         $key = $cell_key;
                                         $project_name = $row_data[++$key];
-                                        $project_id = ProjectDetails::getProjectId($project_name);
+                                        $project_id = ProjectDetails::getProjectId($project_name, $project_check);
         
                                     } //elseif (!empty($cell_data) && ltrim(trim($cell_data," ")) == "Block"){
                                     //         $key1 = $cell_key;

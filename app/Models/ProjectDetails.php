@@ -55,16 +55,16 @@ class ProjectDetails extends Model
         return ProjectDetails::insertGetId($data);
     }
 
-    public static function getProjectId($Project_name)
+    public static function getProjectId($Project_name,$project_check)
     {
         $return = ProjectDetails::whereNull('deleted_at')->where('project_name',$Project_name)->first();
 
         if(isset($return->excel_imported)){
-            if($return->excel_imported && env('RESTRICT_DUPLICATE_PROJECT')){
+            if($return->excel_imported && env('RESTRICT_DUPLICATE_PROJECT') && $project_check){
                 throw new AppException('This Project already exists.');
             }
         }
-
+        $project_check = false;
         if(isset($return->id)){
             return $return->id;
            
