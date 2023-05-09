@@ -57,7 +57,7 @@ class User extends Authenticatable
 
     public static function getUserById($user_id)
     {
-        return User::where('id', $user_id)->first();
+        return User::whereNull('deleted_at')->where('id', $user_id)->first();
     }
 
     public static function details(){

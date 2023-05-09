@@ -10,6 +10,7 @@ use App\Models\ImportExcelTable;
 use App\Models\MainDescritpion;
 use App\Models\ProjectDetails;
 use App\Models\SubDescritpion;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -752,6 +753,11 @@ if (! function_exists('envparam')) {
 
         return ConstructionDetails::remainingBalanceCheckMultipleCase($project_id,$block_id,$apartment_id,$floor_id,$main_description_id,$sub_description_id);
 
+    }
+
+    function checkUserRole($user_id)
+    {
+        return User::getUserById($user_id)['role'];
     }
 
 ?>
