@@ -757,7 +757,7 @@ if (! function_exists('envparam')) {
 
     function checkUserRole($user_id)
     {
-        return User::getUserById($user_id)['role'];
+        return User::getUserById($user_id)['user_role'];
     }
 
 ?>
