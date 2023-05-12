@@ -91,7 +91,7 @@ class WagesDetails extends Model
         ->where('wages_details.user_id',$request['user_id']);
         $latest_sunday =  date('Y-m-d'); //pp($latest_sunday);
         if($date_flag){
-            $date = date('Y-m-d',$request['wages_date']);
+            $date = date('Y-m-d',strtotime($request['wages_date']));
             $data = $data->whereRaw("cast(wages_details.created_at as date) = '$date'")->get();
         }else{
             $data = $data->whereRaw("cast(wages_details.created_at as date) = '$latest_sunday'")->get();
