@@ -64,7 +64,7 @@ class WagesDetails extends Model
         return $return;
     }
 
-    public static function getWagesExcelDownload($request,$excel_data = false)
+    public static function getWagesExcelDownload($request,$excel_data = false,$date_flag=false)
     {
         $noOfRecord = $request['no_of_records'] ?? 10;
         $current_page = $request['page_number'] ?? 1;
@@ -90,7 +90,13 @@ class WagesDetails extends Model
         //->where('wages_details.block_id',$request['block_id'])
         ->where('wages_details.user_id',$request['user_id']);
         $latest_sunday =  date('Y-m-d'); //pp($latest_sunday);
-        $data = $data->whereRaw("cast(wages_details.created_at as date) = '$latest_sunday'")->get();
+        if($date_flag){
+            $date = date('Y-m-d',$request['wages_date']);
+            $data = $data->whereRaw("cast(wages_details.created_at as date) = '$date'")->get();
+        }else{
+            $data = $data->whereRaw("cast(wages_details.created_at as date) = '$latest_sunday'")->get();
+        }
+       
         
 
         if(count($data)>0){
