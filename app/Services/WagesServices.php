@@ -97,7 +97,7 @@ class WagesServices{
             $return['excel_url'] = getXlsxFile($excel_data, 'Wages_Booking_'.$request['wages_number']);
         }else{
             $return['total_booking'] = $total_booking;
-            $return['edit_and_delete_permission'] = (checkUserRole($request['user_id']) == 'admin')?1:0;
+            $return['edit_and_delete_permission'] = 1;//(checkUserRole($request['user_id']) == 'admin')?1:0;
         }
 
 
