@@ -87,9 +87,9 @@ if (! function_exists('envparam')) {
         return $result;
     }
 
-	function getXlsxFile($details,$file){
+	function getXlsxFile($details,$file,$date){
         //Give our xlsx file a name.
-        $xlsxFileName = $file.'.xlsx';
+        $xlsxFileName = $file.'_'.$date.'.xlsx';
 
         // Set the Content-Type and Content-Disposition headers.
         //Open file pointer.
@@ -177,10 +177,10 @@ if (! function_exists('envparam')) {
         return $url;
     }
 
-    function getXlsxFiles($details,$file){
+    function getXlsxFiles($details,$file,$date ){
         //Give our xlsx file a name.
         ini_set('memory_limit', '128M');
-        $xlsxFileName = $file.'_'.date('Y_m_d_H_i_s').'.xlsx';
+        $xlsxFileName = $file.'_'.$date.'.xlsx';
 
         // Set the Content-Type and Content-Disposition headers.
         //Open file pointer.
@@ -757,7 +757,7 @@ if (! function_exists('envparam')) {
 
     function checkUserRole($user_id)
     {
-        return User::getUserById($user_id)['role'];
+        return User::getUserById($user_id)['user_role'];
     }
 
 ?>

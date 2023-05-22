@@ -47,15 +47,15 @@ class WagesServices{
         
     }
 
-    public static function getWages($request,$excel_flag = false)
+    public static function getWages($request,$excel_flag = false,$date_flag=false)
     {
-        $return = WagesDetails::getWagesExcelDownload($request,$excel_flag);
+        $return = WagesDetails::getWagesExcelDownload($request,$excel_flag,$date_flag);
         $total_booking = 0;
         foreach($return['wages_details'] as &$value){
             $value['remaining_amount'] = ConstructionDetails::getRemaingAmountForWages($value);
             $total_booking += $value['amount'];
         }
-        $download_data = WagesDetails::getWagesExcelDownload($request,$excel_flag);
+        $download_data = WagesDetails::getWagesExcelDownload($request,$excel_flag,$date_flag);
         $records = $excel_data = [];
         foreach($download_data['wages_details'] as $value){
             $records['Subcontractor Ref'] = PayToDetails::getPayToCode($value['pay_to'])->pay_to_code??" ";
@@ -94,7 +94,7 @@ class WagesServices{
         }
 
         if($excel_flag){
-            $return['excel_url'] = getXlsxFile($excel_data, 'Wages_Booking_'.$request['wages_number']);
+            $return['excel_url'] = getXlsxFile($excel_data, 'Wages_Booking_'.$request['wages_number'],$request['wages_date']);
         }else{
             $return['total_booking'] = $total_booking;
             $return['edit_and_delete_permission'] = 1;//(checkUserRole($request['user_id']) == 'admin')?1:0;
@@ -236,7 +236,7 @@ class WagesServices{
             $excel_data [] = $records;
         }
 
-        $return['excel_url'] = getXlsxFile($excel_data, 'Wages_Booking_'.$request['wages_number']);
+        $return['excel_url'] = getXlsxFile($excel_data, 'Wages_Booking_'.$request['wages_number'],date('Y_m_d_H_i_s'));
 
         return $return;
     }
