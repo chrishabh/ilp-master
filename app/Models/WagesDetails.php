@@ -86,14 +86,18 @@ class WagesDetails extends Model
         'project_details.project_name','block_details.block_name','wages_details.apartment_id'
         ,'apartment_details.apartment_number','main_descritpions.description as description_header','sub_descritpions.sub_description as sub_description_header','floors.floor_name','wages_details.floor_id')
         ->whereNull('wages_details.deleted_at')
-        ->where('wages_details.project_id',$request['project_id'])
+        ->where('wages_details.project_id',$request['project_id']);
         //->where('wages_details.block_id',$request['block_id'])
-        ->where('wages_details.user_id',$request['user_id']);
+       
         $latest_sunday =  date('Y-m-d'); //pp($latest_sunday);
         if($date_flag){
             $date = date('Y-m-d',strtotime($request['wages_date']));
-            $data = $data->whereNotNull("final_submission_date")->whereRaw("cast(wages_details.created_at as date) = '$date'")->get();
+
+            $data = $data ->where('wages_details.user_id',$request['user_id'])->whereNotNull("final_submission_date")->whereRaw("cast(wages_details.created_at as date) = '$date'")->get();
         }else{
+            if(checkUserRole($request['user_id']) == 'client'){
+                $data = $data ->where('wages_details.user_id',$request['user_id']);
+            }
             $data = $data->whereNull("final_submission_date")->get();
             // $data = $data->whereRaw("cast(wages_details.created_at as date) = '$latest_sunday'")->get();
         }
