@@ -97,8 +97,9 @@ class WagesDetails extends Model
         }else{
             if(checkUserRole($request['user_id']) == 'client'){
                 $data = $data ->where('wages_details.user_id',$request['user_id']);
+                $data = $data->whereNull("final_submission_date")->get();
             }
-            $data = $data->whereNull("final_submission_date")->get();
+            $data = $data->whereRaw("cast(wages_details.created_at as date) = '$latest_sunday'")->get();
             // $data = $data->whereRaw("cast(wages_details.created_at as date) = '$latest_sunday'")->get();
         }
        
