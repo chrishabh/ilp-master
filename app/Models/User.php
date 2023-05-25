@@ -83,7 +83,7 @@ class User extends Authenticatable
 
     public static function deleteUser($id)
     {
-        User::where('id',$id)->update(['deleted_at' =>date('Y-m-d')]);
+        User::where('id',$id)->delete();
     }
 
     public static function updateUserRole($id,$role)
