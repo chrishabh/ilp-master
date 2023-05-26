@@ -25,6 +25,8 @@ Route::group(['middleware'=> ['tracker']],function () {
         });
 
         Route::group(['namespace' => 'Api\Auth'], function () {
+            Route::group(['middleware'=> ['auth:api']],function () {
+
                 Route::post('get-user-projects','UserController@getUserProjectLinkingDetails');
                 Route::post('link-user-project','UserController@linkUserAndProjects');
                 Route::get('get-lookup-value','UserController@lookUpValue');
@@ -66,7 +68,7 @@ Route::group(['middleware'=> ['tracker']],function () {
                 Route::post('read-excel','ConstructionDetailsController@readExcel');
                 Route::post('download-construction-details','ConstructionDetailsController@getProjectConstructionDetails');
                 Route::post('import-main-excel','ConstructionDetailsController@ImportMainExcelJob');
-         
+            });
             
         });
 
