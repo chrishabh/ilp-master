@@ -25,7 +25,7 @@ Route::group(['middleware'=> ['tracker']],function () {
         });
 
         Route::group(['namespace' => 'Api\Auth'], function () {
-            Route::group(['middleware'=> ['auth']],function () {
+            Route::group(['middleware'=> ['auth:api']],function () {
 
                 Route::post('get-user-projects','UserController@getUserProjectLinkingDetails');
                 Route::post('link-user-project','UserController@linkUserAndProjects');
