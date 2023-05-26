@@ -20,7 +20,7 @@ class Kernel extends HttpKernel
         \App\Http\Middleware\PreventRequestsDuringMaintenance::class,
         \Illuminate\Foundation\Http\Middleware\ValidatePostSize::class,
         \App\Http\Middleware\TrimStrings::class,
-        \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
+        \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class
     ];
 
     /**
@@ -44,6 +44,7 @@ class Kernel extends HttpKernel
             'throttle:60,1',
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
             'request.pre.processor',
+            'tracker'
         ],
     ];
 
@@ -65,6 +66,7 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'request.pre.processor'=>\App\Http\Middleware\RequestPreProcessor::class,
-        'userAuth' => \App\Http\Middleware\UserAuthatication::class
+        'userAuth' => \App\Http\Middleware\UserAuthatication::class,
+        'tracker' => \App\Http\Middleware\RequestResponseTracker::class
     ];
 }
