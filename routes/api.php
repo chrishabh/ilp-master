@@ -15,17 +15,18 @@ use Illuminate\Support\Facades\Route;
 */
 
         Route::group(['namespace' => 'Api\Auth'], function () {
-            Route::post('login','UserController@userLogin');		
-            Route::post('register','UserController@userSignUp');
-            Route::get('user-list','UserController@getUserList');
-            Route::post('update-user','UserController@updateUser');
-            Route::post('forgot-password','UserController@forgotPassword');
-            Route::post('decyprt-password','UserController@decryptPassword');
-            
+            Route::middleware(['middleware'=> ['tracker']],function () {
+                Route::post('login','UserController@userLogin');		
+                Route::post('register','UserController@userSignUp');
+                Route::get('user-list','UserController@getUserList');
+                Route::post('update-user','UserController@updateUser');
+                Route::post('forgot-password','UserController@forgotPassword');
+                Route::post('decyprt-password','UserController@decryptPassword');
+            });
         });
 
         Route::group(['namespace' => 'Api\Auth'], function () {
-            //Route::group(['middleware' => ['userAuth']], function () {
+            Route::middleware(['middleware'=> ['tracker']],function () {
                 Route::post('get-user-projects','UserController@getUserProjectLinkingDetails');
                 Route::post('link-user-project','UserController@linkUserAndProjects');
                 Route::get('get-lookup-value','UserController@lookUpValue');
@@ -62,11 +63,12 @@ use Illuminate\Support\Facades\Route;
                 Route::post('get-expot-excel-progress','ConstructionDetailsController@getExportExcelProgress');
                 Route::post('import-excel-job','ConstructionDetailsController@ImportExcelJob');
 
-            //});
-            Route::post('upload-excel','ConstructionDetailsController@uploadExelForConstructionDetails');
-            Route::post('read-excel','ConstructionDetailsController@readExcel');
-            Route::post('download-construction-details','ConstructionDetailsController@getProjectConstructionDetails');
-            Route::post('import-main-excel','ConstructionDetailsController@ImportMainExcelJob');
+         
+                Route::post('upload-excel','ConstructionDetailsController@uploadExelForConstructionDetails');
+                Route::post('read-excel','ConstructionDetailsController@readExcel');
+                Route::post('download-construction-details','ConstructionDetailsController@getProjectConstructionDetails');
+                Route::post('import-main-excel','ConstructionDetailsController@ImportMainExcelJob');
+            });
             
         });
 
