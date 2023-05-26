@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use App\Models\RequestResponseTracker as ModelsRequestResponseTracker;
+use Carbon\Carbon;
 use Closure;
 use Illuminate\Http\Request;
 
@@ -34,7 +35,7 @@ class RequestResponseTracker
                 'http_code'   => $object->getStatusCode(),
                 'response_code' =>  $response_code,
                 'type'   =>  $request->method(),
-                'date' => '2',
+                'date' => Carbon::now(),
                 'created_by'   => null,
                 'updated_by' => null
             ];
