@@ -13,20 +13,18 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-
+Route::middleware(['middleware'=> 'tracker'],function () {
         Route::group(['namespace' => 'Api\Auth'], function () {
-            Route::middleware(['middleware'=> 'tracker'],function () {
+          
                 Route::post('login','UserController@userLogin');		
                 Route::post('register','UserController@userSignUp');
                 Route::get('user-list','UserController@getUserList');
                 Route::post('update-user','UserController@updateUser');
                 Route::post('forgot-password','UserController@forgotPassword');
                 Route::post('decyprt-password','UserController@decryptPassword');
-            });
         });
 
         Route::group(['namespace' => 'Api\Auth'], function () {
-            Route::middleware(['middleware'=> 'tracker'],function () {
                 Route::post('get-user-projects','UserController@getUserProjectLinkingDetails');
                 Route::post('link-user-project','UserController@linkUserAndProjects');
                 Route::get('get-lookup-value','UserController@lookUpValue');
@@ -68,9 +66,11 @@ use Illuminate\Support\Facades\Route;
                 Route::post('read-excel','ConstructionDetailsController@readExcel');
                 Route::post('download-construction-details','ConstructionDetailsController@getProjectConstructionDetails');
                 Route::post('import-main-excel','ConstructionDetailsController@ImportMainExcelJob');
-            });
+         
             
         });
+
+    });
 
         // Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
         //     return $request->user();
