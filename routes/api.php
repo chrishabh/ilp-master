@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 */
 
         Route::group(['namespace' => 'Api\Auth'], function () {
-            Route::middleware(['middleware'=> ['tracker']],function () {
+            Route::middleware(['middleware'=> 'tracker'],function () {
                 Route::post('login','UserController@userLogin');		
                 Route::post('register','UserController@userSignUp');
                 Route::get('user-list','UserController@getUserList');
@@ -26,7 +26,7 @@ use Illuminate\Support\Facades\Route;
         });
 
         Route::group(['namespace' => 'Api\Auth'], function () {
-            Route::middleware(['middleware'=> ['tracker']],function () {
+            Route::middleware(['middleware'=> 'tracker'],function () {
                 Route::post('get-user-projects','UserController@getUserProjectLinkingDetails');
                 Route::post('link-user-project','UserController@linkUserAndProjects');
                 Route::get('get-lookup-value','UserController@lookUpValue');
