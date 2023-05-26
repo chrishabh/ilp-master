@@ -15,7 +15,7 @@ class RequestResponseTracker
      * @param  \Closure  $next
      * @return mixed
      */
-    public function handle(Request $request, Closure $next)
+    public function handle($request, Closure $next)
     {
         $object = $next($request);
 
