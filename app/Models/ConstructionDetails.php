@@ -71,7 +71,7 @@ class ConstructionDetails extends Model
                 $data = ConstructionDetails::whereNull('construction_details.deleted_at')
                 ->where('construction_details.project_id',$request['project_id'])
                 ->where('construction_details.block_id',$request['block_id'])
-                ->whereRaw('area','>','0')
+                ->where('area','>','0')
                 ->where('construction_details.main_description_id',$value['main_description_id'])->where('construction_details.sub_description_id',$sub_header['sub_description_id']);
                 if(!empty($apartment_id)){
                     $data = $data->where('construction_details.apartment_id',$request['apartment_id'])->get();
