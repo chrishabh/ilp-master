@@ -59,7 +59,7 @@ class Floor extends Model
         return Floor::join('user_project_linkings','user_project_linkings.floor_id','=','floors.id',)
         ->whereNull('floors.deleted_at')
         ->whereNull('user_project_linkings.deleted_at')->where('user_project_linkings.project_id',$request['project_id'])
-        ->where('block_id',$request['block_id'])->where('user_project_linkings.user_id',Auth::User()->id)->count('id');
+        ->where('block_id',$request['block_id'])->where('user_project_linkings.user_id',Auth::User()->id)->count('floors.id');
     }
 
     public static function getFloorDetailsForMobile($request){
