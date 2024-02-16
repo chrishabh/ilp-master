@@ -220,4 +220,26 @@ class UserServices{
 
     }
 
+    public static function linkUserAndfloor($request)
+    {
+        if($request['operation'] == 'remove'){
+            if(UserProjectLinking::deleteFloorLinkedUser($request['user_id'],$request['project_id'],$request['floor_id']))
+            {
+                return;
+            }
+            throw new AppException("No operation performed.");
+        }
+
+        if($request['operation'] == 'add')
+        {
+            if(UserProjectLinking::linkUserAndFloors(['user_id' => $request['user_id'],'project_id' => $request['project_id'],'floor_id' => $request['floor_id']]))
+            {
+                return;
+            }
+            throw new AppException("No operation performed.");
+        }
+        throw new AppException("No operation performed.");
+
+    }
+
 }

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 class Floor extends Model
 {
@@ -51,5 +52,30 @@ class Floor extends Model
     {
         return Floor::whereNull('deleted_at')->where('project_id',$request['project_id'])
         ->where('block_id',$request['block_id'])->count('id');
+    }
+
+    public static function getFloorTotalRecordsForMobile($request)
+    {
+        return Floor::join('user_project_linkings','user_project_linkings.floor_id','=','floors.id',)
+        ->whereNull('floors.deleted_at')
+        ->whereNull('user_project_linkings.deleted_at')->where('user_project_linkings.project_id',$request['project_id'])
+        ->where('block_id',$request['block_id'])->where('user_project_linkings.user_id',Auth::User()->id)->count('id');
+    }
+
+    public static function getFloorDetailsForMobile($request){
+
+        $noOfRecord = $request['no_of_records'] ?? 10;
+        $current_page = $request['page_number'] ?? 1;
+        $offset = ($current_page*$noOfRecord)-$noOfRecord;
+
+        $data = Floor::join('user_project_linkings','user_project_linkings.floor_id','=','floors.id',)
+        ->whereNull('floors.deleted_at')
+        ->whereNull('user_project_linkings.deleted_at')->where('user_project_linkings.project_id',$request['project_id'])
+        ->where('block_id',$request['block_id'])->where('user_project_linkings.user_id',Auth::User()->id)->offset($offset)->limit($noOfRecord)->get();
+
+        if(count($data)>0){
+            return $data->toArray();
+        }
+        return [];
     }
 }

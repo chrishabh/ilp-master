@@ -29,12 +29,14 @@ Route::group(['middleware'=> ['tracker']],function () {
 
                 Route::post('get-user-projects','UserController@getUserProjectLinkingDetails');
                 Route::post('link-user-project','UserController@linkUserAndProjects');
+                Route::post('floor-linking','UserController@linkUserAndFloor');
                 Route::get('get-lookup-value','UserController@lookUpValue');
                 Route::get('wages-number','ConstructionDetailsController@getWagesNumber');
                 Route::get('get-project','ConstructionDetailsController@getProject');
                 Route::post('get-project-details','ConstructionDetailsController@getProjectDetails');
                 Route::post('get-block-details','ConstructionDetailsController@getBlockDetails');
                 Route::post('get-floor-details','ConstructionDetailsController@getFloorDetails');
+                Route::post('mobile/get-floor-details','ConstructionDetailsController@getFloorDetailsForMobile');
                 Route::post('get-apartment-details','ConstructionDetailsController@getApartmentDetails');
                 Route::post('get-construction-details','ConstructionDetailsController@getConstructionDetails');
                 Route::post('total-construction-details','ConstructionDetailsController@getTotalProjectDetails');

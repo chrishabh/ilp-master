@@ -29,12 +29,27 @@ class UserProjectLinking extends Model
         return UserProjectLinking::whereNull('deleted_at')->where('user_id',$user_id)->where('project_id',$project_id)->update(['deleted_at'=> Carbon::now()]);
     }
 
+    public static function deleteFloorLinkedUser($user_id,$project_id,$floor_id)
+    {
+        return UserProjectLinking::whereNull('deleted_at')->where('user_id',$user_id)->where('project_id',$project_id)->where('floor_id',$floor_id)->update(['deleted_at'=> Carbon::now()]);
+    }
+
     public static function linkUserAndProjects($data = [])
     {
         if(!(UserProjectLinking::whereNull('deleted_at')->where('user_id',$data['user_id'])->where('project_id',$data['project_id'])->exists())){
             return UserProjectLinking::insert($data);
         }else{
             throw new AppException('Project already linked please select another project');
+        }
+        
+    }
+
+    public static function linkUserAndFloors($data = [])
+    {
+        if(!(UserProjectLinking::whereNull('deleted_at')->where('user_id',$data['user_id'])->where('project_id',$data['project_id'])->where('floor_id',$data['floor_id'])->exists())){
+            return UserProjectLinking::insert($data);
+        }else{
+            throw new AppException('Floor already linked please select another project');
         }
         
     }

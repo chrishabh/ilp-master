@@ -63,6 +63,14 @@ class ConstructionDetailsServices{
         return  $return;
     }
 
+    public static function getFloorDetailsForMobile($request)
+    {
+        $return['total_records'] = Floor::getFloorTotalRecordsForMobile($request);
+        $return['floor_details'] = Floor::getFloorDetailsForMobile($request);
+
+        return  $return;
+    }
+
     public static function getConstructionDetails($request)
     {
         if(isset($request['apartment_id']) || isset($request['floor_id'])){
