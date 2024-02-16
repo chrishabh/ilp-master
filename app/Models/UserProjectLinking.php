@@ -47,7 +47,10 @@ class UserProjectLinking extends Model
     public static function linkUserAndFloors($data = [])
     {
         if(!(UserProjectLinking::whereNull('deleted_at')->where('user_id',$data['user_id'])->where('project_id',$data['project_id'])->where('floor_id',$data['floor_id'])->exists())){
+           if(!(UserProjectLinking::whereNull('deleted_at')->where('user_id',$data['user_id'])->where('project_id',$data['project_id'])->whereNull('floor_id')->exists()))
             return UserProjectLinking::insert($data);
+            return UserProjectLinking::whereNull('deleted_at')->where('user_id',$data['user_id'])->where('project_id',$data['project_id'])->update(['floor_id'=> $data['floor_id']]);
+
         }else{
             throw new AppException('Floor already linked please select another project');
         }
