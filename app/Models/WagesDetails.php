@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -115,7 +116,7 @@ class WagesDetails extends Model
         $offset = ($current_page*$noOfRecord)-$noOfRecord;
         $project_id = $request['project_id'];
         $user_id = $request['user_id'];
-        $date = $request['date'];
+        $date =  Carbon::parse($request['date'])->format('Y-m-d');
 
         $return['total_records'] = WagesDetails::whereNull('deleted_at')->where('project_id',$request['project_id'])->where('user_id',$request['user_id'])->whereRaw("cast(created_at as date) = '$date'")->count('id');
 
