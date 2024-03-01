@@ -159,9 +159,9 @@ class WagesServices{
             $excel_data [] = $records;
         }
 
-        $return['excel_url'] = getXlsxFile($excel_data, 'Wages_Booking_'.$request['wages_number'],Carbon::now());
+        $excel['excel_url'] = getXlsxFile($excel_data, 'Wages_Booking_'.$request['wages_number'],Carbon::now());
 
-        return $return;
+        return $excel;
     }
 
     // public static function getWagesExcel($request)
