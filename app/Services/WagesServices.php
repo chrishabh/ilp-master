@@ -9,6 +9,7 @@ use App\Models\PayToDetails;
 use App\Models\User;
 use App\Models\WagesDetails;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class WagesServices{
 
@@ -98,6 +99,7 @@ class WagesServices{
         }else{
             $return['total_booking'] = $total_booking;
             $return['edit_and_delete_permission'] = 1;//(checkUserRole($request['user_id']) == 'admin')?1:0;
+            $return['wages-report-permission'] = (Auth::User()->user_role == 'admin')?true:false;
         }
 
 
