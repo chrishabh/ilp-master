@@ -106,7 +106,7 @@ class WagesBookingController extends Controller
     public static function getWagesReport(GetWagesFormRequest $request)
     {
         $requestData = $request->validated();
-        $data =  WagesServices::getWages($request);
+        $data =  WagesServices::getWagesReport($request);
 
         return  response()->data($data);
     }

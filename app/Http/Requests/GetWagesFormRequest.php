@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Enums\Constants;
 use Illuminate\Foundation\Http\FormRequest;
 
 class GetWagesFormRequest extends FormRequest
@@ -23,14 +24,31 @@ class GetWagesFormRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            'no_of_records' => 'required',
-            'page_no' => 'required',
-            'project_id' => 'required',
-            'wages_number' => 'required',
-            'user_id' => 'required',
-            #'apartment_id' => 'required'
-        ];
+        switch($this->path()){
+
+            case Constants::WAGES_REPORT:
+                return [
+                    'no_of_records' => 'required',
+                    'page_no' => 'required',
+                    'project_id' => 'required',
+                    'wages_number' => 'required',
+                    'user_id' => 'required',
+                    'date' => 'required'
+                ];
+            break;
+
+            default:
+                return [
+                    'no_of_records' => 'required',
+                    'page_no' => 'required',
+                    'project_id' => 'required',
+                    'wages_number' => 'required',
+                    'user_id' => 'required',
+                    #'apartment_id' => 'required'
+                ];
+            break;
+        }
+       
     }
 
     public function messages(){

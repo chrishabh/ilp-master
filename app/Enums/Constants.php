@@ -12,6 +12,7 @@ class Constants
    const EDIT_BOOKED_WAGES = "api/edit-booked-wages";
    const DELETE_BOOKED_WAGES = "api/delete-booked-wages";
    const WAGES_NUMBER = "api/add-wages-number";
+   const WAGES_REPORT = "api/wages-report";
    const LAST_SUBMIT_WAGES = "api/final-wages-submission";
    const DELETE_PAY_TO_DETAILS = "api/delete-pay-details";
    const UPLOAD_PAY_TO_DETAILS = "api/upload-pay-details";

@@ -105,6 +105,20 @@ class WagesServices{
         return $return;
     }
 
+    public static function getWagesReport($request)
+    {
+        $return = WagesDetails::getWagesReport($request);
+        $total_booking = 0;
+        foreach($return['wages_details'] as &$value){
+            $value['remaining_amount'] = ConstructionDetails::getRemaingAmountForWages($value);
+            $total_booking += $value['amount'];
+        }
+        $return['total_booking'] = $total_booking;
+        $return['edit_and_delete_permission'] = 0;
+
+        return $return;
+    }
+
     // public static function getWagesExcel($request)
     // {
     //     $return = WagesDetails::getWages($request,1);
