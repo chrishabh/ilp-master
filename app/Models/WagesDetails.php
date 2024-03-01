@@ -133,7 +133,7 @@ class WagesDetails extends Model
         ->whereNull('wages_details.deleted_at')
         ->where('wages_details.project_id',$request['project_id'])
         ->where('wages_details.user_id',$request['user_id']);
-        $data = $data->whereNotNull("final_submission_date")->whereRaw("cast(wages_details.created_at as date) = '$date'")->get();
+        $data = $data->whereRaw("cast(wages_details.created_at as date) = '$date'")->get();
        
         
         if(count($data)>0){
