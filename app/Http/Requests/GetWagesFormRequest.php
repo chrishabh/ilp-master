@@ -37,6 +37,17 @@ class GetWagesFormRequest extends FormRequest
                 ];
             break;
 
+            case Constants::DOWNLOAD_WAGES_REPORT:
+                return [
+                    'no_of_records' => 'required',
+                    'page_no' => 'required',
+                    'project_id' => 'required',
+                    'wages_number' => 'required',
+                    'user_id' => 'required',
+                    'date' => 'required'
+                ];
+            break;
+
             default:
                 return [
                     'no_of_records' => 'required',
