@@ -72,6 +72,7 @@ Route::group(['middleware'=> ['tracker']],function () {
                 Route::post('read-excel','ConstructionDetailsController@readExcel');
                 Route::post('download-construction-details','ConstructionDetailsController@getProjectConstructionDetails');
                 Route::post('import-main-excel','ConstructionDetailsController@ImportMainExcelJob');
+                Route::post('download-project-details','ConstructionDetailsController@getProjectConstructionDetails');
             });
             
         });
