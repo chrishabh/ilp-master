@@ -213,7 +213,12 @@ class ConstructionDetailsServices{
         {
             try{
                 if(($value['Total']>0 || $value['Total']<0) && ($value['Rate']>0 || $value['Rate']<0)){
-                    $value['Area'] = ($value['Rate'] != '0')?roundOff((float)$value['Total']/(float)$value['Rate'],1):'';
+                   
+                    if(preg_match('/[\'^£$%&*()}{@#~?><>,|=_+¬-]/',$value['Rate'])){
+                    }else{
+                         $value['Area'] = ($value['Rate'] != '0')?roundOff((float)$value['Total']/(float)$value['Rate'],1):'';
+                    }
+                  
                 }else{
                     $value['Area'] = '';
                 }
