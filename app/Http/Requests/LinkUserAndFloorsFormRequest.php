@@ -28,7 +28,7 @@ class LinkUserAndFloorsFormRequest extends FormRequest
             'user_id' => 'required',
             'operation' => 'required',
             'project_id' => 'required',
-            'floor_id' => 'required',
+            'floor_id' => 'required|array',
         ];
     }
 
