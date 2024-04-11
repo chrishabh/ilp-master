@@ -240,7 +240,6 @@ class UserServices{
                 }
             }
         }
-        throw new AppException("No operation performed.");
 
     }
 
