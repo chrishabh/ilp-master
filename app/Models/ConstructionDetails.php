@@ -71,7 +71,7 @@ class ConstructionDetails extends Model
                 $data = ConstructionDetails::whereNull('construction_details.deleted_at')
                 ->where('construction_details.project_id',$request['project_id'])
                 ->where('construction_details.block_id',$request['block_id'])
-                ->where('area','>','0')
+                // ->where('area','>','0')
                 ->where('construction_details.main_description_id',$value['main_description_id'])->where('construction_details.sub_description_id',$sub_header['sub_description_id']);
                 if(!empty($apartment_id)){
                     $data = $data->where('construction_details.apartment_id',$request['apartment_id'])->get();
@@ -80,7 +80,9 @@ class ConstructionDetails extends Model
                 }
                 
                 foreach($data->toArray() as $records){
-                    $sub_final['records'][] =  $records;
+                    if($records['area'] > '0'){
+                        $sub_final['records'][] =  $records;
+                    }
                     $total += floatval(preg_replace('/[^\d.]/', '',$records['total']));
                     $sub_total += floatval(preg_replace('/[^\d.]/', '',$records['total']));
                     $res = explode(',',str_replace("'", "", $records['amount_booked']));
