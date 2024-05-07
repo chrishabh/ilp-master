@@ -283,16 +283,16 @@ class ConstructionDetails extends Model
 
         if(!empty($apartment_id)){
             if($is_multiple){
-                DB::select("UPDATE construction_details SET amount_booked = '$amount_booked', wages = '$wages' ,`name` = '$name' WHERE id = ( SELECT * FROM(Select min(id) as id from construction_details where project_id = ".$request['project_id']." and block_id = ".$request['block_id']." and main_description_id =".$request['main_description_id']." and sub_description_id =".$request['sub_description_id']." and apartment_id =".$request['apartment_id']." and area > '0' ) as cunst)");
+                DB::select("UPDATE construction_details SET amount_booked = '$amount_booked', wages = '$wages' ,`name` = '$name' WHERE id = ( SELECT * FROM(Select min(id) as id from construction_details where project_id = ".$request['project_id']." and block_id = ".$request['block_id']." and main_description_id =".$request['main_description_id']." and sub_description_id =".$request['sub_description_id']." and apartment_id =".$request['apartment_id']." ) as cunst)");
             }else{
-                DB::select("UPDATE construction_details SET amount_booked = '$amount_booked', wages = '$wages' ,`name` = '$name' WHERE id = ( SELECT * FROM(Select min(id) as id from construction_details where project_id = ".$request['project_id']." and block_id = ".$request['block_id']." and main_description_id =".$request['main_description_id']." and apartment_id =".$request['apartment_id']." and area > '0') as cunst)");
+                DB::select("UPDATE construction_details SET amount_booked = '$amount_booked', wages = '$wages' ,`name` = '$name' WHERE id = ( SELECT * FROM(Select min(id) as id from construction_details where project_id = ".$request['project_id']." and block_id = ".$request['block_id']." and main_description_id =".$request['main_description_id']." and apartment_id =".$request['apartment_id']." ) as cunst)");
             }
             
         }else{
             if($is_multiple){
-                DB::select("UPDATE construction_details SET amount_booked = '$amount_booked', wages = '$wages' ,`name` = '$name' WHERE id = ( SELECT * FROM(Select min(id) as id from construction_details where project_id = ".$request['project_id']." and block_id = ".$request['block_id']." and main_description_id =".$request['main_description_id']." and sub_description_id =".$request['sub_description_id']." and floor_id =".$request['floor_id']." and area > '0' ) as cunst)");
+                DB::select("UPDATE construction_details SET amount_booked = '$amount_booked', wages = '$wages' ,`name` = '$name' WHERE id = ( SELECT * FROM(Select min(id) as id from construction_details where project_id = ".$request['project_id']." and block_id = ".$request['block_id']." and main_description_id =".$request['main_description_id']." and sub_description_id =".$request['sub_description_id']." and floor_id =".$request['floor_id']."  ) as cunst)");
             }else{
-                DB::select("UPDATE construction_details SET amount_booked = '$amount_booked', wages = '$wages' ,`name` = '$name' WHERE id = ( SELECT * FROM(Select min(id) as id from construction_details where project_id = ".$request['project_id']." and block_id = ".$request['block_id']." and main_description_id =".$request['main_description_id']." and floor_id =".$request['floor_id']." and area > '0' ) as cunst)");
+                DB::select("UPDATE construction_details SET amount_booked = '$amount_booked', wages = '$wages' ,`name` = '$name' WHERE id = ( SELECT * FROM(Select min(id) as id from construction_details where project_id = ".$request['project_id']." and block_id = ".$request['block_id']." and main_description_id =".$request['main_description_id']." and floor_id =".$request['floor_id']." ) as cunst)");
             }
             
         }
@@ -588,12 +588,14 @@ class ConstructionDetails extends Model
 
         foreach($data as $value){
             $total += (float)$value['total'];
+            $test[$value['total']] = (float)$value['total'];
             $res = explode(',',str_replace("'", "", $value['amount_booked']));
             $booked +=  array_sum($res);
         }
 
         $response['total_amount'] = round($total,3);
         $response['booked_amount'] = round($booked,3);
+        print_r($test);
 
         return $response;
     }
