@@ -587,15 +587,15 @@ class ConstructionDetails extends Model
         }
 
         foreach($data as $value){
-            $total += (float)$value['total'];
-            $test[$value['total']] = (float)$value['total'];
+            $total += (float)str_replace(',','',$value['total']);
+           // $test[$value['total']] = (float)$value['total'];
             $res = explode(',',str_replace("'", "", $value['amount_booked']));
             $booked +=  array_sum($res);
         }
 
         $response['total_amount'] = round($total,3);
         $response['booked_amount'] = round($booked,3);
-        print_r($test);
+        //print_r($test);
 
         return $response;
     }
