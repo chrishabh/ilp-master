@@ -243,4 +243,35 @@ class UserServices{
 
     }
 
+    public static function linkMainAndSubDescription($request)
+    {
+        if($request['operation'] == 'remove'){
+            UserProjectLinking::deleteMainAndSubDescription($request['user_id'],$request['project_id'],$request['floor_id'],$request['main_description'],$request['sub_description']);
+        }
+
+        if($request['operation'] == 'add')
+        {
+            foreach($request['main_description'] as $key => $value){
+                try{
+                    UserProjectLinking::linkMainDescription(['user_id' => $request['user_id'],'project_id' => $request['project_id'],'floor_id' => $request['floor_id'],'main_description_id' => $value]);
+
+                }
+                catch(\Exception $e){
+
+                }
+            }
+
+            foreach($request['sub_description'] as $key => $value){
+                try{
+                    UserProjectLinking::linkSubDescription(['user_id' => $request['user_id'],'project_id' => $request['project_id'],'floor_id' => $request['floor_id'],'sub_description_id' => $value]);
+
+                }
+                catch(\Exception $e){
+
+                }
+            }
+        }
+
+    }
+
 }

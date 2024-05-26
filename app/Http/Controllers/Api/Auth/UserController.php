@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\ForgotPasswordFormRequest;
 use App\Http\Requests\GetPayToDetailsFormRequest;
 use App\Http\Requests\GetProjectDetialsFormRequest;
+use App\Http\Requests\LinkMainAndSubDescriptionFormRequest;
 use App\Http\Requests\LinkUserAndFloorsFormRequest;
 use App\Http\Requests\LinkUserAndProjectsFormRequest;
 use App\Http\Requests\SignUpFormRequest;
@@ -107,6 +108,15 @@ class UserController extends Controller
         $requestData    =   $request->validated();
         $user           =   new UserServices();
         $data           = $user->linkUserAndfloor($request);
+
+        return  response()->success();
+    }
+
+    public static function linkMainAndSubDescription(LinkMainAndSubDescriptionFormRequest $request)
+    {
+        $requestData    =   $request->validated();
+        $user           =   new UserServices();
+        $data           = $user->linkMainAndSubDescription($request);
 
         return  response()->success();
     }
