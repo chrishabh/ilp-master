@@ -29,8 +29,8 @@ class LinkMainAndSubDescriptionFormRequest extends FormRequest
             'operation' => 'required',
             'project_id' => 'required',
             'floor_id' => 'required|',
-            'main_description' => 'array',
-            'sub_description' => 'array'
+            'main_description' => 'array|empty',
+            'sub_description' => 'array|empty'
         ];
     }
 
