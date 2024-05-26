@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use App\Exceptions\AppException;
 use App\Exceptions\BusinessExceptions\RegisterFailedException;
+use App\Models\MainDescritpion;
+use App\Models\SubDescritpion;
 use App\Models\UserAuthorization;
 use App\Models\UserProjectLinking;
 use Illuminate\Console\Application;
@@ -271,6 +273,15 @@ class UserServices{
                 }
             }
         }
+
+    }
+
+    public static function getMainSubDescription($request)
+    {
+       return [
+        'main_description' => MainDescritpion::getDistinctMainDescription($request),
+        'sub_description' => SubDescritpion::getSubDescription($request)
+       ];
 
     }
 

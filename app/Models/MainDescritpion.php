@@ -98,4 +98,18 @@ class MainDescritpion extends Model
         }
        
     }
+
+    public static function getDistinctMainDescription($request){
+
+        $noOfRecord = $request['no_of_records'] ?? 10;
+        $current_page = $request['page_no'] ?? 1;
+        $offset = ($current_page*$noOfRecord)-$noOfRecord;
+
+        $return = MainDescritpion::whereNull('deleted_at')->distinct()->offset($offset)->limit($noOfRecord)->get();
+
+        if(count($return)>0){
+            return $return->toArray();
+        }
+        return [];
+    }
 }

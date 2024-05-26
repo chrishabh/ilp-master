@@ -120,5 +120,14 @@ class UserController extends Controller
 
         return  response()->success();
     }
+
+    public static function getMainSubDescription(GetPayToDetailsFormRequest $request)
+    {
+        $requestData    =   $request->validated();
+        $user           =   new UserServices();
+        $data           = $user->getMainSubDescription($request);
+
+        return  response()->data($data);
+    }
     
 }

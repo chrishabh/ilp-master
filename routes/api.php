@@ -31,6 +31,7 @@ Route::group(['middleware'=> ['tracker']],function () {
                 Route::post('link-user-project','UserController@linkUserAndProjects');
                 Route::post('floor-linking','UserController@linkUserAndFloor');
                 Route::post('main-sub_description-linking','UserController@linkMainAndSubDescription');
+                Route::post('get-main-sub-description','UserController@getMainSubDescription');
                 Route::get('get-lookup-value','UserController@lookUpValue');
                 Route::get('wages-number','ConstructionDetailsController@getWagesNumber');
                 Route::get('get-project','ConstructionDetailsController@getProject');
