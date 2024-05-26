@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use App\Exceptions\AppException;
 use App\Exceptions\BusinessExceptions\RegisterFailedException;
+use App\Models\MainDescritpion;
+use App\Models\SubDescritpion;
 use App\Models\UserAuthorization;
 use App\Models\UserProjectLinking;
 use Illuminate\Console\Application;
@@ -217,6 +219,69 @@ class UserServices{
             throw new AppException("No operation performed.");
         }
         throw new AppException("No operation performed.");
+
+    }
+
+    public static function linkUserAndfloor($request)
+    {
+        if($request['operation'] == 'remove'){
+            foreach($request['floor_id'] as $value){
+                UserProjectLinking::deleteFloorLinkedUser($request['user_id'],$request['project_id'],$value);
+            }
+        }
+
+        if($request['operation'] == 'add')
+        {
+            foreach($request['floor_id'] as $value){
+                try{
+                    UserProjectLinking::linkUserAndFloors(['user_id' => $request['user_id'],'project_id' => $request['project_id'],'floor_id' => $value]);
+
+                }
+                catch(\Exception $e){
+
+                }
+            }
+        }
+
+    }
+
+    public static function linkMainAndSubDescription($request)
+    {
+        if($request['operation'] == 'remove'){
+            UserProjectLinking::deleteMainAndSubDescription($request['user_id'],$request['project_id'],$request['floor_id'],$request['main_description'],$request['sub_description']);
+        }
+
+        if($request['operation'] == 'add')
+        {
+            foreach($request['main_description'] as $key => $value){
+                try{
+                    UserProjectLinking::linkMainDescription(['user_id' => $request['user_id'],'project_id' => $request['project_id'],'floor_id' => $request['floor_id'],'main_description_id' => $value]);
+
+                }
+                catch(\Exception $e){
+
+                }
+            }
+
+            foreach($request['sub_description'] as $key => $value){
+                try{
+                    UserProjectLinking::linkSubDescription(['user_id' => $request['user_id'],'project_id' => $request['project_id'],'floor_id' => $request['floor_id'],'sub_description_id' => $value]);
+
+                }
+                catch(\Exception $e){
+
+                }
+            }
+        }
+
+    }
+
+    public static function getMainSubDescription($request)
+    {
+       return [
+        'main_description' => MainDescritpion::getDistinctMainDescription($request),
+        'sub_description' => SubDescritpion::getSubDescription($request)
+       ];
 
     }
 

@@ -57,6 +57,14 @@ class ConstructionDetailsController extends Controller
         return  response()->data($data);
     }
 
+    public static function getFloorDetailsForMobile(GetFloorFormRequest $request)
+    {
+        $requestData = $request->validated();
+        $data = ConstructionDetailsServices::getFloorDetailsForMobile($request);
+
+        return  response()->data($data);
+    }
+
     public static function getApartmentDetails(GetApartmentFormRequest $request)
     {
         $requestData = $request->validated();

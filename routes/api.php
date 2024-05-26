@@ -29,12 +29,16 @@ Route::group(['middleware'=> ['tracker']],function () {
 
                 Route::post('get-user-projects','UserController@getUserProjectLinkingDetails');
                 Route::post('link-user-project','UserController@linkUserAndProjects');
+                Route::post('floor-linking','UserController@linkUserAndFloor');
+                Route::post('main-sub_description-linking','UserController@linkMainAndSubDescription');
+                Route::post('get-main-sub-description','UserController@getMainSubDescription');
                 Route::get('get-lookup-value','UserController@lookUpValue');
                 Route::get('wages-number','ConstructionDetailsController@getWagesNumber');
                 Route::get('get-project','ConstructionDetailsController@getProject');
                 Route::post('get-project-details','ConstructionDetailsController@getProjectDetails');
                 Route::post('get-block-details','ConstructionDetailsController@getBlockDetails');
                 Route::post('get-floor-details','ConstructionDetailsController@getFloorDetails');
+                Route::post('mobile/get-floor-details','ConstructionDetailsController@getFloorDetailsForMobile');
                 Route::post('get-apartment-details','ConstructionDetailsController@getApartmentDetails');
                 Route::post('get-construction-details','ConstructionDetailsController@getConstructionDetails');
                 Route::post('total-construction-details','ConstructionDetailsController@getTotalProjectDetails');
@@ -52,6 +56,8 @@ Route::group(['middleware'=> ['tracker']],function () {
                 Route::post('get-wages','WagesBookingController@getWages');
                 Route::post('download-wages','WagesBookingController@downloadWages');
                 Route::post('get-wages-excel','WagesBookingController@downloadWages');
+                Route::post('wages-report','WagesBookingController@getWagesReport');
+                Route::post('download-wages-report','WagesBookingController@getDownloadWagesReport');
                 // Route::post('upload-videos','VideosController@uploadVideo');
                 // Route::post('download-videos','VideosController@downloadVideo');
                 Route::post('add-pay-details','WagesBookingController@addPayToDetails');
@@ -68,6 +74,7 @@ Route::group(['middleware'=> ['tracker']],function () {
                 Route::post('read-excel','ConstructionDetailsController@readExcel');
                 Route::post('download-construction-details','ConstructionDetailsController@getProjectConstructionDetails');
                 Route::post('import-main-excel','ConstructionDetailsController@ImportMainExcelJob');
+                Route::post('download-project-details','ConstructionDetailsController@getProjectConstructionDetails');
             });
             
         });

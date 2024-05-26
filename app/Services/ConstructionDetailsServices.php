@@ -63,6 +63,14 @@ class ConstructionDetailsServices{
         return  $return;
     }
 
+    public static function getFloorDetailsForMobile($request)
+    {
+        $return['total_records'] = Floor::getFloorTotalRecordsForMobile($request);
+        $return['floor_details'] = Floor::getFloorDetailsForMobile($request);
+
+        return  $return;
+    }
+
     public static function getConstructionDetails($request)
     {
         if(isset($request['apartment_id']) || isset($request['floor_id'])){
@@ -205,7 +213,12 @@ class ConstructionDetailsServices{
         {
             try{
                 if(($value['Total']>0 || $value['Total']<0) && ($value['Rate']>0 || $value['Rate']<0)){
-                    $value['Area'] = ($value['Rate'] != '0')?roundOff((float)$value['Total']/(float)$value['Rate'],1):'';
+                   
+                    if(preg_match('/[\'^£$%&*()}{@#~?><>,|=_+¬-]/',$value['Rate'])){
+                    }else{
+                         $value['Area'] = ($value['Rate'] != '0')?roundOff((float)$value['Total']/(float)$value['Rate'],1):'';
+                    }
+                  
                 }else{
                     $value['Area'] = '';
                 }

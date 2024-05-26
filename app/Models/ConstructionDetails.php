@@ -71,7 +71,7 @@ class ConstructionDetails extends Model
                 $data = ConstructionDetails::whereNull('construction_details.deleted_at')
                 ->where('construction_details.project_id',$request['project_id'])
                 ->where('construction_details.block_id',$request['block_id'])
-                ->where('area','>','0')
+                // ->where('area','>','0')
                 ->where('construction_details.main_description_id',$value['main_description_id'])->where('construction_details.sub_description_id',$sub_header['sub_description_id']);
                 if(!empty($apartment_id)){
                     $data = $data->where('construction_details.apartment_id',$request['apartment_id'])->get();
@@ -80,7 +80,9 @@ class ConstructionDetails extends Model
                 }
                 
                 foreach($data->toArray() as $records){
-                    $sub_final['records'][] =  $records;
+                    if($records['area'] > '0'){
+                        $sub_final['records'][] =  $records;
+                    }
                     $total += floatval(preg_replace('/[^\d.]/', '',$records['total']));
                     $sub_total += floatval(preg_replace('/[^\d.]/', '',$records['total']));
                     $res = explode(',',str_replace("'", "", $records['amount_booked']));
@@ -288,7 +290,7 @@ class ConstructionDetails extends Model
             
         }else{
             if($is_multiple){
-                DB::select("UPDATE construction_details SET amount_booked = '$amount_booked', wages = '$wages' ,`name` = '$name' WHERE id = ( SELECT * FROM(Select min(id) as id from construction_details where project_id = ".$request['project_id']." and block_id = ".$request['block_id']." and main_description_id =".$request['main_description_id']." and sub_description_id =".$request['sub_description_id']." and floor_id =".$request['floor_id']." ) as cunst)");
+                DB::select("UPDATE construction_details SET amount_booked = '$amount_booked', wages = '$wages' ,`name` = '$name' WHERE id = ( SELECT * FROM(Select min(id) as id from construction_details where project_id = ".$request['project_id']." and block_id = ".$request['block_id']." and main_description_id =".$request['main_description_id']." and sub_description_id =".$request['sub_description_id']." and floor_id =".$request['floor_id']."  ) as cunst)");
             }else{
                 DB::select("UPDATE construction_details SET amount_booked = '$amount_booked', wages = '$wages' ,`name` = '$name' WHERE id = ( SELECT * FROM(Select min(id) as id from construction_details where project_id = ".$request['project_id']." and block_id = ".$request['block_id']." and main_description_id =".$request['main_description_id']." and floor_id =".$request['floor_id']." ) as cunst)");
             }
@@ -585,13 +587,15 @@ class ConstructionDetails extends Model
         }
 
         foreach($data as $value){
-            $total += (float)$value['total'];
+            $total += (float)str_replace(',','',$value['total']);
+           // $test[$value['total']] = (float)$value['total'];
             $res = explode(',',str_replace("'", "", $value['amount_booked']));
             $booked +=  array_sum($res);
         }
 
         $response['total_amount'] = round($total,3);
         $response['booked_amount'] = round($booked,3);
+        //print_r($test);
 
         return $response;
     }
