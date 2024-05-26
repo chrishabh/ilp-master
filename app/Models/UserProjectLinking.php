@@ -70,7 +70,7 @@ class UserProjectLinking extends Model
             return UserProjectLinking::insert($data);
 
            }else{
-            $id = UserProjectLinking::whereNull('deleted_at')->where('user_id',$data['user_id'])->where('project_id',$data['project_(id'])->where('floor_id',$data['floor_id'])->whereNull('sub_description_id')->first()->id;
+            $id = UserProjectLinking::whereNull('deleted_at')->where('user_id',$data['user_id'])->where('project_id',$data['project_id'])->where('floor_id',$data['floor_id'])->whereNull('main_description_id')->first()->id;
             return UserProjectLinking::whereNull('deleted_at')->where('id',$id)->where('user_id',$data['user_id'])->where('project_id',$data['project_id'])->where('floor_id',$data['floor_id'])->update(['main_description_id'=> $data['main_description_id']]);
 
            }
