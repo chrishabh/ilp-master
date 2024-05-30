@@ -382,7 +382,7 @@ class ConstructionDetails extends Model
             $sub = [];//pp($sub_records);
             foreach($sub_records as $sub_value)
             {$sub_final = [];
-                $total_sum = ConstructionDetails::select(DB::raw("CASE WHEN sum(construction_details.total) IS NULL THEN 0 ELSE ROUND(sum(REPLACE(construction_details.total,',','')),2) END as remaining_booking_amount"))->whereNull('construction_details.deleted_at')
+                $total_sum = ConstructionDetails::join('user_project_linkings','user_project_linkings.sub_description_id','=','construction_details.sub_description_id')->select(DB::raw("CASE WHEN sum(construction_details.total) IS NULL THEN 0 ELSE ROUND(sum(REPLACE(construction_details.total,',','')),2) END as remaining_booking_amount"))->whereNull('construction_details.deleted_at')->whereNull('user_project_linkings.deleted_at')->where('user_project_linkings.user_id',$user_id)->where('user_project_linkings.project_id',$request['project_id'])->whereIn('user_project_linkings.floor_id',$request['floor_id'])
                 ->where('construction_details.project_id',$request['project_id'])->where('construction_details.main_description_id',$value['main_description_id'])
                 ->where('construction_details.block_id',$request['block_id']);
                 if(count($apartment_id)>0){
