@@ -128,7 +128,7 @@ class ConstructionDetails extends Model
 
 
         $distinct_main_header = ConstructionDetails::join('user_project_linkings','user_project_linkings.main_description_id','=','construction_details.main_description_id')->join('main_descritpions', 'main_descritpions.id', '=', 'construction_details.main_description_id')
-        ->select('main_descritpions.description as description_header','main_description_id')->whereNull('construction_details.deleted_at')->whereNull('user_project_linkings.deleted_at')->where('user_project_linkings.user_id',$user_id)->where('user_project_linkings.project_id',$request['project_id'])->where('user_project_linkings.floor_id',$request['floor_id'])
+        ->select('main_descritpions.description as description_header','construction_details.main_description_id')->whereNull('construction_details.deleted_at')->whereNull('user_project_linkings.deleted_at')->where('user_project_linkings.user_id',$user_id)->where('user_project_linkings.project_id',$request['project_id'])->where('user_project_linkings.floor_id',$request['floor_id'])
         ->where('construction_details.project_id',$request['project_id'])->where('construction_details.block_id',$request['block_id']);
         if(!empty($apartment_id)){
             $distinct_main_header = $distinct_main_header->where('construction_details.apartment_id',$request['apartment_id'])->distinct()->offset($offset)->limit($noOfRecord)->get();
