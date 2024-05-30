@@ -361,6 +361,7 @@ class ConstructionDetails extends Model
             $records = $data->toArray();
         }
         $array  =   [];
+        $main_des_sum = 0;
         foreach($records as $value){
             $response[$value['description_header']]['description_header'] = $value['description_header'];
 
@@ -432,9 +433,10 @@ class ConstructionDetails extends Model
                 $sub_response[$value['description_header']][$sub_value['sub_description_header']]['sub_records'][] = $sub_final;
                 $sub_response[$value['description_header']][$sub_value['sub_description_header']]['sub_total'] = count($total_sum)>0 ? ($total_sum->toArray()[0]['remaining_booking_amount']??0) : 0;
                 $sub[$value['description_header']] [] = $sub_response[$value['description_header']][$sub_value['sub_description_header']];
+                $main_des_sum += $sub_value['remaining_booking_amount'];
 
             }
-            $array[$value['description_header']][] = $value['remaining_booking_amount'];
+            $array[$value['description_header']][] = $main_des_sum;
             $response[$value['description_header']]['records'] =   $sub[$value['description_header']];
 
         }
