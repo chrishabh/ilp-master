@@ -75,6 +75,9 @@ Route::group(['middleware'=> ['tracker']],function () {
                 Route::post('download-construction-details','ConstructionDetailsController@getProjectConstructionDetails');
                 Route::post('import-main-excel','ConstructionDetailsController@ImportMainExcelJob');
                 Route::post('download-project-details','ConstructionDetailsController@getProjectConstructionDetails');
+
+                Route::post('mobile/get-construction-details','ConstructionDetailsController@getConstructionDetailsMobile');
+                Route::post('mobile/get-description-work','ConstructionDetailsController@getDescriptionWorkMobile');
             });
             
         });

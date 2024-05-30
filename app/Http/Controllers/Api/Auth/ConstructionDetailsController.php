@@ -81,10 +81,26 @@ class ConstructionDetailsController extends Controller
         return  response()->data($data);
     }
 
+    public static function getConstructionDetailsMobile(GetConstructionDetailsFormRequest $request)
+    {
+        $requestData = $request->validated();
+        $data = ConstructionDetailsServices::getConstructionDetailsMobile($request);
+
+        return  response()->data($data);
+    }
+
     public static function getDescriptionWork(GetConstructionDetailsFormRequest $request)
     {
         $requestData = $request->validated();
         $data = ConstructionDetailsServices::getDescriptionWork($request);
+
+        return  response()->data($data);
+    }
+
+    public static function getDescriptionWorkMobile(GetConstructionDetailsFormRequest $request)
+    {
+        $requestData = $request->validated();
+        $data = ConstructionDetailsServices::getDescriptionWorkMobile($request);
 
         return  response()->data($data);
     }

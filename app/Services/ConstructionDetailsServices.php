@@ -80,10 +80,28 @@ class ConstructionDetailsServices{
         }
     }
 
+    public static function getConstructionDetailsMobile($request)
+    {
+        if(isset($request['apartment_id']) || isset($request['floor_id'])){
+            return ConstructionDetails::getConstructionDetailsMobile($request);
+        } else {
+            throw new AppException("For construction details apartment or floor is required.");
+        }
+    }
+
     public static function getDescriptionWork($request)
     {
         if(isset($request['apartment_id']) || isset($request['floor_id'])){
             return ConstructionDetails::getDescriptionWork($request);
+        } else {
+            throw new AppException("For construction details apartment or floor is required.");
+        }
+    }
+
+    public static function getDescriptionWorkMobile($request)
+    {
+        if(isset($request['apartment_id']) || isset($request['floor_id'])){
+            return ConstructionDetails::getDescriptionWorkMobile($request);
         } else {
             throw new AppException("For construction details apartment or floor is required.");
         }
