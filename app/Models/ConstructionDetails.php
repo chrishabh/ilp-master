@@ -361,8 +361,8 @@ class ConstructionDetails extends Model
             $records = $data->toArray();
         }
         $array  =   [];
-        $main_des_sum = 0;
         foreach($records as $value){
+            $main_des_sum = 0;
             $response[$value['description_header']]['description_header'] = $value['description_header'];
 
             $sub_data = ConstructionDetails::join('user_project_linkings','user_project_linkings.sub_description_id','=','construction_details.sub_description_id')->join('sub_descritpions', 'sub_descritpions.id', '=', 'construction_details.sub_description_id')
