@@ -143,7 +143,7 @@ class ConstructionDetails extends Model
             $final['description_header'] = $value['description_header'];
 
             $distinct_sub_headers = ConstructionDetails::join('user_project_linkings','user_project_linkings.sub_description_id','=','construction_details.sub_description_id')->join('sub_descritpions', 'sub_descritpions.id', '=', 'construction_details.sub_description_id')
-            ->select('sub_descritpions.sub_description','sub_description_id')->whereNull('construction_details.deleted_at')->whereNull('user_project_linkings.deleted_at')->where('user_project_linkings.user_id',$user_id)->where('user_project_linkings.project_id',$request['project_id'])->where('user_project_linkings.floor_id',$request['floor_id'])
+            ->select('sub_descritpions.sub_description','construction_details.sub_description_id')->whereNull('construction_details.deleted_at')->whereNull('user_project_linkings.deleted_at')->where('user_project_linkings.user_id',$user_id)->where('user_project_linkings.project_id',$request['project_id'])->where('user_project_linkings.floor_id',$request['floor_id'])
             ->where('construction_details.project_id',$request['project_id'])
             ->where('construction_details.block_id',$request['block_id'])->where('construction_details.main_description_id',$value['main_description_id']);
             if(!empty($apartment_id)){
