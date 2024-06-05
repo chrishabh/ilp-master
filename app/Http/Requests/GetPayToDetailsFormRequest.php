@@ -25,7 +25,8 @@ class GetPayToDetailsFormRequest extends FormRequest
     {
         return [
             'no_of_records' => 'required',
-            'page_no' => 'required'
+            'page_no' => 'required',
+            'project_id' => 'required'
         ];
     }
 

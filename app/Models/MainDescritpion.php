@@ -112,7 +112,7 @@ class MainDescritpion extends Model
         $current_page = $request['page_no'] ?? 1;
         $offset = ($current_page*$noOfRecord)-$noOfRecord;
 
-        $return = MainDescritpion::select('id','description')->whereNull('deleted_at')->distinct()->offset($offset)->limit($noOfRecord)->get();
+        $return = MainDescritpion::select('id','description')->where('project_id',$request['project_id'])->whereNull('deleted_at')->distinct()->offset($offset)->limit($noOfRecord)->get();
 
         if(count($return)>0){
             return $return->toArray();
