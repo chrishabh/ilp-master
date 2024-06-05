@@ -50,6 +50,7 @@ class MainDescritpion extends Model
         set_time_limit(0);
         if(!empty($file_path)){
             $excel_data = [];
+            $project_name = null;
             $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
             $spreadsheet = $reader->load($file_path);
             $sheet_count = $spreadsheet->getSheetCount();
@@ -57,8 +58,13 @@ class MainDescritpion extends Model
 
             for($i=0; $i<$sheet_count; $i++){
 
-                 $highestRow = $spreadsheet->getSheet($i)->getHighestRow();
-                    //$checkSheetData = $spreadsheet->getCell('')->toArray();
+                $highestRow = $spreadsheet->getSheet($i)->getHighestRow();
+                $project_check = $spreadsheet->getSheet($i)->getCellByColumnAndRow(1,1)->getValue();
+                if($project_check ==  "Project Name")
+                {
+                    $project_name = $spreadsheet->getSheet($i)->getCellByColumnAndRow(2,1)->getValue();
+                }
+                    
                     $is_verified = false;
                     for($k = 1; $k<=$highestRow; $k++){
                         $columnA =  $spreadsheet->getSheet($i)->getCellByColumnAndRow(1, $k)->getValue();
@@ -79,19 +85,20 @@ class MainDescritpion extends Model
                     }
                     $main_desc = array_unique($main_desc);
                     $data ['main_desc'] = [];
+                    $project_id = ProjectDetails::getProjectNameId($project_name);
                     foreach($main_desc as $value){
                         $return =  MainDescritpion::whereNull('deleted_at')->where('description',ltrim(trim($value," ")))->exists();
                         if(!$return){
                            $insert['description'] = ltrim(trim($value," "));
                            $insert['apartment_id'] = '0';
                            $insert['block_id'] = '0';
-                           $insert['project_id'] = '0';
+                           $insert['project_id'] = $project_id;
                            DB::table('main_descritpions')->insert($insert);
                            $data ['main_desc'] [] = $insert;
                         }
                     }
                     $sub_desc = array_unique($sub_desc);
-                    $data ['sub_desc'] = SubDescritpion::insertSubDescription($sub_desc);
+                    $data ['sub_desc'] = SubDescritpion::insertSubDescription($sub_desc,$project_id);
                 
                 return $data;
             }

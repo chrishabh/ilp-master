@@ -35,7 +35,7 @@ class SubDescritpion extends Model
         return ;
     }
 
-    public static function insertSubDescription($sub_description_array = [])
+    public static function insertSubDescription($sub_description_array = [],$project_id = '0')
     {
         $inserted_data = [];
         foreach($sub_description_array as $value){
@@ -45,7 +45,7 @@ class SubDescritpion extends Model
                 $insert['main_description_id'] = '1';
                 $insert['apartment_id'] = '0';
                 $insert['block_id'] = '0';
-                $insert['project_id'] = '0';
+                $insert['project_id'] = $project_id;
                 DB::table('sub_descritpions')->insert($insert);
                 $inserted_data  [] = $insert;
             }

@@ -73,6 +73,16 @@ class ProjectDetails extends Model
         }
     }
 
+    public static function getProjectNameId($Project_name)
+    {
+        $return = ProjectDetails::whereNull('deleted_at')->where('project_name',$Project_name)->first();
+        if(isset($return->id)){
+            return $return->id;
+           
+        }
+        return '0';
+    }
+
     public static function updatedImportedFlag($Project_id)
     {
         return ProjectDetails::where('id',$Project_id)->update(['excel_imported'=>'1']);
