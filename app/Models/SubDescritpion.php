@@ -11,9 +11,9 @@ class SubDescritpion extends Model
 {
     use HasFactory;
 
-    public static function getSubDescriptionId($sub_description)
+    public static function getSubDescriptionId($sub_description,$project_id)
     {
-        $return = SubDescritpion::whereNull('deleted_at')->where('sub_description',$sub_description)->first();
+        $return = SubDescritpion::whereNull('deleted_at')->where('sub_description',$sub_description)->where('project_id',$project_id)->first();
 
         if(isset($return->id)){
             return $return->id;
@@ -39,7 +39,7 @@ class SubDescritpion extends Model
     {
         $inserted_data = [];
         foreach($sub_description_array as $value){
-            $return = SubDescritpion::whereNull('deleted_at')->where('sub_description',ltrim(trim($value," ")))->exists();
+            $return = SubDescritpion::whereNull('deleted_at')->where('sub_description',ltrim(trim($value," ")))->where('project_id',$project_id)->exists();
             if(!$return){
                 $insert['sub_description'] = ltrim(trim($value," "));
                 $insert['main_description_id'] = '1';

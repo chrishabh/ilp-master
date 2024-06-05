@@ -19,9 +19,9 @@ class MainDescritpion extends Model
         return [];
     }
 
-    public static function getMainDescriptionId($header_name)
+    public static function getMainDescriptionId($header_name,$project_id)
     {
-        $return =  MainDescritpion::whereNull('deleted_at')->where('description',$header_name)->first();
+        $return =  MainDescritpion::whereNull('deleted_at')->where('description',$header_name)->where('project_id',$project_id)->first();
 
         if(isset($return->id)){
             return $return->id;
@@ -87,7 +87,7 @@ class MainDescritpion extends Model
                     $data ['main_desc'] = [];
                     $project_id = ProjectDetails::getProjectNameId($project_name);
                     foreach($main_desc as $value){
-                        $return =  MainDescritpion::whereNull('deleted_at')->where('description',ltrim(trim($value," ")))->exists();
+                        $return =  MainDescritpion::whereNull('deleted_at')->where('description',ltrim(trim($value," ")))->where('project_id',$project_id)->exists();
                         if(!$return){
                            $insert['description'] = ltrim(trim($value," "));
                            $insert['apartment_id'] = '0';

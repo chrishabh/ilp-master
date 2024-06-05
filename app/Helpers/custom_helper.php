@@ -434,11 +434,11 @@ if (! function_exists('envparam')) {
                                 }
 
                                 if(!empty($row_data[3])){
-                                    $main_description_id = MainDescritpion::getMainDescriptionId($row_data[3]);
+                                    $main_description_id = MainDescritpion::getMainDescriptionId($row_data[3],$project_id);
                                 }
                             
                                 if(!empty($row_data[4])){
-                                    $sub_description_id = SubDescritpion::getSubDescriptionId($row_data[4]);
+                                    $sub_description_id = SubDescritpion::getSubDescriptionId($row_data[4],$project_id);
                                 }
                             
                                 if(isEmptyArray($row_data)){
