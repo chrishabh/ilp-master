@@ -85,7 +85,7 @@ class MainDescritpion extends Model
                     }
                     $main_desc = array_unique($main_desc);
                     $data ['main_desc'] = [];
-                    $project_id = ProjectDetails::getProjectNameId($project_name);
+                    $project_id = ProjectDetails::getProjectId($project_name);
                     foreach($main_desc as $value){
                         $return =  MainDescritpion::whereNull('deleted_at')->where('description',ltrim(trim($value," ")))->where('project_id',$project_id)->exists();
                         if(!$return){
