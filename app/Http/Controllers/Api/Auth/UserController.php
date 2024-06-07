@@ -7,6 +7,7 @@ use App\Http\Requests\RegisterFormRequest;
 use App\Services\UserServices;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ForgotPasswordFormRequest;
+use App\Http\Requests\GetMainSubDescriptionFormRequest;
 use App\Http\Requests\GetPayToDetailsFormRequest;
 use App\Http\Requests\GetProjectDetialsFormRequest;
 use App\Http\Requests\LinkMainAndSubDescriptionFormRequest;
@@ -121,7 +122,7 @@ class UserController extends Controller
         return  response()->success();
     }
 
-    public static function getMainSubDescription(GetPayToDetailsFormRequest $request)
+    public static function getMainSubDescription(GetMainSubDescriptionFormRequest $request)
     {
         $requestData    =   $request->validated();
         $user           =   new UserServices();
