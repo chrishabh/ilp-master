@@ -222,7 +222,7 @@ class ConstructionDetails extends Model
         if(count($apartment_id)>0){
             $data = $data->groupBy('description_header','construction_details.main_description_id','construction_details.apartment_id','construction_details.floor_id')->whereIn('construction_details.apartment_id',$request['apartment_id'])->get();
         }else{
-            $data = $data->groupBy('description_header','construction_details.main_description_id','construction_details.floor_id',)->whereNull('construction_details.apartment_id')->whereIn('construction_details.floor_id',$request['floor_id'])->get();
+            $data = $data->groupBy('description_header','construction_details.main_description_id','construction_details.floor_id')->whereNull('construction_details.apartment_id')->whereIn('construction_details.floor_id',$request['floor_id'])->get();
         }
         
 
@@ -353,7 +353,7 @@ class ConstructionDetails extends Model
         if(count($apartment_id)>0){
             $data = $data->groupBy('description_header','construction_details.main_description_id','construction_details.apartment_id','construction_details.floor_id')->whereIn('construction_details.apartment_id',$request['apartment_id'])->get();
         }else{
-            $data = $data->groupBy('description_header','construction_details.main_description_id','construction_details.floor_id',)->whereNull('construction_details.apartment_id')->whereIn('construction_details.floor_id',$request['floor_id'])->get();
+            $data = $data->groupBy('description_header','construction_details.main_description_id','construction_details.floor_id')->whereNull('construction_details.apartment_id')->whereIn('construction_details.floor_id',$request['floor_id'])->get();
         }
         
 
