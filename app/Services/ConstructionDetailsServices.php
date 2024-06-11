@@ -16,6 +16,7 @@ use App\Models\MainDescritpion;
 use App\Models\PayToDetails;
 use App\Models\ProjectDetails;
 use App\Models\UserAuthorization;
+use App\Models\UserProjectLinking;
 use Carbon\Carbon;
 use Illuminate\Console\Application;
 use Illuminate\Support\Facades\Storage;
@@ -83,7 +84,11 @@ class ConstructionDetailsServices{
     public static function getConstructionDetailsMobile($request)
     {
         if(isset($request['apartment_id']) || isset($request['floor_id'])){
-            return ConstructionDetails::getConstructionDetailsMobile($request);
+            if(UserProjectLinking::checkMainSubDescriptionUser()){
+                return ConstructionDetails::getConstructionDetails($request);
+            }else{
+                return ConstructionDetails::getConstructionDetailsMobile($request);
+            }
         } else {
             throw new AppException("For construction details apartment or floor is required.");
         }
@@ -101,7 +106,12 @@ class ConstructionDetailsServices{
     public static function getDescriptionWorkMobile($request)
     {
         if(isset($request['apartment_id']) || isset($request['floor_id'])){
-            return ConstructionDetails::getDescriptionWorkMobile($request);
+            if(UserProjectLinking::checkMainSubDescriptionUser()){
+                return ConstructionDetails::getDescriptionWork($request);
+
+            }else{
+                return ConstructionDetails::getDescriptionWorkMobile($request);
+            }
         } else {
             throw new AppException("For construction details apartment or floor is required.");
         }

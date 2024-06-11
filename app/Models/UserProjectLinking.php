@@ -6,6 +6,7 @@ use App\Exceptions\AppException;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 class UserProjectLinking extends Model
 {
@@ -98,5 +99,10 @@ class UserProjectLinking extends Model
              throw new AppException('Sub Description already linked please select another project');
          }
         
+    }
+
+    public static function checkMainSubDescriptionUser()
+    {
+        return UserProjectLinking::whereNull('deleted_at')->where('user_id',Auth::User()->id)->whereNull('main_description_id')->whereNull('sub_description_id')->exists();
     }
 }
