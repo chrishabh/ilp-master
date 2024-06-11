@@ -26,7 +26,8 @@ class ProjectDetails extends Model
         ->join('user_project_linkings','user_project_linkings.project_id','=','project_details.id')
         ->whereNull('project_details.deleted_at')
         ->whereNull('user_project_linkings.deleted_at')
-        ->where('user_project_linkings.user_id',$request['user_id'])->offset($offset)->limit($noOfRecord)->get();
+        ->where('user_project_linkings.user_id',$request['user_id'])
+        ->groupBy('project_details.id','project_details.project_name')->offset($offset)->limit($noOfRecord)->get();
 
         if(count($data)>0){
             return $data->toArray();

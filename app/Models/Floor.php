@@ -71,7 +71,7 @@ class Floor extends Model
         $data = Floor::select('floors.*')->join('user_project_linkings','user_project_linkings.floor_id','=','floors.id',)
         ->whereNull('floors.deleted_at')
         ->whereNull('user_project_linkings.deleted_at')->where('user_project_linkings.project_id',$request['project_id'])
-        ->where('block_id',$request['block_id'])->where('user_project_linkings.user_id',Auth::User()->id)->offset($offset)->limit($noOfRecord)->get();
+        ->where('block_id',$request['block_id'])->where('user_project_linkings.user_id',Auth::User()->id)->groupBy('floors.id')->offset($offset)->limit($noOfRecord)->get();
 
         if(count($data)>0){
             return $data->toArray();
