@@ -437,7 +437,7 @@ class ConstructionDetails extends Model
 
             }
             $array[$value['description_header']][] = $main_des_sum;
-            $response[$value['description_header']]['records'] =   $sub[$value['description_header']];
+            $response[$value['description_header']]['records'] =   $sub[$value['description_header']]??[];
 
         }
         $main_description = MainDescritpion::getDistinctDescription();
