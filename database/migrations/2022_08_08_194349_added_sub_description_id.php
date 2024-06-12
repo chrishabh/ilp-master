@@ -14,6 +14,7 @@ class AddedSubDescriptionId extends Migration
     public function up()
     {
         Schema::table('wages_details', function (Blueprint $table) {
+            $table->unsignedBigInteger('main_description_id')->nullable()->after('floor_id');
             $table->unsignedBigInteger('sub_description_id')->nullable()->after('main_description_id');
         });
     }
