@@ -15,6 +15,8 @@ class AlterWagesDetailsApartment extends Migration
     {
         Schema::table('wages_details', function (Blueprint $table) {
             $table->unsignedBigInteger('apartment_id')->after('sum');
+            $table->unsignedBigInteger('project_id')->after('apartment_id');
+
         });
     }
 
