@@ -81,8 +81,8 @@ class ConstructionDetails extends Model
                 
                 foreach($data->toArray() as $records){
                     $sub_final['records'][] =  $records;
-                    $total += floatval(preg_replace('/[^\d.]/', '',$records['total']));
-                    $sub_total += floatval(preg_replace('/[^\d.]/', '',$records['total']));
+                    $total += floatval(preg_replace('/[^\d.]/', '',$records['area']));
+                    $sub_total += floatval(preg_replace('/[^\d.]/', '',$records['area']));
                     $res = explode(',',str_replace("'", "", $records['amount_booked']));
                     $total_amount_booked +=  array_sum($res);
                     $sub_amount_booked +=  array_sum($res);
