@@ -28,9 +28,6 @@ class BookWagesFormRequest extends FormRequest
             case Constants::BOOK_WAGES:
                 return [
                     'book_wages'=> 'required|array',
-                    'book_wages.*.pay_to' => 'required',
-                    'book_wages.*.trade' => 'required',
-                    'book_wages.*.wages' => 'required',
                     'book_wages.*.sub_description_id' => 'required',
                     'book_wages.*.block_id' => 'required',
                     'book_wages.*.plot_or_room' => 'required',
@@ -47,8 +44,6 @@ class BookWagesFormRequest extends FormRequest
             case Constants::EDIT_BOOKED_WAGES:
                 return [
                     'id' => 'required',
-                    'pay_to' => 'required',
-                    'trade' => 'required',
                     #'sub_description_id' => 'required',
                     'block_id' => 'required',
                     'plot_or_room' => 'required',
@@ -71,7 +66,6 @@ class BookWagesFormRequest extends FormRequest
                 return [
                     'user_id' => 'required',
                     'project_id' => 'required',
-                    'wages_number' => 'required',
                 ];
             break;
 

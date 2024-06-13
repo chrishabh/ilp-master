@@ -18,6 +18,7 @@ class WagesServices{
         $data = $request->toArray();
         $is_multiple = (count($data['book_wages'])>1)?true:false;
         foreach($data['book_wages'] as &$value){
+            $value['pay_to'] = Auth::User()->first_name." ".Auth::User()->last_name;
             if(!empty($value['apartment_id']) || !empty($value['floor_id'])){
                 if($is_multiple && empty($value['sub_description_id'])){
                     throw new AppException("For booking wages sub description id is required.");
