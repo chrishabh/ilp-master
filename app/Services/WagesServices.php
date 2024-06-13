@@ -78,7 +78,7 @@ class WagesServices{
         }
 
         if($excel_flag){
-            $return['excel_url'] = getXlsxFile($excel_data, 'Wages_Booking_'.$request['wages_number'],$request['wages_date']);
+            $return['excel_url'] = getXlsxFile($excel_data, 'Material_Booking_'.$request['user_id'],$request['wages_date']);
         }else{
             $return['total_booking'] = $total_booking;
             $return['edit_and_delete_permission'] = 1;//(checkUserRole($request['user_id']) == 'admin')?1:0;
@@ -261,7 +261,7 @@ class WagesServices{
             $excel_data [] = $records;
         }
 
-        $return['excel_url'] = getXlsxFile($excel_data, 'Wages_Booking_'.$request['wages_number'],date('Y_m_d_H_i_s'));
+        $return['excel_url'] = getXlsxFile($excel_data, 'Material_Booking_'.$request['user_id'],date('Y_m_d_H_i_s'));
 
         return $return;
     }
