@@ -344,8 +344,8 @@ class ConstructionDetails extends Model
             ->leftjoin('floors', 'floors.id', '=', 'construction_details.floor_id')
             ->leftjoin('block_details', 'block_details.id', '=', 'construction_details.block_id')
             ->leftjoin('project_details', 'project_details.id', '=', 'construction_details.project_id')
-            ->select('block_details.block_name as Block','floors.floor_name as Level','apartment_details.apartment_number as Plot','main_descritpions.description as Main Description','sub_descritpions.sub_description as Sub Description','construction_details.description as Description','construction_details.area as Area','construction_details.unit as Unit','construction_details.lab_rate as Rate'
-            ,'construction_details.total as Total','construction_details.amount_booked as Amount','construction_details.name as Pay To:','construction_details.wages as Wages No.','construction_details.quantity as Qty.','construction_details.booking_description as Description of work','project_details.project_name as project_name')
+            ->select('block_details.block_name as Block','floors.floor_name as Level','apartment_details.apartment_number as Plot','main_descritpions.description as Main Description','sub_descritpions.sub_description as Sub Description','construction_details.description as Description','construction_details.area as Qty','construction_details.unit as Unit',
+            'construction_details.name as Booked By','construction_details.amount_booked as Booked Qty','construction_details.booking_date as Booking Date','construction_details.delivery_date as Delivery Date','project_details.project_name as project_name')
             ->WhereNull('construction_details.deleted_at')->where('construction_details.project_id',$project_id)->whereIn('construction_details.block_id',$block_id)->get();
     
             if(count($return)>0){
@@ -358,8 +358,8 @@ class ConstructionDetails extends Model
             ->leftjoin('floors', 'floors.id', '=', 'construction_details.floor_id')
             ->leftjoin('block_details', 'block_details.id', '=', 'construction_details.block_id')
             ->leftjoin('project_details', 'project_details.id', '=', 'construction_details.project_id')
-            ->select('block_details.block_name as Block','floors.floor_name as Level','apartment_details.apartment_number as Plot','main_descritpions.description as Main Description','sub_descritpions.sub_description as Sub Description','construction_details.description as Description','construction_details.area as Area','construction_details.unit as Unit','construction_details.lab_rate as Rate'
-            ,'construction_details.total as Total','construction_details.amount_booked as Amount','construction_details.name as Pay To:','construction_details.wages as Wages No.','construction_details.quantity as Qty.','construction_details.booking_description as Description of work','project_details.project_name as project_name')
+            ->select('block_details.block_name as Block','floors.floor_name as Level','apartment_details.apartment_number as Plot','main_descritpions.description as Main Description','sub_descritpions.sub_description as Sub Description','construction_details.description as Description','construction_details.area as Qty','construction_details.unit as Unit',
+            'construction_details.name as Booked By','construction_details.amount_booked as Booked Qty','construction_details.booking_date as Booking Date','construction_details.delivery_date as Delivery Date','project_details.project_name as project_name')
             ->WhereNull('construction_details.deleted_at')->where('construction_details.project_id',$project_id)->orderBy('construction_details.id','ASC')->get();
     
             if(count($return)>0){

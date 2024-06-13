@@ -211,38 +211,25 @@ class ConstructionDetailsServices{
         $project_name = null;
         foreach($details as &$value)
         {
-            try{
-                if(($value['Total']>0 || $value['Total']<0) && ($value['Rate']>0 || $value['Rate']<0)){
-                   
-                    if(preg_match('/[\'^£$%&*()}{@#~?><>,|=_+¬-]/',$value['Rate'])){
-                    }else{
-                         $value['Area'] = ($value['Rate'] != '0')?roundOff((float)$value['Total']/(float)$value['Rate'],1):'';
-                    }
-                  
-                }else{
-                    $value['Area'] = '';
-                }
-            }catch(\Exception $e){
-                throw new AppException('Something went wrong on Block =>'.$value['Block'].',Level=>'.$value['Level'].',Plot=>'.$value['Plot'].',Main Description=>'.$value['Main Description'].',Sub Description=>'.$value['Sub Description']);
-            }
-            $array_value = [];
-            if(!empty($value['Total'])){
-                $value['Total'] = "£".roundOff($value['Total']);
-            }
-            $amount = explode(",",$value['Amount']);
-            $booked_amount = 0;
-            foreach($amount as $amount_value)
-            {
-                if(!empty($amount_value)){
-                    $amount_value = str_replace("'","",$amount_value);
-                    $array_value [] = roundOff($amount_value);
-                    $booked_amount += roundOff($amount_value);
-                }
+           
+            // $array_value = [];
+            // if(!empty($value['Total'])){
+            //     $value['Total'] = "£".roundOff($value['Total']);
+            // }
+            // $amount = explode(",",$value['Amount']);
+            // $booked_amount = 0;
+            // foreach($amount as $amount_value)
+            // {
+            //     if(!empty($amount_value)){
+            //         $amount_value = str_replace("'","",$amount_value);
+            //         $array_value [] = roundOff($amount_value);
+            //         $booked_amount += roundOff($amount_value);
+            //     }
 
-            }
-            $quantity = ($value['Rate'] > '0' && $booked_amount > 0)?roundOff((float)$booked_amount/(float)$value['Rate'],1):'';
-            $value['Amount'] = implode(",",$array_value);
-            $value['Qty.'] = (number_format((float)$quantity,2)>0)?number_format((float)$quantity,2):'';
+            // }
+            // $quantity = ($value['Rate'] > '0' && $booked_amount > 0)?roundOff((float)$booked_amount/(float)$value['Rate'],1):'';
+            // $value['Amount'] = implode(",",$array_value);
+            // $value['Qty.'] = (number_format((float)$quantity,2)>0)?number_format((float)$quantity,2):'';
             $project_name = $value['project_name'];
             unset($value['project_name']);
             // if(!empty($value['Apartment'])){
