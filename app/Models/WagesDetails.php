@@ -85,7 +85,7 @@ class WagesDetails extends Model
         'wages_details.plot_or_room','wages_details.description_work','wages_details.m2_or_hours','wages_details.rate','wages_details.floor_id',
         'wages_details.sum as amount','wages_details.apartment_id','wages_details.main_description_id','wages_details.project_id','sub_description_id',
         'project_details.project_name','block_details.block_name','wages_details.apartment_id'
-        ,'apartment_details.apartment_number','main_descritpions.description as description_header','sub_descritpions.sub_description as sub_description_header','floors.floor_name','wages_details.floor_id')
+        ,'apartment_details.apartment_number','main_descritpions.description as description_header','sub_descritpions.sub_description as sub_description_header','floors.floor_name','wages_details.floor_id','wages_details.created_at','wages_details.delivery_date')
         ->whereNull('wages_details.deleted_at')
         ->where('wages_details.project_id',$request['project_id'])
         //->where('wages_details.block_id',$request['block_id'])
