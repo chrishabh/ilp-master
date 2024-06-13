@@ -28,6 +28,7 @@ class BookWagesFormRequest extends FormRequest
             case Constants::BOOK_WAGES:
                 return [
                     'book_wages'=> 'required|array',
+                    'book_wages.*.delivery_date' => 'required',
                     'book_wages.*.sub_description_id' => 'required',
                     'book_wages.*.block_id' => 'required',
                     'book_wages.*.plot_or_room' => 'required',
