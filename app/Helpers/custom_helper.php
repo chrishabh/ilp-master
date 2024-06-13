@@ -895,6 +895,16 @@ if (! function_exists('envparam')) {
                      ->getFont()
                      ->getColor()
                      ->setRGB ('ffffff');
+                $doc->getActiveSheet()
+                     ->getStyle('K7')
+                     ->getFont()
+                     ->getColor()
+                     ->setRGB ('ffffff');
+                $doc->getActiveSheet()
+                     ->getStyle('L7')
+                     ->getFont()
+                     ->getColor()
+                     ->setRGB ('ffffff');
 
                 $doc->getActiveSheet()
                     ->getStyle('A7:A7')
@@ -952,6 +962,18 @@ if (! function_exists('envparam')) {
                     ->setARGB('FF0000FF');
                 $doc->getActiveSheet()
                     ->getStyle('J7:J7')
+                    ->getFill()
+                    ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+                    ->getStartColor()
+                    ->setARGB('FF0000FF');
+                $doc->getActiveSheet()
+                    ->getStyle('K7:K7')
+                    ->getFill()
+                    ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+                    ->getStartColor()
+                    ->setARGB('FF0000FF');
+                $doc->getActiveSheet()
+                    ->getStyle('L7:L7')
                     ->getFill()
                     ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
                     ->getStartColor()
