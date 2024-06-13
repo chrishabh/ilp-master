@@ -463,6 +463,7 @@ if (! function_exists('envparam')) {
                                             $insert_data['description'] = (!empty($cell_value))?"'".str_replace("'","''",$cell_value)."'":NULL;
                                         }elseif($cell_key == '6'){
                                             $insert_data['area'] = (!empty($cell_value))?$cell_value:0;
+                                            $insert_data['total'] = (!empty($cell_value))?$cell_value:0;
                                         }elseif($cell_key == '7'){
                                             $insert_data['unit'] = (!empty($cell_value))?$cell_value:NULL;
                                         }elseif($cell_key == '8'){
