@@ -125,7 +125,7 @@ class WagesServices{
             $excel_data [] = $records;
         }
 
-        $excel['excel_url'] = getXlsxFile($excel_data, 'Material_Booking_Report_'.$request['wages_number'],Carbon::now());
+        $excel['excel_url'] = getXlsxFile($excel_data, 'Material_Booking_Report_'.$request['user_id'],Carbon::now());
 
         return $excel;
     }
