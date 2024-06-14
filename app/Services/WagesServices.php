@@ -60,6 +60,7 @@ class WagesServices{
         }
         $download_data = WagesDetails::getWagesExcelDownload($request,$excel_flag,$date_flag);
         $records = $excel_data = [];
+        $user_name = Auth::User()->first_name." ".Auth::User()->last_name;
         foreach($download_data['wages_details'] as $value){
             $records['BOOKED BY'] = $value['pay_to'];     // Coloumn A
             //$records['Level'] = $value['level'];    // Coloumn C
@@ -78,7 +79,7 @@ class WagesServices{
         }
 
         if($excel_flag){
-            $return['excel_url'] = getXlsxFile($excel_data, 'Material_Booking_'.$request['user_id'],$request['wages_date']);
+            $return['excel_url'] = getXlsxFile($excel_data, 'Material_Booking_'.$user_name,$request['wages_date']);
         }else{
             $return['total_booking'] = $total_booking;
             $return['edit_and_delete_permission'] = 1;//(checkUserRole($request['user_id']) == 'admin')?1:0;
@@ -107,7 +108,7 @@ class WagesServices{
     public static function getDownloadWagesReport($request)
     {
         $return = WagesDetails::getWagesReport($request);
-      
+        $user_name = Auth::User()->first_name." ".Auth::User()->last_name;
         foreach($return['wages_details'] as $value){
             $records['BOOKED BY'] = $value['pay_to'];     // Coloumn A
             //$records['Level'] = $value['level'];    // Coloumn C
@@ -118,14 +119,14 @@ class WagesServices{
             $records['Sub Description'] = $value['sub_description_header'];      // Coloumn H
             $records['DESCRIPTION OF WORK'] = $value['description_work'];  // Coloumn G
             $records['Booked Quantity'] = roundOff($value['amount']);
-            $records['Unit'] = $value['m2_or_hours'];      // Coloumn I
+            $records['Unit'] = $value['unit'];      // Coloumn I
             $records['Booking Date'] = Carbon::parse($value['created_at'])->format('Y-m-d');      // Coloumn I
             $records['Delivery Date'] = Carbon::parse($value['delivery_date'])->format('Y-m-d');     // Coloumn I
             //$records['CHECK'] = '';     // Coloumn T
             $excel_data [] = $records;
         }
 
-        $excel['excel_url'] = getXlsxFile($excel_data, 'Material_Booking_Report_'.$request['user_id'],Carbon::now());
+        $excel['excel_url'] = getXlsxFile($excel_data, 'Material_Booking_Report_'.$user_name,Carbon::now());
 
         return $excel;
     }
@@ -224,6 +225,7 @@ class WagesServices{
 
         $download_data = WagesDetails::getWages($request,true);
         WagesDetails::finalWagesSubmission($request);
+        $user_name = Auth::User()->first_name." ".Auth::User()->last_name;
         $records = $excel_data = [];
         foreach($download_data['wages_details'] as $value){
             $records['BOOKED BY'] = $value['pay_to'];     // Coloumn A
@@ -242,7 +244,7 @@ class WagesServices{
             $excel_data [] = $records;
         }
 
-        $return['excel_url'] = getXlsxFile($excel_data, 'Material_Booking_'.$request['user_id'],date('Y_m_d_H_i_s'));
+        $return['excel_url'] = getXlsxFile($excel_data, 'Material_Booking_'.$user_name,date('Y_m_d_H_i_s'));
 
         return $return;
     }
