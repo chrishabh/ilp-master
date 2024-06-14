@@ -137,7 +137,7 @@ class ConstructionDetails extends Model
         if(count($data)>0){
             $records = $data->toArray();
         }
-        $array  =  $booked_array_main = [];
+        $array  =  $booked_array_main = $booked_array = [];
         foreach($records as $value){
             $response[$value['description_header']]['description_header'] = $value['description_header'];
 
@@ -156,7 +156,7 @@ class ConstructionDetails extends Model
             if(count($data)>0){
                 $sub_records = $sub_data->toArray();
             }
-            $sub = $booked_array = [];//pp($sub_records);
+            $sub = [];//pp($sub_records);
             foreach($sub_records as $sub_value)
             {$sub_final = [];
                 $units = null;
