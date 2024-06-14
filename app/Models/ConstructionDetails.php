@@ -159,6 +159,7 @@ class ConstructionDetails extends Model
             $sub = [];//pp($sub_records);
             foreach($sub_records as $sub_value)
             {$sub_final = [];
+                $units = null;
                 $total_sum = ConstructionDetails::select(DB::raw("CASE WHEN sum(construction_details.total) IS NULL THEN 0 ELSE ROUND(sum(REPLACE(construction_details.total,',','')),2) END as remaining_booking_amount"))->whereNull('construction_details.deleted_at')
                 ->where('construction_details.project_id',$request['project_id'])->where('construction_details.main_description_id',$value['main_description_id'])
                 ->where('construction_details.block_id',$request['block_id']);
@@ -177,7 +178,7 @@ class ConstructionDetails extends Model
                     //$sub_description []
                     $sub_final['apartment_id'] = $value['apartment_id'];
                     $sub_final['floor_id'] = $value['floor_id'];
-                    $booked_amount = ConstructionDetails::select('amount_booked')->whereNull('construction_details.deleted_at')
+                    $booked_amount = ConstructionDetails::select('amount_booked','unit')->whereNull('construction_details.deleted_at')
                     ->where('construction_details.project_id',$request['project_id'])->where('construction_details.main_description_id',$value['main_description_id'])
                     ->where('construction_details.sub_description_id',$sub_value['sub_description_id'])
                     ->where('construction_details.block_id',$request['block_id'])->where('construction_details.apartment_id',$value['apartment_id'])->get();
@@ -186,11 +187,12 @@ class ConstructionDetails extends Model
                         foreach($booked_amount->toArray() as $booked_amount_value){
                             $res = explode(',',str_replace("'", "", $booked_amount_value['amount_booked']));
                             $total_amount_booked +=  array_sum($res);
+                            $units = $booked_amount_value['unit'];
                         }
                     }
                 }else{
                     $sub_final['floor_id'] = $value['floor_id'];
-                    $booked_amount = ConstructionDetails::select('amount_booked')->whereNull('construction_details.deleted_at')
+                    $booked_amount = ConstructionDetails::select('amount_booked','unit')->whereNull('construction_details.deleted_at')
                     ->where('construction_details.project_id',$request['project_id'])->where('construction_details.main_description_id',$value['main_description_id'])
                     ->where('construction_details.sub_description_id',$sub_value['sub_description_id'])
                     ->where('construction_details.block_id',$request['block_id'])->whereNull('construction_details.apartment_id')->where('construction_details.floor_id',$value['floor_id'])->get();
@@ -199,6 +201,7 @@ class ConstructionDetails extends Model
                         foreach($booked_amount->toArray() as $booked_amount_value){
                             $res = explode(',',str_replace("'", "", $booked_amount_value['amount_booked']));
                             $total_amount_booked +=  array_sum($res);
+                            $units = $booked_amount_value['unit'];
                         }
                     }
                 }
@@ -208,6 +211,7 @@ class ConstructionDetails extends Model
                 //$response[$value['description_header']]['total_sum'] += $value['remaining_booking_amount'];
                 $sub_response[$value['description_header']][$sub_value['sub_description_header']]['sub_records'][] = $sub_final;
                 $sub_response[$value['description_header']][$sub_value['sub_description_header']]['sub_total'] = count($total_sum)>0 ? ($total_sum->toArray()[0]['remaining_booking_amount']??0) : 0;
+                $sub_response[$value['description_header']][$sub_value['sub_description_header']]['units'] = $units;
                 $sub[$value['description_header']] [] = $sub_response[$value['description_header']][$sub_value['sub_description_header']];
 
             }
