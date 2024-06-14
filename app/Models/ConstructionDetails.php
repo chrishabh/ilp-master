@@ -156,10 +156,9 @@ class ConstructionDetails extends Model
             if(count($data)>0){
                 $sub_records = $sub_data->toArray();
             }
-            $sub = [];//pp($sub_records);
+            $sub = $booked_array = [];//pp($sub_records);
             foreach($sub_records as $sub_value)
             {$sub_final = [];
-                $booked_array = [];
                 $units = null;
                 $total_sum = ConstructionDetails::select(DB::raw("CASE WHEN sum(construction_details.total) IS NULL THEN 0 ELSE ROUND(sum(REPLACE(construction_details.total,',','')),2) END as remaining_booking_amount"))->whereNull('construction_details.deleted_at')
                 ->where('construction_details.project_id',$request['project_id'])->where('construction_details.main_description_id',$value['main_description_id'])
