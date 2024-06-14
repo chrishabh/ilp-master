@@ -137,7 +137,7 @@ class ConstructionDetails extends Model
         if(count($data)>0){
             $records = $data->toArray();
         }
-        $array  =  $booked_array_main = $booked_array = [];
+        $array  = $booked_array = [];
         foreach($records as $value){
             $response[$value['description_header']]['description_header'] = $value['description_header'];
 
@@ -206,7 +206,8 @@ class ConstructionDetails extends Model
                     }
                 }
                 
-                $booked_array [] = $sub_final['remaining_booking_amount'] = (($sub_value['remaining_booking_amount']-$total_amount_booked) < 0)?0:$sub_value['remaining_booking_amount']-$total_amount_booked;
+                $sub_final['remaining_booking_amount'] = (($sub_value['remaining_booking_amount']-$total_amount_booked) < 0)?0:$sub_value['remaining_booking_amount']-$total_amount_booked;
+                $booked_array[$value['description_header']][] = $total_amount_booked;
                 //$sub_final['total'] = $value['remaining_booking_amount'];
                 //$response[$value['description_header']]['total_sum'] += $value['remaining_booking_amount'];
                 $sub_response[$value['description_header']][$sub_value['sub_description_header']]['sub_records'][] = $sub_final;
@@ -216,7 +217,6 @@ class ConstructionDetails extends Model
 
             }
             $array[$value['description_header']][] = $value['remaining_booking_amount'];
-            $booked_array_main[$value['description_header']] = $booked_array;
             $response[$value['description_header']]['records'] =   $sub[$value['description_header']];
 
         }
@@ -225,7 +225,7 @@ class ConstructionDetails extends Model
             if(isset($response[$value['description_header']])){
                 if(isset($array[$value['description_header']])){
                     $response[$value['description_header']]['total'] = array_sum($array[$value['description_header']]);
-                    $response[$value['description_header']]['remaining_total'] = array_sum($booked_array_main[$value['description_header']]);
+                    $response[$value['description_header']]['remaining_total'] = array_sum($array[$value['description_header']]) - array_sum($booked_array[$value['description_header']]);
                 } else {
                     $response[$value['description_header']]['total'] = 0;
                 }
