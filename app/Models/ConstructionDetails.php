@@ -137,7 +137,7 @@ class ConstructionDetails extends Model
         if(count($data)>0){
             $records = $data->toArray();
         }
-        $array  =   [];
+        $array  =  $booked_array_main = [];
         foreach($records as $value){
             $response[$value['description_header']]['description_header'] = $value['description_header'];
 
@@ -159,6 +159,7 @@ class ConstructionDetails extends Model
             $sub = [];//pp($sub_records);
             foreach($sub_records as $sub_value)
             {$sub_final = [];
+                $booked_array = [];
                 $units = null;
                 $total_sum = ConstructionDetails::select(DB::raw("CASE WHEN sum(construction_details.total) IS NULL THEN 0 ELSE ROUND(sum(REPLACE(construction_details.total,',','')),2) END as remaining_booking_amount"))->whereNull('construction_details.deleted_at')
                 ->where('construction_details.project_id',$request['project_id'])->where('construction_details.main_description_id',$value['main_description_id'])
@@ -208,7 +209,6 @@ class ConstructionDetails extends Model
                 
                 $booked_array [] = $sub_final['remaining_booking_amount'] = (($sub_value['remaining_booking_amount']-$total_amount_booked) < 0)?0:$sub_value['remaining_booking_amount']-$total_amount_booked;
                 //$sub_final['total'] = $value['remaining_booking_amount'];
-                $booked_array [] =
                 //$response[$value['description_header']]['total_sum'] += $value['remaining_booking_amount'];
                 $sub_response[$value['description_header']][$sub_value['sub_description_header']]['sub_records'][] = $sub_final;
                 $sub_response[$value['description_header']][$sub_value['sub_description_header']]['sub_total'] = count($total_sum)>0 ? ($total_sum->toArray()[0]['remaining_booking_amount']??0) : 0;
