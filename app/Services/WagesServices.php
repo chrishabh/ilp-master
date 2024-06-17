@@ -237,7 +237,7 @@ class WagesServices{
             $records['Sub Description'] = $value['sub_description_header'];      // Coloumn H
             $records['DESCRIPTION OF WORK'] = $value['description_work'];  // Coloumn G
             $records['Booked Quantity'] = roundOff($value['amount']);
-            $records['Unit'] = $value['m2_or_hours'];      // Coloumn I
+            $records['Unit'] = $value['unit'];      // Coloumn I
             $records['Booking Date'] = Carbon::parse($value['created_at'])->format('Y-m-d');      // Coloumn I
             $records['Delivery Date'] = Carbon::parse($value['delivery_date'])->format('Y-m-d');     // Coloumn I
             //$records['CHECK'] = '';     // Coloumn T
