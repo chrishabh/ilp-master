@@ -84,7 +84,7 @@ class ConstructionDetailsServices{
     public static function getConstructionDetailsMobile($request)
     {
         if(isset($request['apartment_id']) || isset($request['floor_id'])){
-            if(UserProjectLinking::checkMainSubDescriptionUser()){
+            if(UserProjectLinking::checkMainSubDescriptionUser($request['project_id'],$request['floor_id'])){
                 return ConstructionDetails::getConstructionDetails($request);
             }else{
                 return ConstructionDetails::getConstructionDetailsMobile($request);
@@ -106,7 +106,7 @@ class ConstructionDetailsServices{
     public static function getDescriptionWorkMobile($request)
     {
         if(isset($request['apartment_id']) || isset($request['floor_id'])){
-            if(UserProjectLinking::checkMainSubDescriptionUser()){
+            if(UserProjectLinking::checkMainSubDescriptionUserForMultiple($request['project_id'],$request['floor_id'])){
                 return ConstructionDetails::getDescriptionWork($request);
 
             }else{

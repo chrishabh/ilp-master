@@ -101,8 +101,13 @@ class UserProjectLinking extends Model
         
     }
 
-    public static function checkMainSubDescriptionUser()
+    public static function checkMainSubDescriptionUser($project_id,$floor_id)
     {
-        return UserProjectLinking::whereNull('deleted_at')->where('user_id',Auth::User()->id)->whereNull('main_description_id')->whereNull('sub_description_id')->exists();
+        return UserProjectLinking::whereNull('deleted_at')->where('user_id',Auth::User()->id)->where('project_id',$project_id)->where('floor_id',$floor_id)->whereNull('main_description_id')->whereNull('sub_description_id')->exists();
+    }
+
+    public static function checkMainSubDescriptionUserForMultiple($project_id,$floor_id)
+    {
+        return UserProjectLinking::whereNull('deleted_at')->where('user_id',Auth::User()->id)->where('project_id',$project_id)->whereIn('floor_id',$floor_id)->whereNull('main_description_id')->whereNull('sub_description_id')->exists();
     }
 }
