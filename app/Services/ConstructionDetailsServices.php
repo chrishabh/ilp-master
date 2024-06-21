@@ -83,7 +83,7 @@ class ConstructionDetailsServices{
     public static function getDescriptionWork($request)
     {
         if(isset($request['apartment_id']) || isset($request['floor_id'])){
-            return ConstructionDetails::getDescriptionWork($request);
+            return ConstructionDetails::getDescriptionWorkSecond($request);
         } else {
             throw new AppException("For construction details apartment or floor is required.");
         }

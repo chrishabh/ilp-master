@@ -241,6 +241,92 @@ class ConstructionDetails extends Model
         return $return;
     }
 
+    public static function getDescriptionWorkSecond($request)
+    {
+        // $noOfRecord = $request['no_of_records'] ?? 10;
+        // $current_page = $request['page_number'] ?? 1;
+        // $offset = ($current_page*$noOfRecord)-$noOfRecord;
+        $return = $final = $response = $sub_final = $records =[];
+
+        $apartment_id = $request['apartment_id']??[];
+
+
+        $return['total_records'] = ConstructionDetails::whereNull('deleted_at')->where('project_id',$request['project_id'])->where('block_id',$request['block_id'])->distinct()->count('main_description_id');
+
+        if(count($apartment_id)>0){
+            $data = ConstructionDetails::join('main_descritpions', 'main_descritpions.id', '=', 'construction_details.main_description_id')
+            ->select('construction_details.main_description_id','construction_details.apartment_id','construction_details.floor_id','main_descritpions.description as description_header',DB::raw("CASE WHEN sum(construction_details.total) IS NULL THEN 0 ELSE ROUND(sum(construction_details.total),2) END as remaining_booking_amount"))->whereNull('construction_details.deleted_at')
+            ->where('construction_details.project_id',$request['project_id'])
+            ->where('construction_details.block_id',$request['block_id']);
+        }else{
+            $data = ConstructionDetails::join('main_descritpions', 'main_descritpions.id', '=', 'construction_details.main_description_id')
+            ->select('construction_details.main_description_id','construction_details.floor_id','main_descritpions.description as description_header',DB::raw("CASE WHEN sum(construction_details.total) IS NULL THEN 0 ELSE ROUND(sum(construction_details.total),2) END as remaining_booking_amount"))->whereNull('construction_details.deleted_at')
+            ->where('construction_details.project_id',$request['project_id'])
+            ->where('construction_details.block_id',$request['block_id']);
+        }
+
+        if(count($apartment_id)>0){
+            $data = $data->groupBy('description_header','construction_details.main_description_id','construction_details.apartment_id','construction_details.floor_id')->whereIn('construction_details.apartment_id',$request['apartment_id'])->get();
+        }else{
+            $data = $data->groupBy('description_header','construction_details.main_description_id','construction_details.floor_id',)->whereNull('construction_details.apartment_id')->whereIn('construction_details.floor_id',$request['floor_id'])->get();
+        }
+        
+
+        if(count($data)>0){
+            $records = $data->toArray();
+        }
+        $array  = $booked_array = [];
+        foreach($records as $value){
+           $sub_final = [];
+                $units = null;
+                $description_data = ConstructionDetails::whereNull('construction_details.deleted_at')
+                ->where('construction_details.project_id',$request['project_id'])->where('construction_details.main_description_id',$value['main_description_id'])
+                ->where('construction_details.block_id',$request['block_id']);
+                if(count($apartment_id)>0){
+                    $description_data = $description_data->whereIn('construction_details.apartment_id',$request['apartment_id']);
+                }else{
+                    $description_data = $description_data->whereIn('construction_details.floor_id',$request['floor_id']);
+                }
+                
+                $description_data = $description_data->get();
+                foreach( $description_data as &$desc_value){
+                    $total_amount_booked = 0;
+                    $sub_response[$value['description_header']][$desc_value['description']]['sub_description_header'] = $desc_value['description'];
+                    $sub_final['main_description_id'] = $value['main_description_id'];
+                    $sub_final['sub_description_id'] = $desc_value['sub_description_id'];
+                    $sub_final['apartment_id'] = $value['apartment_id'];
+                    $sub_final['floor_id'] = $value['floor_id'];
+
+                    $res = explode(',',str_replace("'", "", $desc_value['amount_booked']));
+                    $total_amount_booked =  array_sum($res);
+                    $desc_value['remaining_booking_amount'] = $desc_value['total'] - $total_amount_booked;
+                }
+                
+                $sub[$value['description_header']] [] = $sub_response[$value['description_header']];
+
+            $array[$value['description_header']][] = $value['remaining_booking_amount'];
+            $response[$value['description_header']]['records'] =   $sub[$value['description_header']];
+
+        }
+        $main_description = MainDescritpion::getDistinctDescription();
+        foreach($main_description as $value){
+            if(isset($response[$value['description_header']])){
+                if(isset($array[$value['description_header']])){
+                    $response[$value['description_header']]['total'] = array_sum($array[$value['description_header']]);
+                    $response[$value['description_header']]['remaining_total'] = array_sum($array[$value['description_header']]) - array_sum($booked_array[$value['description_header']]);
+                } else {
+                    $response[$value['description_header']]['total'] = 0;
+                }
+                
+                $final[] =  $response[$value['description_header']];
+            }
+        }
+
+        $return['description_work_details'] = $final;
+
+        return $return;
+    }
+
     public static function addWagesBookValue($request,$is_multiple)
     {
         $apartment_id = $request['apartment_id']??null;
