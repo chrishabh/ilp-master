@@ -298,9 +298,9 @@ class ConstructionDetails extends Model
                 }
                 
             $response['$description_header'] =  $value['description_header'];
-            $response['$description_header']['records'][] =   $sub_response[$value['description_header']];['records'];
+            $response['records']=   $sub_response[$value['description_header']]['records'];
 
-
+            $final [] = $response;
         }
         // $main_description = MainDescritpion::getDistinctDescription();
         // foreach($main_description as $value){
@@ -316,7 +316,7 @@ class ConstructionDetails extends Model
         //     }
         // }
 
-        $return['description_work_details'] =  $response;
+        $return['description_work_details'] =  $final;
 
         return $return;
     }
