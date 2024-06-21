@@ -79,11 +79,12 @@ class ConstructionDetails extends Model
                     $data = $data->whereNull('construction_details.apartment_id')->where('construction_details.floor_id',$request['floor_id'])->get();
                 }
                 
-                foreach($data->toArray() as $records){
-                    $sub_final['records'][] =  $records;
+                foreach($data->toArray() as &$records){
                     $total += floatval(preg_replace('/[^\d.]/', '',$records['total']));
                     $sub_total += floatval(preg_replace('/[^\d.]/', '',$records['total']));
                     $res = explode(',',str_replace("'", "", $records['amount_booked']));
+                    $records['amount_booked'] =  array_sum($res);
+                    $sub_final['records'][] =  $records;
                     $total_amount_booked +=  array_sum($res);
                     $sub_amount_booked +=  array_sum($res);
                 }

@@ -460,7 +460,12 @@ if (! function_exists('envparam')) {
                                     foreach($row_data as $cell_key => $cell_value)
                                     {
                                         if($cell_key == '5'){
-                                            $insert_data['description'] = (!empty($cell_value))?"'".str_replace("'","''",$cell_value)."'":NULL;
+                                            if (strpos($cell_value, "~") !== false) {
+                                                $parts = explode("~", $cell_value, 2); 
+                                                $insert_data['description'] = (!empty($parts[1]))?"'".str_replace("'","''",$parts[1])."'":NULL;
+                                            } else {
+                                                $insert_data['description'] = (!empty($cell_value))?"'".str_replace("'","''",$cell_value)."'":NULL; 
+                                            }  
                                         }elseif($cell_key == '6'){
                                             $insert_data['area'] = (!empty($cell_value))? preg_replace('/-[^\d.]/', '0',$cell_value):0;
                                             $insert_data['total'] = (!empty($cell_value))? preg_replace('/-[^\d.]/', '0',$cell_value):0;

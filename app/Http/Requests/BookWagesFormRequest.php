@@ -33,6 +33,8 @@ class BookWagesFormRequest extends FormRequest
                     'book_wages.*.block_id' => 'required',
                     'book_wages.*.plot_or_room' => 'required',
                     'book_wages.*.description_work' => 'required',
+                    'book_wages.*.description' => 'required',
+                    'book_wages.*.consruction_id' => 'required',
                     'book_wages.*.sum' => 'required',
                     'book_wages.*.project_id' => 'required',
                     'book_wages.*.block_id' => 'required',
