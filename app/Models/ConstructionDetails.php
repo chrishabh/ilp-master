@@ -291,38 +291,32 @@ class ConstructionDetails extends Model
                 $description_data = $description_data->get();
                 foreach( $description_data as &$desc_value){
                     $total_amount_booked = 0;
-                    $sub_response[$value['description_header']][$desc_value['description']]['sub_description_header'] = $desc_value['description'];
-                    $sub_final['main_description_id'] = $value['main_description_id'];
-                    $sub_final['sub_description_id'] = $desc_value['sub_description_id'];
-                    $sub_final['apartment_id'] = $value['apartment_id'];
-                    $sub_final['floor_id'] = $value['floor_id'];
-
                     $res = explode(',',str_replace("'", "", $desc_value['amount_booked']));
                     $total_amount_booked =  array_sum($res);
                     $desc_value['remaining_booking_amount'] = $desc_value['total'] - $total_amount_booked;
+                    $sub_response[$value['description_header']]['records'][] = $desc_value;
                 }
                 
-                $sub[$value['description_header']] [] = $sub_response[$value['description_header']];
+            $response['$description_header'] =  $value['description_header'];
+            $response['$description_header']['records'][] =   $sub_response[$value['description_header']];['records'];
 
-            $array[$value['description_header']][] = $value['remaining_booking_amount'];
-            $response[$value['description_header']]['records'] =   $sub[$value['description_header']];
 
         }
-        $main_description = MainDescritpion::getDistinctDescription();
-        foreach($main_description as $value){
-            if(isset($response[$value['description_header']])){
-                if(isset($array[$value['description_header']])){
-                    $response[$value['description_header']]['total'] = array_sum($array[$value['description_header']]);
-                    $response[$value['description_header']]['remaining_total'] = array_sum($array[$value['description_header']]) - array_sum($booked_array[$value['description_header']]);
-                } else {
-                    $response[$value['description_header']]['total'] = 0;
-                }
+        // $main_description = MainDescritpion::getDistinctDescription();
+        // foreach($main_description as $value){
+        //     if(isset($response[$value['description_header']])){
+        //         if(isset($array[$value['description_header']])){
+        //             $response[$value['description_header']]['total'] = array_sum($array[$value['description_header']]);
+        //             $response[$value['description_header']]['remaining_total'] = array_sum($array[$value['description_header']]) - array_sum($booked_array[$value['description_header']]);
+        //         } else {
+        //             $response[$value['description_header']]['total'] = 0;
+        //         }
                 
-                $final[] =  $response[$value['description_header']];
-            }
-        }
+        //         $final[] =  $response[$value['description_header']];
+        //     }
+        // }
 
-        $return['description_work_details'] = $final;
+        $return['description_work_details'] =  $response;
 
         return $return;
     }
