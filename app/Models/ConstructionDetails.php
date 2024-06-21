@@ -258,7 +258,7 @@ class ConstructionDetails extends Model
         ->where('construction_details.project_id',$request['project_id'])
         ->where('construction_details.block_id',$request['block_id']);
         
-        $data = $data->groupBy('description_header','construction_details.main_description_id')->whereNull('construction_details.apartment_id')->whereIn('construction_details.apartment_id',$request['apartment_id'])->whereIn('construction_details.floor_id',$request['floor_id'])->get();
+        $data = $data->groupBy('description_header','construction_details.main_description_id')->whereIn('construction_details.apartment_id',$request['apartment_id'])->whereIn('construction_details.floor_id',$request['floor_id'])->get();
 
         
 
