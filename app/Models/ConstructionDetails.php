@@ -285,7 +285,7 @@ class ConstructionDetails extends Model
                     $sub_response[$value['description_header']]['records'][] = $desc_value;
                 }
                 
-            $response['$description_header'] =  $value['description_header'];
+            $response['description_header'] =  $value['description_header'];
             $response['records']=   $sub_response[$value['description_header']]['records'];
 
             $final [] = $response;
