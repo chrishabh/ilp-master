@@ -299,12 +299,12 @@ class ConstructionDetails extends Model
                     $sub_response[$value['description_header']]['remaining_booking_amount'] =  $total_area - $total_amount_booked;
                     $sub_response[$value['description_header']]['total'] =  $total_area;
                     $sub_response[$value['description_header']]['unit'] =    $unit;
-
+                    $sub_response_records[$value['description_header']][] = $sub_response;
 
                 }
                 
             $response['description_header'] =  $value['description_header'];
-            $response['records']=   $sub_response[$value['description_header']];
+            $response['records'] =   $sub_response_records[$value['description_header']];
 
             $final [] = $response;
         }
