@@ -267,26 +267,42 @@ class ConstructionDetails extends Model
         }
    
         foreach($records as $value){
-                $description_data = ConstructionDetails::whereNull('construction_details.deleted_at')
+                $description_data = ConstructionDetails::select('description','construction_details.apartment_id','construction_details.floor_id','construction_details.block_id')->whereNull('construction_details.deleted_at')
                 ->where('construction_details.project_id',$request['project_id'])->where('construction_details.main_description_id',$value['main_description_id'])
                 ->where('construction_details.block_id',$request['block_id']);
-                if(count($apartment_id)>0){
-                    $description_data = $description_data->whereIn('construction_details.apartment_id',$request['apartment_id']);
-                }else{
-                    $description_data = $description_data->whereIn('construction_details.floor_id',$request['floor_id']);
-                }
+                $description_data = $description_data->whereIn('construction_details.apartment_id',$request['apartment_id']);
+                $description_data = $description_data->whereIn('construction_details.floor_id',$request['floor_id']);
                 
-                $description_data = $description_data->get();
-                foreach( $description_data as &$desc_value){
+                $description_data = $description_data->groupBy('description','construction_details.apartment_id','construction_details.floor_id','construction_details.block_id')->get();
+                foreach( $description_data as $desc_value){
+                    $construction_data = ConstructionDetails::whereNull('construction_details.deleted_at')
+                    ->where('construction_details.project_id',$request['project_id'])->where('construction_details.main_description_id',$value['main_description_id'])
+                    ->where('construction_details.block_id',$desc_value['block_id']);
+                    $description_data = $description_data->whereIn('construction_details.apartment_id',$desc_value['apartment_id']);
+                    $description_data = $description_data->whereIn('construction_details.floor_id',$desc_value['floor_id'])->where('description',$desc_value['description']);
+                    $description_data = $description_data->get();
                     $total_amount_booked = 0;
-                    $res = explode(',',str_replace("'", "", $desc_value['amount_booked']));
-                    $total_amount_booked =  array_sum($res);
-                    $desc_value['remaining_booking_amount'] = $desc_value['total'] - $total_amount_booked;
-                    $sub_response[$value['description_header']]['records'][] = $desc_value;
+                    $total_area = 0;
+                    $unit = null;
+                    foreach($construction_data as $const_value){
+                        $res = explode(',',str_replace("'", "", $const_value['amount_booked']));
+                        $total_amount_booked +=  array_sum($res);
+                        $total_area += $const_value['total'];
+                        $unit = $const_value['unit'];
+                        $sub_records [] = $const_value;
+                       
+                    }
+                    $construct_data['remaining_booking_amount'] =  $total_area - $total_amount_booked;
+                    $construct_data['total'] =  $total_area;
+                    $construct_data['unit'] =    $unit;
+                    $sub_response[$value['description_header']]['description'] = $desc_value['description'];
+                    $sub_response[$value['description_header']]['sub_records'][] = $sub_records;
+
+
                 }
                 
             $response['description_header'] =  $value['description_header'];
-            $response['records']=   $sub_response[$value['description_header']]['records'];
+            $response['records']=   $sub_response[$value['description_header']];
 
             $final [] = $response;
         }
