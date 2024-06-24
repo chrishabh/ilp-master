@@ -267,7 +267,7 @@ class ConstructionDetails extends Model
         }
    
         foreach($records as $value){
-                $description_data = ConstructionDetails::select('description','construction_details.apartment_id','construction_details.floor_id','construction_details.block_id')->whereNull('construction_details.deleted_at')
+                $description_data = ConstructionDetails::select('description')->whereNull('construction_details.deleted_at')
                 ->where('construction_details.project_id',$request['project_id'])->where('construction_details.main_description_id',$value['main_description_id'])
                 ->where('construction_details.block_id',$request['block_id']);
                 $description_data = $description_data->whereIn('construction_details.apartment_id',$request['apartment_id']);
@@ -277,9 +277,9 @@ class ConstructionDetails extends Model
                 foreach( $description_data as $desc_value){
                     $construction_data = ConstructionDetails::whereNull('construction_details.deleted_at')
                     ->where('construction_details.project_id',$request['project_id'])->where('construction_details.main_description_id',$value['main_description_id'])
-                    ->where('construction_details.block_id',$desc_value['block_id']);
-                    $construction_data = $construction_data->whereIn('construction_details.apartment_id',$desc_value['apartment_id']);
-                    $construction_data = $construction_data->whereIn('construction_details.floor_id',$desc_value['floor_id'])->where('description',$desc_value['description']);
+                    ->where('construction_details.block_id',$request['block_id']);
+                    $construction_data = $construction_data->whereIn('construction_details.apartment_id',$request['apartment_id']);
+                    $construction_data = $construction_data->whereIn('construction_details.floor_id',$request['floor_id'])->where('description',$desc_value['description']);
                     $construction_data = $construction_data->get();
                     $total_amount_booked = 0;
                     $total_area = 0;
