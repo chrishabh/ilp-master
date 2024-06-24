@@ -320,17 +320,13 @@ class ConstructionDetails extends Model
     {
         $apartment_id = $request['apartment_id']??null;
         $floor_id = $request['floor_id']??null;
-        $return = ConstructionDetails::whereNull('deleted_at')->where('project_id',$request['project_id'])->where('block_id',$request['block_id'])->where('main_description_id',$request['main_description_id']);
+        $return = ConstructionDetails::whereNull('deleted_at')->where('project_id',$request['project_id'])->where('block_id',$request['block_id'])->where('main_description_id',$request['main_description_id'])->where('id',$request['consruction_id']);
         
         if($is_multiple){
             $return = $return->where('sub_description_id',$request['sub_description_id']);
         }
-
-        if(!empty($apartment_id)){
-            $return = $return->where('apartment_id',$request['apartment_id'])->first();
-        }else{
-            $return = $return->where('floor_id',$request['floor_id'])->first();
-        }
+        $return = $return->where('apartment_id',$request['apartment_id'])->where('floor_id',$request['floor_id'])->first();
+      
         
 
         if(isset($return['amount_booked']))
