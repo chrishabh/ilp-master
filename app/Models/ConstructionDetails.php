@@ -285,6 +285,7 @@ class ConstructionDetails extends Model
                     $total_amount_booked = 0;
                     $total_area = 0;
                     $unit = null;
+                    $sub_records = [];
                     foreach($construction_data as $const_value){
                         $res = explode(',',str_replace("'", "", $const_value['amount_booked']));
                         $total_amount_booked +=  array_sum($res);
