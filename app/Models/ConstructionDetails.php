@@ -278,9 +278,9 @@ class ConstructionDetails extends Model
                     $construction_data = ConstructionDetails::whereNull('construction_details.deleted_at')
                     ->where('construction_details.project_id',$request['project_id'])->where('construction_details.main_description_id',$value['main_description_id'])
                     ->where('construction_details.block_id',$desc_value['block_id']);
-                    $description_data = $description_data->whereIn('construction_details.apartment_id',$desc_value['apartment_id']);
-                    $description_data = $description_data->whereIn('construction_details.floor_id',$desc_value['floor_id'])->where('description',$desc_value['description']);
-                    $description_data = $description_data->get();
+                    $construction_data = $construction_data->whereIn('construction_details.apartment_id',$desc_value['apartment_id']);
+                    $construction_data = $construction_data->whereIn('construction_details.floor_id',$desc_value['floor_id'])->where('description',$desc_value['description']);
+                    $construction_data = $construction_data->get();
                     $total_amount_booked = 0;
                     $total_area = 0;
                     $unit = null;
