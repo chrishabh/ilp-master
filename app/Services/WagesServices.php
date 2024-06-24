@@ -31,7 +31,7 @@ class WagesServices{
                 //$value['user_id'] = User::details()->id;
                 $remaining_balance = ($is_multiple)?roundOff(remainingBalanceCheckMultipleCase($value['project_id'],$value['block_id'],!empty($value['apartment_id'])?$value['apartment_id']:null,!empty($value['floor_id'])?$value['floor_id']:null,$value['main_description_id'],!empty($value['sub_description_id'])?$value['sub_description_id']:null,$value['consruction_id'])) : roundOff(remainingBalanceCheck($value['project_id'],$value['block_id'],!empty($value['apartment_id'])?$value['apartment_id']:null,!empty($value['floor_id'])?$value['floor_id']:null,$value['main_description_id'],$value['sub_description_id'],$value['consruction_id']));
                 
-                if((float)$value['sum'] > $remaining_balance){
+                if((float)$value['sum'] > round($remaining_balance)){
                     if($is_multiple){
                         continue;
                     }
