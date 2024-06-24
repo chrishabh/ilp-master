@@ -69,7 +69,7 @@ class WagesServices{
             $records['PLOT'] = $value['plot_or_room'];     // Coloumn E
             $records['Main Description'] = $value['description_header'];      // Coloumn H
             $records['Sub Description'] = $value['sub_description_header'];      // Coloumn H
-            $records['DESCRIPTION OF WORK'] = $value['description_work'];  // Coloumn G
+            $records['DESCRIPTION OF WORK'] = $value['description'];  // Coloumn G
             $records['Booked Quantity'] = roundOff($value['amount']);
             $records['Unit'] = $value['unit'];      // Coloumn I
             $records['Booking Date'] = Carbon::parse($value['created_at'])->format('Y-m-d');      // Coloumn I
@@ -119,7 +119,7 @@ class WagesServices{
             $records['PLOT'] = $value['plot_or_room'];     // Coloumn E
             $records['Main Description'] = $value['description_header'];      // Coloumn H
             $records['Sub Description'] = $value['sub_description_header'];      // Coloumn H
-            $records['DESCRIPTION OF WORK'] = $value['description_work'];  // Coloumn G
+            $records['DESCRIPTION OF WORK'] = $value['description'];  // Coloumn G
             $records['Booked Quantity'] = roundOff($value['amount']);
             $records['Unit'] = $value['unit'];      // Coloumn I
             $records['Booking Date'] = Carbon::parse($value['created_at'])->format('Y-m-d');      // Coloumn I
@@ -237,7 +237,7 @@ class WagesServices{
             $records['PLOT'] = $value['plot_or_room'];     // Coloumn E
             $records['Main Description'] = $value['description_header'];      // Coloumn H
             $records['Sub Description'] = $value['sub_description_header'];      // Coloumn H
-            $records['DESCRIPTION OF WORK'] = $value['description_work'];  // Coloumn G
+            $records['DESCRIPTION OF WORK'] = $value['description'];  // Coloumn G
             $records['Booked Quantity'] = roundOff($value['amount']);
             $records['Unit'] = $value['unit'];      // Coloumn I
             $records['Booking Date'] = Carbon::parse($value['created_at'])->format('Y-m-d');      // Coloumn I
