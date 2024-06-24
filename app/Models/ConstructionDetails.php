@@ -84,7 +84,7 @@ class ConstructionDetails extends Model
                     $sub_total += floatval(preg_replace('/[^\d.]/', '',$records['total']));
                     $res = explode(',',str_replace("'", "", $records['amount_booked']));
                     $records['amount_booked'] =  array_sum($res);
-                    $records['remaining'] =  (($records['total']-$records['amount_booked'])>=0)?$records['total']-$records['amount_booked']:0;
+                    $records['remaining'] =  (($records['total']-$records['amount_booked'])>=0)?roundOff($records['total']-$records['amount_booked'],2):0;
                     $sub_final['records'][] =  $records;
                     $total_amount_booked +=  array_sum($res);
                     $sub_amount_booked +=  array_sum($res);
