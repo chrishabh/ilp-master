@@ -276,7 +276,7 @@ class ConstructionDetails extends Model
                 $description_data = $description_data->groupBy('description')->get();
                 foreach( $description_data as $desc_value){
                     $description = $desc_value['description'];
-                    $construction_data = ConstructionDetails::whereNull('construction_details.deleted_at')
+                    $construction_data = ConstructionDetails::select('main_description_id','sub_description_id','area','unit','total','amount_booked','floor_id','apartment_id','block_id','project_id')->whereNull('construction_details.deleted_at')
                     ->where('construction_details.project_id',$request['project_id'])->where('construction_details.main_description_id',$value['main_description_id'])
                     ->where('construction_details.block_id',$request['block_id']);
                     $construction_data = $construction_data->whereIn('construction_details.apartment_id',$request['apartment_id']);
