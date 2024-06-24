@@ -273,13 +273,14 @@ class ConstructionDetails extends Model
                 $description_data = $description_data->whereIn('construction_details.apartment_id',$request['apartment_id']);
                 $description_data = $description_data->whereIn('construction_details.floor_id',$request['floor_id']);
                 
-                $description_data = $description_data->groupBy('description','construction_details.apartment_id','construction_details.floor_id','construction_details.block_id')->get();
+                $description_data = $description_data->groupBy('description')->get();
                 foreach( $description_data as $desc_value){
+                    $description = $desc_value['description'];
                     $construction_data = ConstructionDetails::whereNull('construction_details.deleted_at')
                     ->where('construction_details.project_id',$request['project_id'])->where('construction_details.main_description_id',$value['main_description_id'])
                     ->where('construction_details.block_id',$request['block_id']);
                     $construction_data = $construction_data->whereIn('construction_details.apartment_id',$request['apartment_id']);
-                    $construction_data = $construction_data->whereIn('construction_details.floor_id',$request['floor_id'])->where('description',$desc_value['description']);
+                    $construction_data = $construction_data->whereIn('construction_details.floor_id',$request['floor_id'])->where('description','like',"%$description%");
                     $construction_data = $construction_data->get();
                     $total_amount_booked = 0;
                     $total_area = 0;
