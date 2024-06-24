@@ -291,15 +291,15 @@ class ConstructionDetails extends Model
                         $total_amount_booked +=  array_sum($res);
                         $total_area += $const_value['total'];
                         $unit = $const_value['unit'];
-                        $const_value['remaining_booking_amount'] =  $const_value['total'] - array_sum($res);
+                        $const_value['remaining_booking_amount'] =  (($const_value['total'] - array_sum($res))>=0)?roundOff($const_value['total'] - array_sum($res),2):0.00;
                         $sub_records [] = $const_value;
                        
                     }
                  
                     $sub_response['description'] = $desc_value['description'];
                     $sub_response['sub_records'] = $sub_records;
-                    $sub_response['remaining_booking_amount'] =  $total_area - $total_amount_booked;
-                    $sub_response['total'] =  $total_area;
+                    $sub_response['remaining_booking_amount'] =  (($total_area - $total_amount_booked)>=0)?roundOff($total_area - $total_amount_booked,2):0.00;
+                    $sub_response['total'] =  roundOff($total_area,0);
                     $sub_response['unit'] =    $unit;
                     $sub_response_records[$value['description_header']][] = $sub_response;
 
