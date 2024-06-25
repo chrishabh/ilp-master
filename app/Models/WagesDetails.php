@@ -196,7 +196,7 @@ class WagesDetails extends Model
         ->groupBy('wages_details.pay_to','wages_details.floor','wages_details.block_id',
         'wages_details.plot_or_room','wages_details.description_work','wages_details.floor_id','wages_details.apartment_id','wages_details.main_description_id','wages_details.project_id','sub_description_id',
         'project_details.project_name','block_details.block_name','wages_details.apartment_id'
-        ,'apartment_details.apartment_number','main_descritpions.description','sub_descritpions.sub_description','floors.floor_name','wages_details.delivery_date','wages_details.unit','wages_details.description','wages_details.created_at')->get();
+        ,'apartment_details.apartment_number','main_descritpions.description','sub_descritpions.sub_description','floors.floor_name','wages_details.delivery_date','wages_details.unit','wages_details.description', DB::raw("cast(wages_details.created_at as date)"))->get();
        
         
         if(count($data)>0){
