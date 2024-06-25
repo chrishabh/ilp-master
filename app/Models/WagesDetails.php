@@ -5,6 +5,7 @@ namespace App\Models;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class WagesDetails extends Model
 {
@@ -164,5 +165,45 @@ class WagesDetails extends Model
     public static function getWagesById($id)
     {
         return WagesDetails::whereNull('deleted_at')->where('id',$id)->first();
+    }
+
+    public static function getWagesReportGroupBy($request)
+    {
+        $noOfRecord = $request['no_of_records'] ?? 10;
+        $current_page = $request['page_number'] ?? 1;
+        $offset = ($current_page*$noOfRecord)-$noOfRecord;
+        $project_id = $request['project_id'];
+        $user_id = $request['user_id'];
+        $date =  Carbon::parse($request['date'])->format('Y-m-d');
+
+        $return['total_records'] = WagesDetails::whereNull('deleted_at')->where('project_id',$request['project_id'])->where('user_id',$request['user_id'])->whereRaw("cast(created_at as date) = '$date'")->count('id');
+
+        $data = WagesDetails::join('project_details','wages_details.project_id','=','project_details.id')
+        ->join('block_details','wages_details.block_id','=','block_details.id')
+        ->join('main_descritpions', 'main_descritpions.id', '=', 'wages_details.main_description_id')
+        ->leftjoin('sub_descritpions', 'sub_descritpions.id', '=', 'wages_details.sub_description_id')
+        ->leftjoin('apartment_details','wages_details.apartment_id','=','apartment_details.id')
+        ->leftjoin('floors','wages_details.floor_id','=','floors.id')
+        ->select('wages_details.pay_to','wages_details.floor as level','wages_details.block_id',
+        'wages_details.plot_or_room','wages_details.description_work','wages_details.floor_id',
+        DB::raw("SUM(wages_details.sum) as amount"),'wages_details.apartment_id','wages_details.main_description_id','wages_details.project_id','sub_description_id',
+        'project_details.project_name','block_details.block_name','wages_details.apartment_id'
+        ,'apartment_details.apartment_number','main_descritpions.description as description_header','sub_descritpions.sub_description as sub_description_header','floors.floor_name','wages_details.created_at','wages_details.delivery_date','wages_details.unit','wages_details.description')
+        ->whereNull('wages_details.deleted_at')
+        ->where('wages_details.project_id',$request['project_id'])
+        ->where('wages_details.user_id',$request['user_id']);
+        $data = $data->whereRaw("cast(wages_details.created_at as date) = '$date'")
+        ->groupBy('wages_details.pay_to','wages_details.floor as level','wages_details.block_id',
+        'wages_details.plot_or_room','wages_details.description_work','wages_details.floor_id','wages_details.apartment_id','wages_details.main_description_id','wages_details.project_id','sub_description_id',
+        'project_details.project_name','block_details.block_name','wages_details.apartment_id'
+        ,'apartment_details.apartment_number','description_header','sub_description_header','floors.floor_name','wages_details.created_at','wages_details.delivery_date','wages_details.unit','wages_details.description')->get();
+       
+        
+        if(count($data)>0){
+            $return['wages_details'] = $data->toArray();
+        }else{
+            $return['wages_details'] = [];
+        }
+        return $return;
     }
 }

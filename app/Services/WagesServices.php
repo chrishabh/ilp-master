@@ -251,4 +251,30 @@ class WagesServices{
         return $return;
     }
 
+    public static function downloadOrderGroupBy($request)
+    {
+        $return = WagesDetails::getWagesReportGroupBy($request);
+        $user_name = Auth::User()->first_name." ".Auth::User()->last_name;
+        foreach($return['wages_details'] as $value){
+            $records['BOOKED BY'] = $value['pay_to'];     // Coloumn A
+            //$records['Level'] = $value['level'];    // Coloumn C
+            $records['BLOCK'] = BlockDetails::getBlockName($value['block_id'])->block_name?? " ";     // Coloumn D
+            $records['LEVEL'] = $value['floor_name'];  // Coloumn F
+            $records['PLOT'] = $value['plot_or_room'];     // Coloumn E
+            $records['Main Description'] = $value['description_header'];      // Coloumn H
+            $records['Sub Description'] = $value['sub_description_header'];      // Coloumn H
+            $records['DESCRIPTION OF WORK'] = $value['description'];  // Coloumn G
+            $records['Booked Quantity'] = roundOff($value['amount']);
+            $records['Unit'] = $value['unit'];      // Coloumn I
+            $records['Booking Date'] = Carbon::parse($value['created_at'])->format('Y-m-d');      // Coloumn I
+            $records['Delivery Date'] = Carbon::parse($value['delivery_date'])->format('Y-m-d');     // Coloumn I
+            //$records['CHECK'] = '';     // Coloumn T
+            $excel_data [] = $records;
+        }
+
+        $excel['excel_url'] = getXlsxFile($excel_data, 'Groupped_Material_Booking_Report_'.$user_name,Carbon::now());
+
+        return $excel;
+    }
+
 }

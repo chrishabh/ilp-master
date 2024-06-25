@@ -118,4 +118,12 @@ class WagesBookingController extends Controller
 
         return  response()->data($data);
     }
+
+    public static function downloadOrderGroupBy(GetWagesFormRequest $request)
+    {
+        $requestData = $request->validated();
+        $data =  WagesServices::downloadOrderGroupBy($request);
+
+        return  response()->data($data);
+    }
 }

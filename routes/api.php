@@ -56,6 +56,7 @@ Route::group(['middleware'=> ['tracker']],function () {
                 Route::post('get-wages-excel','WagesBookingController@downloadWages');
                 Route::post('wages-report','WagesBookingController@getWagesReport');
                 Route::post('download-wages-report','WagesBookingController@getDownloadWagesReport');
+                Route::post('download-groupped-report','WagesBookingController@downloadOrderGroupBy');
                 // Route::post('upload-videos','VideosController@uploadVideo');
                 // Route::post('download-videos','VideosController@downloadVideo');
                 Route::post('add-pay-details','WagesBookingController@addPayToDetails');
