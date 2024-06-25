@@ -193,7 +193,7 @@ class WagesDetails extends Model
         ->where('wages_details.project_id',$request['project_id'])
         ->where('wages_details.user_id',$request['user_id']);
         $data = $data->whereRaw("cast(wages_details.created_at as date) = '$date'")
-        ->groupBy('wages_details.pay_to','wages_details.floor as level','wages_details.block_id',
+        ->groupBy('wages_details.pay_to','level','wages_details.block_id',
         'wages_details.plot_or_room','wages_details.description_work','wages_details.floor_id','wages_details.apartment_id','wages_details.main_description_id','wages_details.project_id','sub_description_id',
         'project_details.project_name','block_details.block_name','wages_details.apartment_id'
         ,'apartment_details.apartment_number','description_header','sub_description_header','floors.floor_name','wages_details.created_at','wages_details.delivery_date','wages_details.unit','wages_details.description')->get();
