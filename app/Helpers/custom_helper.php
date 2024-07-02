@@ -456,6 +456,8 @@ if (! function_exists('envparam')) {
                                         'quantity' => null,
                                         'booking_description' => null,
                                         'floor' => null,
+                                        'booking_date' => null,
+                                        'delivery_date' => null
                                     ];
                                     foreach($row_data as $cell_key => $cell_value)
                                     {
