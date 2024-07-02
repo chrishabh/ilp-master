@@ -470,7 +470,7 @@ if (! function_exists('envparam')) {
                                             $insert_data['area'] = (!empty($cell_value))? preg_replace('/-[^\d.]/', '0',$cell_value):0;
                                             $insert_data['total'] = (!empty($cell_value))? preg_replace('/-[^\d.]/', '0',$cell_value):0;
                                         }elseif($cell_key == '7'){
-                                            $insert_data['unit'] = (!empty($cell_value))?$cell_value:NULL;
+                                            $insert_data['unit'] = (!empty($cell_value))?"'".$cell_value."'":NULL;
                                         }elseif($cell_key == '8'){
                                             $insert_data['name'] = (!empty($cell_value))?"'".$cell_value."'":NULL;
                                         }elseif($cell_key == '9'){
