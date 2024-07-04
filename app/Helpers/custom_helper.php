@@ -96,11 +96,11 @@ if (! function_exists('envparam')) {
       
         $doc = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
         $count = 0;
-        $firstLineKeys = false;
         $uploaded = false;
         if(!empty($details)){
             //Loop through the associative array.
             foreach($details as $details_key => $inner_details){
+                $firstLineKeys = false;
                 $fp = fopen('php://output', 'w+');
                 $doc->setActiveSheetIndex($count);
                 $sheet = $doc->createSheet();
