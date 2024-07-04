@@ -93,78 +93,88 @@ if (! function_exists('envparam')) {
 
         // Set the Content-Type and Content-Disposition headers.
         //Open file pointer.
-        $fp = fopen('php://output', 'w+');
+      
         $doc = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
-        $sheet = $doc->getActiveSheet();
+        $count = 0;
         $firstLineKeys = false;
         $uploaded = false;
         if(!empty($details)){
             //Loop through the associative array.
-           foreach($details as $i => $row){
-            if (empty($firstLineKeys)) {
-                $firstLineKeys = array_keys($row);
-                $j=1;
-                foreach($firstLineKeys as $x_value){
-                    $sheet->setCellValueByColumnAndRow($j,1,$x_value);
-  		            $j=$j+1;
-                }
-            }
-            $j=1;
-            foreach($row as $x => $x_value) {
-                $sheet->setCellValueByColumnAndRow($j,$i+2,$x_value);
-                  $j=$j+1;
-            }
+            foreach($details as $details_key => $inner_details){
+                $fp = fopen('php://output', 'w+');
+                $doc->setActiveSheetIndex($count);
+                $sheet = $doc->createSheet();
               
-            }
-              // get last row and column for formatting
-              $last_column = $doc->getActiveSheet()->getHighestColumn();
-              $last_row = $doc->getActiveSheet()->getHighestRow();
-  
-              // autosize all columns to content width
-              for ($k = 'A'; $k <= $last_column; $k++) {
-                  $doc->getActiveSheet()->getColumnDimension($k)->setAutoSize(TRUE);
-              }
-  
-              // if $keys, freeze the header row and make it bold
-              if ($firstLineKeys) {
-                  $doc->getActiveSheet()->freezePane('A2');
-                  $doc->getActiveSheet()->getStyle('A1:' . $last_column . '1')->getFont()->setBold(true);
-              }
-              // format all columns as text
-              $doc->getActiveSheet()->getStyle('A2:' . $last_column . $last_row)
-                  ->getNumberFormat()->setFormatCode(\PhpOffice\PhpSpreadsheet\Style\NumberFormat::FORMAT_TEXT);
+                $sheet = $doc->getActiveSheet();
 
-                $doc->getActiveSheet()->getStyle('H1:H'.$last_row)->getAlignment()->setHorizontal('center');
-                $doc->getActiveSheet()->getStyle('K1:K'.$last_row)->getAlignment()->setHorizontal('center');
-                $doc->getActiveSheet()->getStyle('L1:L'.$last_row)->getAlignment()->setHorizontal('center');
-                $doc->getActiveSheet()->getStyle('O1:O'.$last_row)->getAlignment()->setHorizontal('center');
-                $doc->getActiveSheet()->getColumnDimension('G')->setAutoSize(FALSE);
-                $doc->getActiveSheet()->getColumnDimension('G')->setWidth('20');
-                $doc->getActiveSheet()->getColumnDimension('I')->setAutoSize(FALSE);
-                $doc->getActiveSheet()->getColumnDimension('I')->setWidth('16');
-                $doc->getActiveSheet()->getColumnDimension('J')->setAutoSize(FALSE);
-                $doc->getActiveSheet()->getColumnDimension('J')->setWidth('16');
-                $doc->getActiveSheet()->getColumnDimension('K')->setAutoSize(FALSE);
-                $doc->getActiveSheet()->getColumnDimension('K')->setWidth('6');
-                
-            //   // Color
-            // $doc->getActiveSheet()
-            //     ->getStyle('A2:T'.$last_row)
-            //     ->getFill()
-            //     ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
-            //     ->getStartColor()
-            //     ->setARGB('ffffff');
-              // write and save the file
-              //$writer = new Xlsx($doc); 
-              $writer = new PhpOffice\PhpSpreadsheet\Writer\Xlsx($doc);
-              //$writer->save($fp);
-			  ob_start();
-			  	$writer->save($fp);
-    			$content = ob_get_contents();
-    			ob_end_clean();
-				$uploaded = Storage::disk('wages_data')->put($xlsxFileName, $content); 
+                foreach($inner_details as $i => $row){
+                    if (empty($firstLineKeys)) {
+                        $firstLineKeys = array_keys($row);
+                        $j=1;
+                        foreach($firstLineKeys as $x_value){
+                            $sheet->setCellValueByColumnAndRow($j,1,$x_value);
+                              $j=$j+1;
+                        }
+                    }
+                    $j=1;
+                    foreach($row as $x => $x_value) {
+                        $sheet->setCellValueByColumnAndRow($j,$i+2,$x_value);
+                          $j=$j+1;
+                    }
+                      
+                    }
+                      // get last row and column for formatting
+                      $last_column = $doc->getActiveSheet()->getHighestColumn();
+                      $last_row = $doc->getActiveSheet()->getHighestRow();
+          
+                      // autosize all columns to content width
+                      for ($k = 'A'; $k <= $last_column; $k++) {
+                          $doc->getActiveSheet()->getColumnDimension($k)->setAutoSize(TRUE);
+                      }
+          
+                      // if $keys, freeze the header row and make it bold
+                      if ($firstLineKeys) {
+                          $doc->getActiveSheet()->freezePane('A2');
+                          $doc->getActiveSheet()->getStyle('A1:' . $last_column . '1')->getFont()->setBold(true);
+                      }
+                      // format all columns as text
+                      $doc->getActiveSheet()->getStyle('A2:' . $last_column . $last_row)
+                          ->getNumberFormat()->setFormatCode(\PhpOffice\PhpSpreadsheet\Style\NumberFormat::FORMAT_TEXT);
+        
+                        $doc->getActiveSheet()->getStyle('H1:H'.$last_row)->getAlignment()->setHorizontal('center');
+                        $doc->getActiveSheet()->getStyle('K1:K'.$last_row)->getAlignment()->setHorizontal('center');
+                        $doc->getActiveSheet()->getStyle('L1:L'.$last_row)->getAlignment()->setHorizontal('center');
+                        $doc->getActiveSheet()->getStyle('O1:O'.$last_row)->getAlignment()->setHorizontal('center');
+                        $doc->getActiveSheet()->getColumnDimension('G')->setAutoSize(FALSE);
+                        $doc->getActiveSheet()->getColumnDimension('G')->setWidth('20');
+                        $doc->getActiveSheet()->getColumnDimension('I')->setAutoSize(FALSE);
+                        $doc->getActiveSheet()->getColumnDimension('I')->setWidth('16');
+                        $doc->getActiveSheet()->getColumnDimension('J')->setAutoSize(FALSE);
+                        $doc->getActiveSheet()->getColumnDimension('J')->setWidth('16');
+                        $doc->getActiveSheet()->getColumnDimension('K')->setAutoSize(FALSE);
+                        $doc->getActiveSheet()->getColumnDimension('K')->setWidth('6');
+                        
+                    //   // Color
+                    // $doc->getActiveSheet()
+                    //     ->getStyle('A2:T'.$last_row)
+                    //     ->getFill()
+                    //     ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+                    //     ->getStartColor()
+                    //     ->setARGB('ffffff');
+                      // write and save the file
+                      //$writer = new Xlsx($doc); 
+                      $writer = new PhpOffice\PhpSpreadsheet\Writer\Xlsx($doc);
+                      //$writer->save($fp);
+                      ob_start();
+                          $writer->save($fp);
+                        $content = ob_get_contents();
+                        ob_end_clean();
+                        $count++;
+            }
+            $uploaded = Storage::disk('wages_data')->put($xlsxFileName, $content); 
 			//   $url['url'] = public_path().'/'.$xlsxFileName;
         }
+
         // $tempImage = tempnam(sys_get_temp_dir(), $xlsxFileName);
         // return $url;
         // fclose($fp);
