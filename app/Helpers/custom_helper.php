@@ -198,7 +198,7 @@ if (! function_exists('envparam')) {
                 $fp = fopen('php://output', 'w+');
                 $sheet = $doc->createSheet();
                 $sheet = $doc->getActiveSheet();
-                $doc->setActiveSheetIndex(1);
+                $doc->setActiveSheetIndex($key);
                //}
             
             $sheet->setTitle($key);

@@ -83,7 +83,7 @@ class WagesServices{
         }else{
             $return['total_booking'] = $total_booking;
             $return['edit_and_delete_permission'] = 1;//(checkUserRole($request['user_id']) == 'admin')?1:0;
-            //$return['wages_report_permission'] = (Auth::User()->user_role == 'admin')?true:false;
+            $return['recent_order_permission'] = (Auth::User()->user_role == 'admin')?true:false;
             $return['wages_report_permission'] = true;
 
         }
@@ -228,7 +228,7 @@ class WagesServices{
         $download_data = WagesDetails::getWages($request,true);
         WagesDetails::finalWagesSubmission($request);
         $user_name = Auth::User()->first_name." ".Auth::User()->last_name;
-        $records = $excel_data = [];
+        $records = $excel_data = $excel_data_second = [];
         foreach($download_data['wages_details'] as $value){
             $records['BOOKED BY'] = $value['pay_to'];     // Coloumn A
             //$records['Level'] = $value['level'];    // Coloumn C
@@ -245,8 +245,28 @@ class WagesServices{
             //$records['CHECK'] = '';     // Coloumn T
             $excel_data [] = $records;
         }
+        $return = WagesDetails::getWagesReportGroupBy($request);
+        $records = [];
+        foreach($return['wages_details'] as $value){
+            $records['BOOKED BY'] = $value['pay_to'];     // Coloumn A
+            //$records['Level'] = $value['level'];    // Coloumn C
+            $records['BLOCK'] = BlockDetails::getBlockName($value['block_id'])->block_name?? " ";     // Coloumn D
+            $records['LEVEL'] = $value['floor_name'];  // Coloumn F
+            $records['PLOT'] = $value['plot_or_room'];     // Coloumn E
+            $records['Main Description'] = $value['description_header'];      // Coloumn H
+            $records['Sub Description'] = $value['sub_description_header'];      // Coloumn H
+            $records['DESCRIPTION OF WORK'] = $value['description'];  // Coloumn G
+            $records['Booked Quantity'] = roundOff($value['amount']);
+            $records['Unit'] = $value['unit'];      // Coloumn I
+            $records['Booking Date'] = Carbon::parse($value['created_at'])->format('Y-m-d');      // Coloumn I
+            $records['Delivery Date'] = Carbon::parse($value['delivery_date'])->format('Y-m-d');     // Coloumn I
+            //$records['CHECK'] = '';     // Coloumn T
+            $excel_data_second [] = $records;
+        }
 
-        $return['excel_url'] = getXlsxFile($excel_data, 'Material_Booking_'.$user_name,date('Y_m_d_H_i_s'));
+        $final_excel = array_merge($excel_data,$excel_data_second);
+
+        $return['excel_url'] = getXlsxFile($final_excel, 'Material_Booking_'.$user_name,date('Y_m_d_H_i_s'));
 
         return $return;
     }
