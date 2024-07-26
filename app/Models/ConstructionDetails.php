@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Exceptions\AppException;
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -320,6 +321,8 @@ class ConstructionDetails extends Model
     {
         $apartment_id = $request['apartment_id']??null;
         $floor_id = $request['floor_id']??null;
+        $delivery_date = $request['delivery_date'];
+        $booking_date = Carbon::now()->format('Y-m-d');
         $return = ConstructionDetails::whereNull('deleted_at')->where('project_id',$request['project_id'])->where('block_id',$request['block_id'])->where('main_description_id',$request['main_description_id'])->where('id',$request['consruction_id']);
         
         if($is_multiple){
@@ -360,16 +363,16 @@ class ConstructionDetails extends Model
 
         if(!empty($apartment_id)){
             if($is_multiple){
-                DB::select("UPDATE construction_details SET amount_booked = '$amount_booked',`name` = '$name' WHERE id = ( SELECT * FROM(Select min(id) as id from construction_details where id =".$request['consruction_id']."  and project_id = ".$request['project_id']." and block_id = ".$request['block_id']." and main_description_id =".$request['main_description_id']." and sub_description_id =".$request['sub_description_id']." and apartment_id =".$request['apartment_id']." ) as cunst)");
+                DB::select("UPDATE construction_details SET amount_booked = '$amount_booked',`name` = '$name',`delivery_date` = '$delivery_date',`booking_date` = '$booking_date' WHERE id = ( SELECT * FROM(Select min(id) as id from construction_details where id =".$request['consruction_id']."  and project_id = ".$request['project_id']." and block_id = ".$request['block_id']." and main_description_id =".$request['main_description_id']." and sub_description_id =".$request['sub_description_id']." and apartment_id =".$request['apartment_id']." ) as cunst)");
             }else{
-                DB::select("UPDATE construction_details SET amount_booked = '$amount_booked', `name` = '$name' WHERE id = ( SELECT * FROM(Select min(id) as id from construction_details where id =".$request['consruction_id']."  and project_id = ".$request['project_id']." and block_id = ".$request['block_id']." and main_description_id =".$request['main_description_id']." and apartment_id =".$request['apartment_id']." ) as cunst)");
+                DB::select("UPDATE construction_details SET amount_booked = '$amount_booked', `name` = '$name',`delivery_date` = '$delivery_date',`booking_date` = '$booking_date' WHERE id = ( SELECT * FROM(Select min(id) as id from construction_details where id =".$request['consruction_id']."  and project_id = ".$request['project_id']." and block_id = ".$request['block_id']." and main_description_id =".$request['main_description_id']." and apartment_id =".$request['apartment_id']." ) as cunst)");
             }
             
         }else{
             if($is_multiple){
-                DB::select("UPDATE construction_details SET amount_booked = '$amount_booked',`name` = '$name' WHERE id = ( SELECT * FROM(Select min(id) as id from construction_details where id =".$request['consruction_id']."  and project_id = ".$request['project_id']." and block_id = ".$request['block_id']." and main_description_id =".$request['main_description_id']." and sub_description_id =".$request['sub_description_id']." and floor_id =".$request['floor_id']." ) as cunst)");
+                DB::select("UPDATE construction_details SET amount_booked = '$amount_booked',`name` = '$name',`delivery_date` = '$delivery_date',`booking_date` = '$booking_date' WHERE id = ( SELECT * FROM(Select min(id) as id from construction_details where id =".$request['consruction_id']."  and project_id = ".$request['project_id']." and block_id = ".$request['block_id']." and main_description_id =".$request['main_description_id']." and sub_description_id =".$request['sub_description_id']." and floor_id =".$request['floor_id']." ) as cunst)");
             }else{
-                DB::select("UPDATE construction_details SET amount_booked = '$amount_booked', `name` = '$name' WHERE id = ( SELECT * FROM(Select min(id) as id from construction_details where id =".$request['consruction_id']."  and project_id = ".$request['project_id']." and block_id = ".$request['block_id']." and main_description_id =".$request['main_description_id']." and floor_id =".$request['floor_id']." ) as cunst)");
+                DB::select("UPDATE construction_details SET amount_booked = '$amount_booked', `name` = '$name',`delivery_date` = '$delivery_date',`booking_date` = '$booking_date' WHERE id = ( SELECT * FROM(Select min(id) as id from construction_details where id =".$request['consruction_id']."  and project_id = ".$request['project_id']." and block_id = ".$request['block_id']." and main_description_id =".$request['main_description_id']." and floor_id =".$request['floor_id']." ) as cunst)");
             }
             
         }

@@ -231,6 +231,7 @@ class ConstructionDetailsServices{
             // $value['Amount'] = implode(",",$array_value);
             // $value['Qty.'] = (number_format((float)$quantity,2)>0)?number_format((float)$quantity,2):'';
             $project_name = $value['project_name'];
+            $value['Description'] =  trim($value['Description'],"'");
             unset($value['project_name']);
             // if(!empty($value['Apartment'])){
             //     $aparment_aaray [] = $value;
