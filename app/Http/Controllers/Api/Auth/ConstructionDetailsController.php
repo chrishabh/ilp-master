@@ -218,4 +218,10 @@ class ConstructionDetailsController extends Controller
 
         return  response()->data(['wages_number' => $return]);
     }
+
+    public static function importExcel(Request $request){
+
+        importExcelwithBoxSpout($request['file_path']);
+
+    }
 }

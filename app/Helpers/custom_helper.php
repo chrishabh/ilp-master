@@ -11,6 +11,7 @@ use App\Models\MainDescritpion;
 use App\Models\ProjectDetails;
 use App\Models\SubDescritpion;
 use App\Models\User;
+use Box\Spout\Reader\Common\Creator\ReaderEntityFactory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -977,6 +978,35 @@ if (! function_exists('envparam')) {
              $url = env('WEB_URL');
          }
          return $url;
+    }
+
+    function importExcelwithBoxSpout( $filePath)
+    {
+        set_time_limit(0);
+
+        $reader = ReaderEntityFactory::createReaderFromFile($filePath);
+
+        $reader->open($filePath);
+        $ri=0;
+        foreach ($reader->getSheetIterator() as $sheet) {
+            foreach ($sheet->getRowIterator() as $row) {
+                // do stuff with the row
+                // $cells = $row->getCells();
+                // if($ri==1000){
+                //     foreach($cells as $ck=>$cell){
+                //         echo 'Cell No '.$ck.'. ';
+                //         print_r($cell->getValue());
+                //         echo '<br/>';
+                //     }
+                //     die;
+                // }
+                // $ri++;
+                //...
+                pp($row);
+            }
+        }
+
+        $reader->close();
     }
 
     function isEmptyArray($data = []){
