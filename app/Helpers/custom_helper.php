@@ -988,6 +988,7 @@ if (! function_exists('envparam')) {
         $reader->open($filePath);
         $ri=0;
         foreach ($reader->getSheetIterator() as $sheet) {
+            pp($sheet->toArray());
             foreach ($sheet->getRowIterator() as $row) {
                 // do stuff with the row
                 // $cells = $row->getCells();
