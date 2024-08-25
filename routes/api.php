@@ -22,7 +22,7 @@ Route::group(['middleware'=> ['tracker']],function () {
                 Route::post('update-user','UserController@updateUser');
                 Route::post('forgot-password','UserController@forgotPassword');
                 Route::post('decyprt-password','UserController@decryptPassword');
-                Route::get('import-excel','ConstructionDetailsController@importExcel');
+                Route::post('import-excel','ConstructionDetailsController@importExcel');
         });
 
         Route::group(['namespace' => 'Api\Auth'], function () {
