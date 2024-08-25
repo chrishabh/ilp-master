@@ -982,7 +982,6 @@ if (! function_exists('envparam')) {
 
     function importExcelwithBoxSpout( $filePath)
     {
-        set_time_limit(0);
 
         $reader = ReaderEntityFactory::createReaderFromFile($filePath);
 
@@ -1002,7 +1001,7 @@ if (! function_exists('envparam')) {
                 // }
                 // $ri++;
                 //...
-                pp($row);
+                pp($row->toArray());
             }
         }
 
