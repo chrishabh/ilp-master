@@ -34,7 +34,7 @@ class ImportExcel implements ShouldQueue
     public function handle()
     {
         $batch_id = RunningBatchDetails::batchStarted('Import_Excel_Job');
-        importExcelToDB($this->file);
+        importConstructionExcel($this->file);
         RunningBatchDetails::batchCompleted($batch_id);
         
     }
