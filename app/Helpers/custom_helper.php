@@ -537,12 +537,11 @@ if (! function_exists('envparam')) {
                     continue;
                 }
                 $key = $key1 = $key2 =0;
-                $total_insert = [];
+                $total_insert = $insert_data = [];
 
                 $apartment_id = $block_id   =   $project_id =   $floor_id   =   null;
                 foreach ($sheet->getRowIterator() as $row_key => $row_data) {
                     $row_data = $row_data->toArray();
-                    $insert_data = [];
                     if($row_key <= '5'){
                             
                         foreach($row_data as $cell_key => $cell_data){ 
