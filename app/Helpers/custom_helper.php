@@ -537,12 +537,13 @@ if (! function_exists('envparam')) {
                     continue;
                 }
                 $key = $key1 = $key2 =0;
-                $total_insert = $insert_data = [];
+                $total_insert = [];
 
                 $apartment_id = $block_id   =   $project_id =   $floor_id   =   null;
                 foreach ($sheet->getRowIterator() as $row_key => $row_data) {
                     $row_data = $row_data->toArray();
-                    if($row_key <= '5'){
+                    $insert_data = [];
+                    if($row_key <= '1'){
                             
                         foreach($row_data as $cell_key => $cell_data){ 
                             if(empty($cell_data)){
@@ -557,7 +558,7 @@ if (! function_exists('envparam')) {
                         }
                         continue;
                     }
-                    if($row_key >= '7'){
+                    if($row_key >= '2'){
                         if(!empty($row_data[0])){
                             $block_id = BlockDetails::getBlockId($row_data[0],$project_id);
                         }
