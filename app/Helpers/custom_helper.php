@@ -558,7 +558,7 @@ if (! function_exists('envparam')) {
                         }
                         continue;
                     }
-                    if($row_key >= '2'){
+                    if($row_key >= '3'){
                         if(!empty($row_data[0])){
                             $block_id = BlockDetails::getBlockId($row_data[0],$project_id);
                         }
