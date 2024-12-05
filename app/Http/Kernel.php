@@ -67,6 +67,7 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'request.pre.processor'=>\App\Http\Middleware\RequestPreProcessor::class,
         'userAuth' => \App\Http\Middleware\UserAuthatication::class,
-        'tracker' => \App\Http\Middleware\RequestResponseTracker::class
+        'tracker' => \App\Http\Middleware\RequestResponseTracker::class,
+        'throttle.seconds' => \App\Http\Middleware\ThrottleRequestsBySeconds::class,
     ];
 }
