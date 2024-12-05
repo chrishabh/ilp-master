@@ -46,7 +46,7 @@ Route::group(['middleware'=> ['tracker']],function () {
                 Route::post('edit-construction-details','ConstructionDetailsController@editConstructionDetails');
 
                 // wages booking
-                Route::middleware('throttle:1,1')->group(function () {
+                Route::middleware('throttle:2,1')->group(function () {
                     Route::post('book-wages','WagesBookingController@bookWages');
                 });
                 Route::post('add-wages-number','WagesBookingController@addWages');
