@@ -211,7 +211,7 @@ if (! function_exists('envparam')) {
                     $sheet->setCellValueByColumnAndRow($j,$i+2,$x_value);
                     $j=$j+1;
                 }else{
-                    if($x_value){
+                    if(!$x_value){
                         $highlight_row [] = $i+2;
                     }
                 }
