@@ -292,12 +292,13 @@ class WagesServices{
             $records['Non Rec'] ='';      // Coloumn T
             $records['Mgt'] ='';      // Coloumn T
             $records['CHECK'] ='';      // Coloumn T
-            $records['Wages No.'] =$value['wages'];
+            $records['Wages No.'] = $value['wages'];
+            $records['highligt_ind'] = WagesDetails::getIndicatorTraderPerviousBooking($value['pay_to'],$value['wages']);
             //$records['CHECK'] = '';     // Coloumn T
             $excel_data [] = $records;
         }
 
-        $return['excel_url'] = getXlsxFile($excel_data, 'Wages_Booking_'.$request['wages_number'],date('Y_m_d_H_i_s'));
+        $return['excel_url'] = getFinalSubmissionXlsxFile($excel_data, 'Wages_Booking_'.$request['wages_number'],date('Y_m_d_H_i_s'));
 
         return $return;
     }

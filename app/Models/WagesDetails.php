@@ -166,4 +166,10 @@ class WagesDetails extends Model
     {
         return WagesDetails::whereNull('deleted_at')->where('id',$id)->first();
     }
+
+    public static function getIndicatorTraderPerviousBooking($trader,$wage_no)
+    {
+        $date =  Carbon::now()->format('Y-m-d');
+        return WagesDetails::whereNull('deleted_at')->where('pay_to',$trader)->where('wages',$wage_no)->whereRaw("cast(wages_details.created_at as date) < '$date'")->exists();
+    }
 }
