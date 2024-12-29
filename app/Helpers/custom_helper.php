@@ -197,8 +197,10 @@ if (! function_exists('envparam')) {
                 $firstLineKeys = array_keys($row);
                 $j=1;
                 foreach($firstLineKeys as $index => $x_value){
-                    if(count($firstLineKeys)-1 <> $index)
+                    if(count($firstLineKeys)-1 == $index)
                     {
+                      
+                    }else{
                         $sheet->setCellValueByColumnAndRow($j,1,$x_value);
                         $j=$j+1;
                     }
@@ -206,7 +208,7 @@ if (! function_exists('envparam')) {
             }
             $j=1;
             foreach($row as $x => $x_value) {
-                if(count($row)-1 <> $x)
+                if('highligt_ind'<> $x)
                 {
                     $sheet->setCellValueByColumnAndRow($j,$i+2,$x_value);
                     $j=$j+1;
