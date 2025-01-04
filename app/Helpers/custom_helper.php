@@ -170,7 +170,7 @@ if (! function_exists('envparam')) {
         // return $url;
         // fclose($fp);
         if($uploaded){
-            $url = env('APP_URL').'/public/wages_data'.'/'.$xlsxFileName;
+            $url = env('APP_URL').'/wages_data'.'/'.$xlsxFileName;
         }else{
             throw new AppException('No wages exists to download',null,1001);
             //$url = env('WEB_URL');
@@ -280,7 +280,7 @@ if (! function_exists('envparam')) {
         // return $url;
         // fclose($fp);
         if($uploaded){
-            $url = env('APP_URL').'/public/wages_data'.'/'.$xlsxFileName;
+            $url = env('APP_URL').'/wages_data'.'/'.$xlsxFileName;
         }else{
             throw new AppException('No wages exists to download',null,1001);
             //$url = env('WEB_URL');
