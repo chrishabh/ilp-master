@@ -22,6 +22,8 @@ Route::group(['middleware'=> ['tracker']],function () {
                 Route::post('update-user','UserController@updateUser');
                 Route::post('forgot-password','UserController@forgotPassword');
                 Route::post('decyprt-password','UserController@decryptPassword');
+                Route::post('smtp-handshake','UserController@smtpHandshake');
+
         });
 
         Route::group(['namespace' => 'Api\Auth'], function () {

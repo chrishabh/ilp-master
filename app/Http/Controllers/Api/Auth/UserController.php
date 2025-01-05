@@ -111,4 +111,53 @@ class UserController extends Controller
         return  response()->success();
     }
     
+    public static function smtpHandshake(Request $request)
+    {
+        $email = $request['email'];
+        $domain = substr(strrchr($email, "@"), 1); // Extract domain
+        $mxRecords = dns_get_record($domain, DNS_MX);
+
+        if (empty($mxRecords)) {
+            return "No MX records found for domain $domain.";
+        }
+
+        // Use the highest priority MX server
+        usort($mxRecords, function ($a, $b) {
+            return $a['pri'] - $b['pri'];
+        });
+        $mxHost = $mxRecords[0]['target'];
+
+        // Connect to the SMTP server
+        $connection = fsockopen($mxHost, 25, $errno, $errstr, 10);
+        if (!$connection) {
+            return "Failed to connect to SMTP server: $errstr ($errno)";
+        }
+
+        // Perform SMTP handshake
+        $responses = [];
+        fwrite($connection, "HELO " . gethostname() . "\r\n");
+        $responses[] = fgets($connection, 1024);
+
+        // Specify the sender email
+        fwrite($connection, "MAIL FROM: <test@example.com>\r\n");
+        $responses[] = fgets($connection, 1024);
+
+        // Specify the recipient email
+        fwrite($connection, "RCPT TO: <$email>\r\n");
+        $response = fgets($connection, 1024);
+        $responses[] = $response;
+
+        // Close the connection
+        fwrite($connection, "QUIT\r\n");
+        fclose($connection);
+
+        // Check the response for recipient validation
+        if (strpos($response, '250') !== false) {
+            return "Email address is valid.";
+        } elseif (strpos($response, '550') !== false) {
+            return "Email address is invalid.";
+        }
+
+        return "Unable to verify the email address.";
+    }
 }
