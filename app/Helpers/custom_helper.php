@@ -967,7 +967,7 @@ if (! function_exists('envparam')) {
          // return $url;
          // fclose($fp);
          if($uploaded){
-             $url = env('APP_URL').'/public/construction_data'.'/'.$xlsxFileName;
+             $url = env('APP_URL').'/construction_data'.'/'.$xlsxFileName;
          }else{
              $url = env('WEB_URL');
          }
