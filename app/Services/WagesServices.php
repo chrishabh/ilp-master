@@ -15,6 +15,8 @@ class WagesServices{
 
     public static function bookWages($request)
     {
+        ini_set('max_execution_time', 360);
+        ini_set('memory_limit', '-1');
         $data = $request->toArray();
         $is_multiple = (count($data['book_wages'])>1)?true:false;
         foreach($data['book_wages'] as &$value){
