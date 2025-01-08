@@ -116,7 +116,8 @@ class ConstructionDetails extends Model
 
 
         $return['total_records'] = ConstructionDetails::whereNull('deleted_at')->where('project_id',$request['project_id'])->where('block_id',$request['block_id'])->distinct()->count('main_description_id');
-
+        ini_set('max_execution_time', 360);
+        ini_set('memory_limit', '-1');
         if(count($apartment_id)>0){
             $data = ConstructionDetails::join('main_descritpions', 'main_descritpions.id', '=', 'construction_details.main_description_id')
             ->select('construction_details.main_description_id','construction_details.apartment_id','construction_details.floor_id','main_descritpions.description as description_header',DB::raw("CASE WHEN sum(construction_details.total) IS NULL THEN 0 ELSE ROUND(sum(construction_details.total),2) END as remaining_booking_amount"))->whereNull('construction_details.deleted_at')
