@@ -170,9 +170,9 @@ class UserController extends Controller
             'message' => 'This is a test email sent from a IPL-WAGES application.'
         ];
     
-        Mail::to($email)->send(new TestEmail($details));
+        $data = Mail::to($email)->send(new TestEmail($details));
     
-        return 'Test email sent successfully!';
+        return  response()->data($data);
        
     }
 }
