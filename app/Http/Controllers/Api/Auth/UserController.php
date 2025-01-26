@@ -13,8 +13,10 @@ use App\Http\Requests\LinkUserAndFloorsFormRequest;
 use App\Http\Requests\LinkUserAndProjectsFormRequest;
 use App\Http\Requests\SignUpFormRequest;
 use App\Http\Requests\UpdateUserRoleFormRequest;
+use App\Mail\TestEmail;
 use App\Models\LookUpValue;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Symfony\Component\HttpFoundation\Request as HttpFoundationRequest;
 
 class UserController extends Controller
@@ -159,5 +161,18 @@ class UserController extends Controller
         }
 
         return "Unable to verify the email address.";
+    }
+
+    public static function testEmail(Request $request)
+    {
+        $email = $request['email'];
+        $details = [
+            'message' => 'This is a test email sent from a IPL-WAGES application.'
+        ];
+    
+        Mail::to($email)->send(new TestEmail($details));
+    
+        return 'Test email sent successfully!';
+       
     }
 }
